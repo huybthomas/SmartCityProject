@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>be.uantwerpen.sc</groupId>
-	<artifactId>SC Central</artifactId>
+	<artifactId>SCCentral</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
