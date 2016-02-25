@@ -3,8 +3,6 @@ package be.uantwerpen.sc.services;
 import be.uantwerpen.sc.tools.Terminal;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.PostConstruct;
-
 /**
  * Created by Thomas on 25/02/2016.
  */

@@ -14,7 +14,7 @@ import org.springframework.context.annotation.Profile;
 @Profile("dev")
 @Configuration
 @Import(EmbeddedServletContainerAutoConfiguration.class)
-public class WebConfiguration
+public class DevelopmentConfiguration
 {
     @Bean
     ServletRegistrationBean h2servletRegistration()
