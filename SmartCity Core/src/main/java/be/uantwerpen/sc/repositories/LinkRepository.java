@@ -1,16 +1,16 @@
 package be.uantwerpen.sc.repositories;
 
-import be.uantwerpen.sc.models.core.Point;
+import be.uantwerpen.sc.models.core.Link;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 /**
- * Created by Thomas on 25/02/2016.
+ * Created by Thomas on 27/02/2016.
  */
 @Repository
-public interface PointRepository extends CrudRepository<Point, Long>
+public interface LinkRepository extends CrudRepository<Link, Long>
 {
-    List<Point> findAll();
+    List<Link> findAll();
 }
