@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head th:replace="layout :: head (pageTitle=#{homepage.title})"></head>
+<body>
+    <!-- Import navigation bar -->
+    <div th:replace="layout :: navbar"></div>
+
+    <h1>SimCity</h1>
+    <h3>Welcome</h3>
+
+    <!-- Import footer -->
+    <div th:replace="layout :: footer"></div>
+</body>
+</html>
