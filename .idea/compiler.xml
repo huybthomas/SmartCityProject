@@ -27,6 +27,7 @@
         <module name="SimCity Worker" />
         <module name="SmartCity Central" />
         <module name="SmartCity Core" />
+        <module name="SmartCity Viewer" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -35,6 +36,7 @@
       <module name="SimCity Worker" target="1.8" />
       <module name="SmartCity Central" target="1.8" />
       <module name="SmartCity Core" target="1.8" />
+      <module name="SmartCity Viewer" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

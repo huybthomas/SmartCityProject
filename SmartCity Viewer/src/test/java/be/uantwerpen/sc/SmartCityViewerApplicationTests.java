@@ -8,9 +8,9 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = SimCityViewerApplication.class)
+@SpringApplicationConfiguration(classes = SmartCityViewerApplication.class)
 @ActiveProfiles(profiles = {"dev"}, resolver = SystemPropertyActiveProfileResolver.class)
-public class SimCityViewerApplicationTests
+public class SmartCityViewerApplicationTests
 {
 	@Test
 	public void contextLoads()

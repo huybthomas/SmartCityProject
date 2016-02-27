@@ -4,11 +4,11 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>be.uantwerpen.sc</groupId>
-	<artifactId>SCSimCityViewer</artifactId>
+	<artifactId>SCSmartCityViewer</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>SimCity Viewer</name>
+	<name>SmartCity Viewer</name>
 	<description>Visual front-end simulator of Smart City</description>
 
 	<parent>
@@ -78,6 +78,4 @@
 			</plugin>
 		</plugins>
 	</build>
-	
-
 </project>

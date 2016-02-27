@@ -3,10 +3,10 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/SimCity/SimCity.iml" filepath="$PROJECT_DIR$/SimCity/SimCity.iml" />
-      <module fileurl="file://$PROJECT_DIR$/SimCity Viewer/SimCity Viewer.iml" filepath="$PROJECT_DIR$/SimCity Viewer/SimCity Viewer.iml" />
       <module fileurl="file://$PROJECT_DIR$/SimCity Worker/SimCity Worker.iml" filepath="$PROJECT_DIR$/SimCity Worker/SimCity Worker.iml" />
       <module fileurl="file://$PROJECT_DIR$/SmartCity Central/SmartCity Central.iml" filepath="$PROJECT_DIR$/SmartCity Central/SmartCity Central.iml" />
       <module fileurl="file://$PROJECT_DIR$/SmartCity Core/SmartCity Core.iml" filepath="$PROJECT_DIR$/SmartCity Core/SmartCity Core.iml" />
+      <module fileurl="file://$PROJECT_DIR$/SmartCity Viewer/SimCity Viewer.iml" filepath="$PROJECT_DIR$/SmartCity Viewer/SimCity Viewer.iml" />
     </modules>
   </component>
 </project>
