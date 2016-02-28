@@ -6,7 +6,7 @@
       <module fileurl="file://$PROJECT_DIR$/SimCity Worker/SimCity Worker.iml" filepath="$PROJECT_DIR$/SimCity Worker/SimCity Worker.iml" />
       <module fileurl="file://$PROJECT_DIR$/SmartCity Central/SmartCity Central.iml" filepath="$PROJECT_DIR$/SmartCity Central/SmartCity Central.iml" />
       <module fileurl="file://$PROJECT_DIR$/SmartCity Core/SmartCity Core.iml" filepath="$PROJECT_DIR$/SmartCity Core/SmartCity Core.iml" />
-      <module fileurl="file://$PROJECT_DIR$/SmartCity Viewer/SmartCityViewer.iml" filepath="$PROJECT_DIR$/SmartCity Viewer/SmartCityViewer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/SmartCity Viewer/SmartCity Viewer.iml" filepath="$PROJECT_DIR$/SmartCity Viewer/SmartCity Viewer.iml" />
     </modules>
   </component>
 </project>
