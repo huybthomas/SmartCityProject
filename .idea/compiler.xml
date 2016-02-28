@@ -22,21 +22,25 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="true" />
+        <module name="SCSmartCityViewer" />
         <module name="SimCity" />
         <module name="SimCity Viewer" />
         <module name="SimCity Worker" />
         <module name="SmartCity Central" />
         <module name="SmartCity Core" />
         <module name="SmartCity Viewer" />
+        <module name="SmartCityViewer" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="SCSmartCityViewer" target="1.8" />
       <module name="SimCity" target="1.8" />
       <module name="SimCity Viewer" target="1.8" />
       <module name="SimCity Worker" target="1.8" />
       <module name="SmartCity Central" target="1.8" />
       <module name="SmartCity Core" target="1.8" />
       <module name="SmartCity Viewer" target="1.8" />
+      <module name="SmartCityViewer" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>
