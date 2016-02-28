@@ -40,6 +40,154 @@ public class TerminalService
             case "exit":
                 exitSystem();
                 break;
+            case "create":
+                if(commandString.split(" ", 2).length <= 1)
+                {
+                    terminal.printTerminalInfo("Missing arguments! 'create {type}'");
+                }
+                else
+                {
+                    terminal.printTerminalInfo("METHOD NOT IMPLEMENTED YET!");
+                }
+                break;
+            case "run":
+                if(commandString.split(" ", 2).length <= 1)
+                {
+                    terminal.printTerminalInfo("Missing arguments! 'run {botId}'");
+                }
+                else
+                {
+                    terminal.printTerminalInfo("METHOD NOT IMPLEMENTED YET!");
+                }
+                break;
+            case "stop":
+                if(commandString.split(" ", 2).length <= 1)
+                {
+                    terminal.printTerminalInfo("Missing arguments! 'stop {botId}'");
+                }
+                else
+                {
+                    terminal.printTerminalInfo("METHOD NOT IMPLEMENTED YET!");
+                }
+                break;
+            case "restart":
+                if(commandString.split(" ", 2).length <= 1)
+                {
+                    terminal.printTerminalInfo("Missing arguments! 'restart {botId}'");
+                }
+                else
+                {
+                    terminal.printTerminalInfo("METHOD NOT IMPLEMENTED YET!");
+                }
+                break;
+            case "kill":
+                if(commandString.split(" ", 2).length <= 1)
+                {
+                    terminal.printTerminalInfo("Missing arguments! 'kill {botId}'");
+                }
+                else
+                {
+                    terminal.printTerminalInfo("METHOD NOT IMPLEMENTED YET!");
+                }
+                break;
+            case "set":
+                if(commandString.split(" ", 4).length <= 3)
+                {
+                    if(commandString.contains("help") || commandString.contains("?"))
+                    {
+                        this.printHelp("set");
+                    }
+                    else
+                    {
+                        terminal.printTerminalInfo("Missing arguments! 'set {botId} {property} {value}'");
+
+                    }
+                }
+                else
+                {
+                    int botId = Integer.parseInt(commandString.split(" ", 4)[1]);
+                    String property = commandString.split(" ", 4)[2];
+                    String value = commandString.split(" ", 4)[3];
+
+                    terminal.printTerminalInfo("METHOD NOT IMPLEMENTED YET!");
+                }
+                break;
+            case "get":
+                if(commandString.split(" ", 3).length <= 2)
+                {
+                    if(commandString.contains("help") || commandString.contains("?"))
+                    {
+                        this.printHelp("get");
+                    }
+                    else
+                    {
+                        terminal.printTerminalInfo("Missing arguments! 'get {botId} {property}'");
+
+                    }
+                }
+                else
+                {
+                    int botId = Integer.parseInt(commandString.split(" ", 4)[1]);
+                    String property = commandString.split(" ", 4)[2];
+
+                    terminal.printTerminalInfo("METHOD NOT IMPLEMENTED YET!");
+                }
+                break;
+            case "setconfig":
+                if(commandString.split(" ", 3).length <= 2)
+                {
+                    if(commandString.contains("help") || commandString.contains("?"))
+                    {
+                        printHelp("setconfig");
+                    }
+                    else
+                    {
+                        terminal.printTerminalInfo("Missing arguments! 'setconfig {property} {value}'");
+                    }
+                }
+                else
+                {
+                    String property = commandString.split(" ", 3)[1];
+                    String value = commandString.split(" ", 3)[2];
+
+                    terminal.printTerminalInfo("METHOD NOT IMPLEMENTED YET!");
+                }
+                break;
+            case "getconfig":
+                if(commandString.split(" ", 2).length <= 1)
+                {
+                    if(commandString.contains("help") || commandString.contains("?"))
+                    {
+                        printHelp("getconfig");
+                    }
+                    else
+                    {
+                        terminal.printTerminalInfo("Missing arguments! 'getconfig {property}'");
+                    }
+                }
+                else
+                {
+                    String property = commandString.split(" ", 3)[1];
+                    String value = commandString.split(" ", 3)[2];
+
+                    terminal.printTerminalInfo("METHOD NOT IMPLEMENTED YET!");
+                }
+                break;
+            case "show":
+                if(commandString.split(" ", 2).length <= 1)
+                {
+                    if(commandString.split(" ", 2)[1].equals("all"))
+                    {
+                        terminal.printTerminalInfo("METHOD NOT IMPLEMENTED YET!");;
+                    }
+                    else
+                    {
+                        int botId = Integer.parseInt(commandString.split(" ", 2)[1]);
+
+                        terminal.printTerminalInfo("METHOD NOT IMPLEMENTED YET!");
+                    }
+                }
+                break;
             case "help":
             case "?":
                 printHelp("");
@@ -59,9 +207,40 @@ public class TerminalService
     {
         switch(command)
         {
+            case "set":
+                terminal.printTerminal("SET {botId} {property} {value}");
+                terminal.printTerminal("------------------------------");
+                terminal.printTerminal("'help' / '?' : show all configurable properties.\n");
+                break;
+            case "get":
+                terminal.printTerminal("GET {botId} {property}");
+                terminal.printTerminal("----------------------");
+                terminal.printTerminal("'help' / '?' : show all configurable properties.\n");
+                break;
+            case "setconfig":
+                terminal.printTerminal("SETCONFIG {property} {value}");
+                terminal.printTerminal("----------------------------");
+                terminal.printTerminal("'help' / '?' : show all configurable properties.\n");
+                break;
+            case "getconfig":
+                terminal.printTerminal("GETCONFIG {property}");
+                terminal.printTerminal("--------------------");
+                terminal.printTerminal("'help' / '?' : show all configurable properties.\n");
+                break;
             default:
                 terminal.printTerminal("Available commands:");
                 terminal.printTerminal("-------------------");
+                terminal.printTerminal("'create {type}' : instantiate a bot of the given type.");
+                terminal.printTerminal("'run {botId}' : start the bot with the given id.");
+                terminal.printTerminal("'stop {botId}' : stop the bot with the given id.");
+                terminal.printTerminal("'restart {botId}' : restart the bot with the given id.");
+                terminal.printTerminal("'kill {botId}' : destroy the bot with the given id.");
+                terminal.printTerminal("'set {botId} {property} {value}' : set the property of the bot with the given id.");
+                terminal.printTerminal("'get {botId} {property}' : get the value of the property for the bot with the given id.");
+                terminal.printTerminal("'setconfig {property} {value}' : set the system property of the worker node.");
+                terminal.printTerminal("'getconfig {property}' : get the value of the property for the bot with the given id.");
+                terminal.printTerminal("'show all' : give a list of all created bots.");
+                terminal.printTerminal("'show {botId}' : display the details of the bot with the given id.");
                 terminal.printTerminal("'exit' : shutdown the server.");
                 terminal.printTerminal("'help' / '?' : show all available commands.\n");
                 break;
