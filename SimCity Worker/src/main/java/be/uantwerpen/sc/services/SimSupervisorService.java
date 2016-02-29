@@ -27,4 +27,22 @@ public class SimSupervisorService
     {
         return new SimBotStatus(0, "");
     }
+
+    public boolean addNewBot(SimBot bot)
+    {
+        boolean status;
+
+        bot.setName("bot-" + nextId);
+
+        if(bots.add(bot))
+        {
+            nextId++;
+
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
 }

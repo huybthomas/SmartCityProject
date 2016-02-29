@@ -1,6 +1,9 @@
 package be.uantwerpen.sc.services;
 
+import be.uantwerpen.sc.models.sim.SimBot;
+import be.uantwerpen.sc.models.sim.SimCar;
 import be.uantwerpen.sc.tools.Terminal;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -9,6 +12,9 @@ import org.springframework.stereotype.Service;
 @Service
 public class TerminalService
 {
+    @Autowired
+    SimDispatchService dispatchService;
+
     private Terminal terminal;
 
     public TerminalService()
@@ -47,7 +53,7 @@ public class TerminalService
                 }
                 else
                 {
-                    terminal.printTerminalInfo("METHOD NOT IMPLEMENTED YET!");
+                    this.instantiateBot(commandString.split(" ", 2)[1]);
                 }
                 break;
             case "run":
@@ -195,6 +201,31 @@ public class TerminalService
             default:
                 terminal.printTerminalInfo("Command: '" + command + "' is not recognized.");
                 break;
+        }
+    }
+
+    private void instantiateBot(String type)
+    {
+        SimBot bot;
+
+        switch(type.toLowerCase().trim())
+        {
+            case "car":
+                bot = dispatchService.instantiateBot(new SimCar());
+                break;
+            default:
+                terminal.printTerminalInfo("Bottype: '" + type + "' is unknown!");
+                terminal.printTerminalInfo("Known types: {car}");
+                return;
+        }
+
+        if(bot != null)
+        {
+            terminal.printTerminalInfo("New bot of type: '" + bot.getType() + "' and name: '" + bot.getName() + "' instantiated.");
+        }
+        else
+        {
+            terminal.printTerminalError("Could not instantiate bot of type: " + type + "!");
         }
     }
 
