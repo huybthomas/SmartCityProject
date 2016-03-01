@@ -15,4 +15,10 @@ public class HomeController
     {
         return "homepage";
     }
+
+    @RequestMapping(value = {"/about"})
+    public String showAboutpage(ModelMap model)
+    {
+        return "about";
+    }
 }
