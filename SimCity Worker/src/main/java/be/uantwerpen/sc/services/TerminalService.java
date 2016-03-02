@@ -2,9 +2,12 @@ package be.uantwerpen.sc.services;
 
 import be.uantwerpen.sc.models.sim.SimBot;
 import be.uantwerpen.sc.models.sim.SimCar;
+import be.uantwerpen.sc.models.sim.messages.SimBotStatus;
 import be.uantwerpen.sc.tools.Terminal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * Created by Thomas on 26/02/2016.
@@ -14,6 +17,9 @@ public class TerminalService
 {
     @Autowired
     SimDispatchService dispatchService;
+
+    @Autowired
+    SimSupervisorService supervisorService;
 
     private Terminal terminal;
 
@@ -63,7 +69,18 @@ public class TerminalService
                 }
                 else
                 {
-                    terminal.printTerminalInfo("METHOD NOT IMPLEMENTED YET!");
+                    int parsedInt;
+
+                    try
+                    {
+                        parsedInt = this.parseInteger(commandString.split(" ", 2)[1]);
+
+                        this.startBot(parsedInt);
+                    }
+                    catch(Exception e)
+                    {
+                        terminal.printTerminalError(e.getMessage());
+                    }
                 }
                 break;
             case "stop":
@@ -73,7 +90,18 @@ public class TerminalService
                 }
                 else
                 {
-                    terminal.printTerminalInfo("METHOD NOT IMPLEMENTED YET!");
+                    int parsedInt;
+
+                    try
+                    {
+                        parsedInt = this.parseInteger(commandString.split(" ", 2)[1]);
+
+                        this.stopBot(parsedInt);
+                    }
+                    catch(Exception e)
+                    {
+                        terminal.printTerminalError(e.getMessage());
+                    }
                 }
                 break;
             case "restart":
@@ -83,7 +111,18 @@ public class TerminalService
                 }
                 else
                 {
-                    terminal.printTerminalInfo("METHOD NOT IMPLEMENTED YET!");
+                    int parsedInt;
+
+                    try
+                    {
+                        parsedInt = this.parseInteger(commandString.split(" ", 2)[1]);
+
+                        this.restartBot(parsedInt);
+                    }
+                    catch(Exception e)
+                    {
+                        terminal.printTerminalError(e.getMessage());
+                    }
                 }
                 break;
             case "kill":
@@ -93,7 +132,18 @@ public class TerminalService
                 }
                 else
                 {
-                    terminal.printTerminalInfo("METHOD NOT IMPLEMENTED YET!");
+                    int parsedInt;
+
+                    try
+                    {
+                        parsedInt = this.parseInteger(commandString.split(" ", 2)[1]);
+
+                        this.killBot(parsedInt);
+                    }
+                    catch(Exception e)
+                    {
+                        terminal.printTerminalError(e.getMessage());
+                    }
                 }
                 break;
             case "set":
@@ -111,9 +161,18 @@ public class TerminalService
                 }
                 else
                 {
-                    int botId = Integer.parseInt(commandString.split(" ", 4)[1]);
+                    int botId;
                     String property = commandString.split(" ", 4)[2];
                     String value = commandString.split(" ", 4)[3];
+
+                    try
+                    {
+                        this.parseInteger(commandString.split(" ", 4)[1]);
+                    }
+                    catch(Exception e)
+                    {
+                        terminal.printTerminalError(e.getMessage());
+                    }
 
                     terminal.printTerminalInfo("METHOD NOT IMPLEMENTED YET!");
                 }
@@ -133,8 +192,17 @@ public class TerminalService
                 }
                 else
                 {
-                    int botId = Integer.parseInt(commandString.split(" ", 4)[1]);
+                    int botId;
                     String property = commandString.split(" ", 4)[2];
+
+                    try
+                    {
+                        botId = this.parseInteger(commandString.split(" ", 4)[1]);
+                    }
+                    catch(Exception e)
+                    {
+                        terminal.printTerminalError(e.getMessage());
+                    }
 
                     terminal.printTerminalInfo("METHOD NOT IMPLEMENTED YET!");
                 }
@@ -182,15 +250,28 @@ public class TerminalService
             case "show":
                 if(commandString.split(" ", 2).length <= 1)
                 {
+                    terminal.printTerminalInfo("Missing arguments! 'show {botId | all}'");
+                }
+                else
+                {
                     if(commandString.split(" ", 2)[1].equals("all"))
                     {
-                        terminal.printTerminalInfo("METHOD NOT IMPLEMENTED YET!");;
+                        this.printAllBots();
                     }
                     else
                     {
-                        int botId = Integer.parseInt(commandString.split(" ", 2)[1]);
+                        int botId;
 
-                        terminal.printTerminalInfo("METHOD NOT IMPLEMENTED YET!");
+                        try
+                        {
+                            botId = this.parseInteger(commandString.split(" ", 2)[1]);
+
+                            this.printBotStatus(botId);
+                        }
+                        catch(Exception e)
+                        {
+                            terminal.printTerminalError(e.getMessage());
+                        }
                     }
                 }
                 break;
@@ -211,7 +292,7 @@ public class TerminalService
         switch(type.toLowerCase().trim())
         {
             case "car":
-                bot = dispatchService.instantiateBot(new SimCar());
+                bot = dispatchService.instantiateBot(type);
                 break;
             default:
                 terminal.printTerminalInfo("Bottype: '" + type + "' is unknown!");
@@ -226,6 +307,91 @@ public class TerminalService
         else
         {
             terminal.printTerminalError("Could not instantiate bot of type: " + type + "!");
+        }
+    }
+
+    private void startBot(int botId)
+    {
+        if(supervisorService.startBot(botId))
+        {
+            terminal.printTerminalInfo("Bot started with id: " + botId + ".");
+        }
+        else
+        {
+            terminal.printTerminalError("Could not start bot with id: " + botId + "!");
+        }
+    }
+
+    private void stopBot(int botId)
+    {
+        if(supervisorService.stopBot(botId))
+        {
+            terminal.printTerminalInfo("Bot stopped with id: " + botId + ".");
+        }
+        else
+        {
+            terminal.printTerminalError("Could not stop bot with id: " + botId + "!");
+        }
+    }
+
+    private void restartBot(int botId)
+    {
+        if(supervisorService.restartBot(botId))
+        {
+            terminal.printTerminalInfo("Bot restarted with id: " + botId + ".");
+        }
+        else
+        {
+            terminal.printTerminalError("Could not restart bot with id: " + botId + "!");
+        }
+    }
+
+    private void killBot(int botId)
+    {
+        if(supervisorService.removeBot(botId))
+        {
+            terminal.printTerminalInfo("Bot killed with id: " + botId + ".");
+        }
+        else
+        {
+            terminal.printTerminalError("Could not kill bot with id: " + botId + "!");
+        }
+    }
+
+    private void printBotStatus(int botId)
+    {
+        SimBotStatus status = supervisorService.getBotStatus(botId);
+
+        if(status == null)
+        {
+            terminal.printTerminalError("Could not find bot with id: " + botId + "!");
+        }
+        else
+        {
+            terminal.printTerminal("Bot-id:\t\t" + status.getId());
+            terminal.printTerminal("Name:\t\t" + status.getName());
+            terminal.printTerminal("Type:\t\t" + status.getType());
+            terminal.printTerminal("Running:\t" + status.getRunningState());
+        }
+    }
+
+    private void printAllBots()
+    {
+        List<SimBotStatus> stats = supervisorService.getAllBotStats();
+
+        if(stats.isEmpty())
+        {
+            terminal.printTerminalInfo("There are no bots available to list.");
+        }
+        else
+        {
+            terminal.printTerminal("Bot-id\t\tType\t\tName\t\tRunning");
+            terminal.printTerminal("-----------------------------------------------");
+
+            for (SimBotStatus status : stats)
+            {
+                terminal.printTerminal("\t" + status.getId() + "\t\t" + status.getType() + "\t\t\t" + status.getName() + "\t\t" + status.getRunningState());
+            }
         }
     }
 
@@ -276,5 +442,21 @@ public class TerminalService
                 terminal.printTerminal("'help' / '?' : show all available commands.\n");
                 break;
         }
+    }
+
+    private int parseInteger(String value) throws Exception
+    {
+        int parsedInt;
+
+        try
+        {
+           parsedInt = Integer.parseInt(value);
+        }
+        catch(NumberFormatException e)
+        {
+            throw new Exception("'" + value + "' is not an integer value!");
+        }
+
+        return parsedInt;
     }
 }

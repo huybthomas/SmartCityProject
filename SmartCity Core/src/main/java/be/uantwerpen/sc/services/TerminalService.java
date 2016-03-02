@@ -67,4 +67,20 @@ public class TerminalService
                 break;
         }
     }
+
+    private int parseInteger(String value) throws Exception
+    {
+        int parsedInt;
+
+        try
+        {
+            parsedInt = Integer.parseInt(value);
+        }
+        catch(NumberFormatException e)
+        {
+            throw new Exception("'" + value + "' is not an integer value!");
+        }
+
+        return parsedInt;
+    }
 }
