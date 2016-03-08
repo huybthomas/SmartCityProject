@@ -26,6 +26,8 @@ public class SimPoint
         this.id = id;
     }
 
+    public void setPos(int posX, int posY){this.posX = posX; this.posY = posY;}
+
     public int getPosX()
     {
         return this.posX;
