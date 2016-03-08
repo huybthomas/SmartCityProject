@@ -21,7 +21,6 @@ public class SimPoint
     {
         return this.id;
     }
-
     public void setId(int id)
     {
         this.id = id;
@@ -31,7 +30,6 @@ public class SimPoint
     {
         return this.posX;
     }
-
     public void setPosX(int posX)
     {
         this.posX = posX;
@@ -41,7 +39,6 @@ public class SimPoint
     {
         return this.posY;
     }
-
     public void setPosY(int posY)
     {
         this.posY = posY;
@@ -51,7 +48,6 @@ public class SimPoint
     {
         return this.rfId;
     }
-
     public void setRfId(String rfId)
     {
         this.rfId = rfId;
