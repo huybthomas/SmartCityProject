@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head th:replace="layout :: head (pageTitle=#{homepage.title})"></head>
+<body>
+
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    var username = /*[[@{/images/car.png}]]*/ 'Sebastian';
+    /*]]>*/
+</script>
+
+<script type="text/javascript">
+    var carPic = new Image();
+    carPic.src = username;
+</script>
+
+<!--<img id="carPic" th:src="@{/images/car.png}" alt="carPic" style="width:225px;height:225px;"/>-->
+
+<canvas id="myCanvas" width="200" height="100" style="border:1px solid #000000;"></canvas>
+<div id="time"></div>
+<script type="text/javascript" th:src="@{/js/test.js}"></script>
+
+</body>
+</html>

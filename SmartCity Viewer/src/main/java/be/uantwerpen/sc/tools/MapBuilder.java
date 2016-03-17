@@ -25,6 +25,8 @@ public class MapBuilder{
     private void buildMap() {
         int locX, locY = 0;
 
+        /*
+
         //Current placeholder variables
         ArrayList<SimPoint> simPoints = new ArrayList<>();
         ArrayList<SimPoint> processedPoints = new ArrayList<>();
@@ -125,6 +127,8 @@ public class MapBuilder{
 
         //Add the coordiates of the most negative (-x, -y) point to all other SimPoints
         //(Makes the map completely positive again)
+
+        */
 
     }
 
