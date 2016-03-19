@@ -1,7 +1,9 @@
 /**
  * Created by Arthur on 16/03/2016.
  */
-document.write("<p>This is a paragraph</p>");
+
+var carPic = new Image();
+carPic.src = username;
 
 function checkTime(i) {
     return (i < 10) ? "0" + i : i;
@@ -19,15 +21,31 @@ function startTime() {
     }, 500);
 }
 
-function draw() {
+function drawCanvas() {
     var c = document.getElementById("myCanvas");
     var ctx = c.getContext("2d");
+
     ctx.fillStyle = "#FF0000";
     ctx.fillRect(0, 0, 150, 75);
 
-    var c = document.getElementById("myCanvas");
+    ctx.drawImage(carPic, 0, 200);
+}
+
+function drawLegend() {
+    var c = document.getElementById("myLegend");
     var ctx = c.getContext("2d");
-    ctx.drawImage(carPic,0,0);
+
+    ctx.font = '20pt Arial';
+    ctx.fillText('Legend:', 10, 30);
+
+    ctx.font = '16pt Arial';
+    ctx.fillText('Car:', 10, 60);
+    ctx.drawImage(carPic, 10, 70);
+}
+
+function draw() {
+    drawCanvas();
+    drawLegend();
 }
 
 startTime();
