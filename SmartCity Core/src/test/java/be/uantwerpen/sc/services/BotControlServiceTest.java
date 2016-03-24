@@ -2,11 +2,10 @@ package be.uantwerpen.sc.services;
 
 import be.uantwerpen.sc.SmartCityCoreApplication;
 import be.uantwerpen.sc.configurations.SystemPropertyActiveProfileResolver;
-import be.uantwerpen.sc.models.RobotEntity;
 import be.uantwerpen.sc.models.LinkEntity;
 import be.uantwerpen.sc.models.PuntEntity;
+import be.uantwerpen.sc.models.RobotEntity;
 import be.uantwerpen.sc.repositories.BotRepository;
-import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -16,7 +15,6 @@ import org.mockito.MockitoAnnotations;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 import java.util.ArrayList;

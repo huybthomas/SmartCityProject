@@ -3,7 +3,6 @@ package be.uantwerpen.sc.controllers;
 import be.uantwerpen.sc.models.RobotEntity;
 import be.uantwerpen.sc.services.BotControlService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

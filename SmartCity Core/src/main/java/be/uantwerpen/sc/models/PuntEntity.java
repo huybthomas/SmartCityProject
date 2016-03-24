@@ -3,17 +3,17 @@ package be.uantwerpen.sc.models;
 import javax.persistence.*;
 
 /**
- * Created by Niels on 23/03/2016.
+ * Created by Niels on 24/03/2016.
  */
 @Entity
-@Table(name = "Punt", schema = "", catalog = "smartcity")
+@Table(name = "punt", schema = "", catalog = "smartcity")
 public class PuntEntity {
     private int pid;
     private String rfid;
     private String type;
 
     @Id
-    @Column(name = "PID")
+    @Column(name = "pid")
     public int getPid() {
         return pid;
     }
@@ -23,7 +23,7 @@ public class PuntEntity {
     }
 
     @Basic
-    @Column(name = "RFID")
+    @Column(name = "rfid")
     public String getRfid() {
         return rfid;
     }
@@ -33,7 +33,7 @@ public class PuntEntity {
     }
 
     @Basic
-    @Column(name = "TYPE")
+    @Column(name = "type")
     public String getType() {
         return type;
     }

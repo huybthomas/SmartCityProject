@@ -3,22 +3,20 @@ package be.uantwerpen.sc.models;
 import javax.persistence.*;
 
 /**
- * Created by Niels on 23/03/2016.
+ * Created by Niels on 24/03/2016.
  */
 @Entity
-@Table(name = "Link", schema = "", catalog = "smartcity")
+@Table(name = "link", schema = "", catalog = "smartcity")
 public class LinkEntity {
     private int lid;
-
-    @OneToOne
-    @PrimaryKeyJoinColumn
-    private PuntEntity startId;
     private Integer lengte;
     private String startDirection;
+    private Integer startId;
     private String stopDirection;
+    private Integer stopId;
 
     @Id
-    @Column(name = "LID")
+    @Column(name = "lid")
     public int getLid() {
         return lid;
     }
@@ -27,16 +25,8 @@ public class LinkEntity {
         this.lid = lid;
     }
 
-    public PuntEntity getStartId() {
-        return startId;
-    }
-
-    public void setStartId(PuntEntity puntEntity) {
-        this.startId = puntEntity;
-    }
-
     @Basic
-    @Column(name = "LENGTE")
+    @Column(name = "lengte")
     public Integer getLengte() {
         return lengte;
     }
@@ -46,7 +36,7 @@ public class LinkEntity {
     }
 
     @Basic
-    @Column(name = "START_DIRECTION")
+    @Column(name = "start_direction")
     public String getStartDirection() {
         return startDirection;
     }
@@ -56,13 +46,33 @@ public class LinkEntity {
     }
 
     @Basic
-    @Column(name = "STOP_DIRECTION")
+    @Column(name = "start_id")
+    public Integer getStartId() {
+        return startId;
+    }
+
+    public void setStartId(Integer startId) {
+        this.startId = startId;
+    }
+
+    @Basic
+    @Column(name = "stop_direction")
     public String getStopDirection() {
         return stopDirection;
     }
 
     public void setStopDirection(String stopDirection) {
         this.stopDirection = stopDirection;
+    }
+
+    @Basic
+    @Column(name = "stop_id")
+    public Integer getStopId() {
+        return stopId;
+    }
+
+    public void setStopId(Integer stopId) {
+        this.stopId = stopId;
     }
 
     @Override
@@ -76,8 +86,10 @@ public class LinkEntity {
         if (lengte != null ? !lengte.equals(that.lengte) : that.lengte != null) return false;
         if (startDirection != null ? !startDirection.equals(that.startDirection) : that.startDirection != null)
             return false;
+        if (startId != null ? !startId.equals(that.startId) : that.startId != null) return false;
         if (stopDirection != null ? !stopDirection.equals(that.stopDirection) : that.stopDirection != null)
             return false;
+        if (stopId != null ? !stopId.equals(that.stopId) : that.stopId != null) return false;
 
         return true;
     }
@@ -87,7 +99,9 @@ public class LinkEntity {
         int result = lid;
         result = 31 * result + (lengte != null ? lengte.hashCode() : 0);
         result = 31 * result + (startDirection != null ? startDirection.hashCode() : 0);
+        result = 31 * result + (startId != null ? startId.hashCode() : 0);
         result = 31 * result + (stopDirection != null ? stopDirection.hashCode() : 0);
+        result = 31 * result + (stopId != null ? stopId.hashCode() : 0);
         return result;
     }
 }

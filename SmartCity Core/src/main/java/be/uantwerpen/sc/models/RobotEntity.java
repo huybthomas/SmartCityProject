@@ -3,19 +3,19 @@ package be.uantwerpen.sc.models;
 import javax.persistence.*;
 
 /**
- * Created by Niels on 23/03/2016.
+ * Created by Niels on 24/03/2016.
  */
 @Entity
-@Table(name = "Robot", schema = "", catalog = "smartcity")
+@Table(name = "robot", schema = "", catalog = "smartcity")
 public class RobotEntity {
     private int rid;
-    private String state;
-    private int linkId;
+    private Integer jobId;
+    private Integer linkId;
     private Integer percentageCompleted;
-    private int jobId;
+    private String state;
 
     @Id
-    @Column(name = "RID")
+    @Column(name = "rid")
     public int getRid() {
         return rid;
     }
@@ -25,27 +25,27 @@ public class RobotEntity {
     }
 
     @Basic
-    @Column(name = "STATE")
-    public String getState() {
-        return state;
+    @Column(name = "job_id")
+    public Integer getJobId() {
+        return jobId;
     }
 
-    public void setState(String state) {
-        this.state = state;
+    public void setJobId(Integer jobId) {
+        this.jobId = jobId;
     }
 
     @Basic
-    @Column(name = "LINK_ID")
-    public int getLinkId() {
+    @Column(name = "link_id")
+    public Integer getLinkId() {
         return linkId;
     }
 
-    public void setLinkId(int linkId) {
+    public void setLinkId(Integer linkId) {
         this.linkId = linkId;
     }
 
     @Basic
-    @Column(name = "PERCENTAGE_COMPLETED")
+    @Column(name = "percentage_completed")
     public Integer getPercentageCompleted() {
         return percentageCompleted;
     }
@@ -55,13 +55,13 @@ public class RobotEntity {
     }
 
     @Basic
-    @Column(name = "JOB_ID")
-    public int getJobId() {
-        return jobId;
+    @Column(name = "state")
+    public String getState() {
+        return state;
     }
 
-    public void setJobId(int jobId) {
-        this.jobId = jobId;
+    public void setState(String state) {
+        this.state = state;
     }
 
     @Override
@@ -72,11 +72,11 @@ public class RobotEntity {
         RobotEntity that = (RobotEntity) o;
 
         if (rid != that.rid) return false;
-        if (linkId != that.linkId) return false;
-        if (jobId != that.jobId) return false;
-        if (state != null ? !state.equals(that.state) : that.state != null) return false;
+        if (jobId != null ? !jobId.equals(that.jobId) : that.jobId != null) return false;
+        if (linkId != null ? !linkId.equals(that.linkId) : that.linkId != null) return false;
         if (percentageCompleted != null ? !percentageCompleted.equals(that.percentageCompleted) : that.percentageCompleted != null)
             return false;
+        if (state != null ? !state.equals(that.state) : that.state != null) return false;
 
         return true;
     }
@@ -84,10 +84,10 @@ public class RobotEntity {
     @Override
     public int hashCode() {
         int result = rid;
-        result = 31 * result + (state != null ? state.hashCode() : 0);
-        result = 31 * result + linkId;
+        result = 31 * result + (jobId != null ? jobId.hashCode() : 0);
+        result = 31 * result + (linkId != null ? linkId.hashCode() : 0);
         result = 31 * result + (percentageCompleted != null ? percentageCompleted.hashCode() : 0);
-        result = 31 * result + jobId;
+        result = 31 * result + (state != null ? state.hashCode() : 0);
         return result;
     }
 }

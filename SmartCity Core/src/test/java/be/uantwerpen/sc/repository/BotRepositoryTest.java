@@ -2,9 +2,9 @@ package be.uantwerpen.sc.repository;
 
 import be.uantwerpen.sc.SmartCityCoreApplication;
 import be.uantwerpen.sc.configurations.SystemPropertyActiveProfileResolver;
-import be.uantwerpen.sc.models.RobotEntity;
 import be.uantwerpen.sc.models.LinkEntity;
 import be.uantwerpen.sc.models.PuntEntity;
+import be.uantwerpen.sc.models.RobotEntity;
 import be.uantwerpen.sc.repositories.BotRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
