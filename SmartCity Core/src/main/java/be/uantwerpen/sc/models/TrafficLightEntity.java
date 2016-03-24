@@ -11,6 +11,7 @@ public class TrafficlightEntity {
     private int tlid;
     private String direction;
     private String state;
+    private PuntEntity puntid;
 
     @Id
     @Column(name = "tlid")
@@ -62,5 +63,15 @@ public class TrafficlightEntity {
         result = 31 * result + (direction != null ? direction.hashCode() : 0);
         result = 31 * result + (state != null ? state.hashCode() : 0);
         return result;
+    }
+
+    @OneToOne
+    @JoinColumn(name = "punt_id", referencedColumnName = "pid")
+    public PuntEntity getPuntid() {
+        return puntid;
+    }
+
+    public void setPuntid(PuntEntity puntid) {
+        this.puntid = puntid;
     }
 }
