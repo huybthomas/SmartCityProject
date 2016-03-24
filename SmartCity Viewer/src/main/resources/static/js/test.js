@@ -3,7 +3,7 @@
  */
 
 var carPic = new Image();
-carPic.src = username;
+carPic.src = carImage;
 
 function checkTime(i) {
     return (i < 10) ? "0" + i : i;
@@ -21,8 +21,18 @@ function startTime() {
     }, 500);
 }
 
-function drawCanvas() {
-    var c = document.getElementById("myCanvas");
+function refresh() {
+    //Draw canvas
+    //Draw Tiles
+    refreshTiles();
+    //Draw Cars
+    t = setTimeout(function () {
+        refresh()
+    }, 500);
+}
+
+function drawCanvas(){
+    var c = document.getElementById("canvas");
     var ctx = c.getContext("2d");
 
     ctx.fillStyle = "#FF0000";
@@ -31,8 +41,12 @@ function drawCanvas() {
     ctx.drawImage(carPic, 0, 200);
 }
 
+function refreshTiles(){
+    //Draw Tiles
+}
+
 function drawLegend() {
-    var c = document.getElementById("myLegend");
+    var c = document.getElementById("legend");
     var ctx = c.getContext("2d");
 
     ctx.font = '20pt Arial';
@@ -49,14 +63,3 @@ function draw() {
 }
 
 startTime();
-
-function httpGetAsync(theUrl, callback)
-{
-    var xmlHttp = new XMLHttpRequest();
-    xmlHttp.onreadystatechange = function() {
-        if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
-            callback(xmlHttp.responseText);
-    }
-    xmlHttp.open("GET", theUrl, true); // true for asynchronous
-    xmlHttp.send(null);
-}
