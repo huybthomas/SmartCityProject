@@ -8,9 +8,5 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class PathPlanningService {
-    //Testbots
-    SimBot bot1;
-    SimBot bot2;
-    SimBot bot3;
 
 }
