@@ -32,7 +32,7 @@ public class BotControlService
         RobotEntity dbBot = botRepository.findOne(bot.getRid());
         dbBot.setState(bot.getState());
         dbBot.setPercentageCompleted(bot.getPercentageCompleted());
-        dbBot.setLinkId(bot.getLinkId());
+        //dbBot.setLinkId(bot.getLinkId());
         botRepository.save(dbBot);
     }
 

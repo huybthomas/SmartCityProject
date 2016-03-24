@@ -19,7 +19,10 @@ public class BotController
     private BotControlService botControlService;
 
     @RequestMapping(method = RequestMethod.GET)
-    public List<RobotEntity> allBots(){return botControlService.getAllBots();}
+    public List<RobotEntity> allBots(){
+        List<RobotEntity> robotEntityList = botControlService.getAllBots();
+        return robotEntityList;
+    }
 
     @RequestMapping(value = "{id}",method = RequestMethod.GET)
     public RobotEntity getBot(@PathVariable("id") int id){return  botControlService.getBot(id);}

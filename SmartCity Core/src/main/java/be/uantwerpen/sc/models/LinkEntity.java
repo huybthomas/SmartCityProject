@@ -11,9 +11,9 @@ public class LinkEntity {
     private int lid;
     private Integer lengte;
     private String startDirection;
-    private Integer startId;
     private String stopDirection;
-    private Integer stopId;
+    private PuntEntity startId;
+    private PuntEntity stopId;
 
     @Id
     @Column(name = "lid")
@@ -46,16 +46,6 @@ public class LinkEntity {
     }
 
     @Basic
-    @Column(name = "start_id")
-    public Integer getStartId() {
-        return startId;
-    }
-
-    public void setStartId(Integer startId) {
-        this.startId = startId;
-    }
-
-    @Basic
     @Column(name = "stop_direction")
     public String getStopDirection() {
         return stopDirection;
@@ -63,16 +53,6 @@ public class LinkEntity {
 
     public void setStopDirection(String stopDirection) {
         this.stopDirection = stopDirection;
-    }
-
-    @Basic
-    @Column(name = "stop_id")
-    public Integer getStopId() {
-        return stopId;
-    }
-
-    public void setStopId(Integer stopId) {
-        this.stopId = stopId;
     }
 
     @Override
@@ -86,10 +66,8 @@ public class LinkEntity {
         if (lengte != null ? !lengte.equals(that.lengte) : that.lengte != null) return false;
         if (startDirection != null ? !startDirection.equals(that.startDirection) : that.startDirection != null)
             return false;
-        if (startId != null ? !startId.equals(that.startId) : that.startId != null) return false;
         if (stopDirection != null ? !stopDirection.equals(that.stopDirection) : that.stopDirection != null)
             return false;
-        if (stopId != null ? !stopId.equals(that.stopId) : that.stopId != null) return false;
 
         return true;
     }
@@ -99,9 +77,27 @@ public class LinkEntity {
         int result = lid;
         result = 31 * result + (lengte != null ? lengte.hashCode() : 0);
         result = 31 * result + (startDirection != null ? startDirection.hashCode() : 0);
-        result = 31 * result + (startId != null ? startId.hashCode() : 0);
         result = 31 * result + (stopDirection != null ? stopDirection.hashCode() : 0);
-        result = 31 * result + (stopId != null ? stopId.hashCode() : 0);
         return result;
+    }
+
+    @OneToOne
+    @JoinColumn(name = "start_id", referencedColumnName = "pid")
+    public PuntEntity getStartId() {
+        return startId;
+    }
+
+    public void setStartId(PuntEntity startId) {
+        this.startId = startId;
+    }
+
+    @OneToOne
+    @JoinColumn(name = "stop_id", referencedColumnName = "pid")
+    public PuntEntity getStopId() {
+        return stopId;
+    }
+
+    public void setStopId(PuntEntity stopId) {
+        this.stopId = stopId;
     }
 }

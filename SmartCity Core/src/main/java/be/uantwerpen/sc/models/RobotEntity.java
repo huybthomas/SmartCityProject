@@ -10,9 +10,9 @@ import javax.persistence.*;
 public class RobotEntity {
     private int rid;
     private Integer jobId;
-    private Integer linkId;
     private Integer percentageCompleted;
     private String state;
+    private LinkEntity linkId;
 
     @Id
     @Column(name = "rid")
@@ -32,16 +32,6 @@ public class RobotEntity {
 
     public void setJobId(Integer jobId) {
         this.jobId = jobId;
-    }
-
-    @Basic
-    @Column(name = "link_id")
-    public Integer getLinkId() {
-        return linkId;
-    }
-
-    public void setLinkId(Integer linkId) {
-        this.linkId = linkId;
     }
 
     @Basic
@@ -73,7 +63,6 @@ public class RobotEntity {
 
         if (rid != that.rid) return false;
         if (jobId != null ? !jobId.equals(that.jobId) : that.jobId != null) return false;
-        if (linkId != null ? !linkId.equals(that.linkId) : that.linkId != null) return false;
         if (percentageCompleted != null ? !percentageCompleted.equals(that.percentageCompleted) : that.percentageCompleted != null)
             return false;
         if (state != null ? !state.equals(that.state) : that.state != null) return false;
@@ -85,9 +74,18 @@ public class RobotEntity {
     public int hashCode() {
         int result = rid;
         result = 31 * result + (jobId != null ? jobId.hashCode() : 0);
-        result = 31 * result + (linkId != null ? linkId.hashCode() : 0);
         result = 31 * result + (percentageCompleted != null ? percentageCompleted.hashCode() : 0);
         result = 31 * result + (state != null ? state.hashCode() : 0);
         return result;
+    }
+
+    @OneToOne
+    @JoinColumn(name = "link_id", referencedColumnName = "lid")
+    public LinkEntity getLinkId() {
+        return linkId;
+    }
+
+    public void setLinkId(LinkEntity linkId) {
+        this.linkId = linkId;
     }
 }

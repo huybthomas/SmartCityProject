@@ -10,7 +10,6 @@ import javax.persistence.*;
 public class TrafficlightEntity {
     private int tlid;
     private String direction;
-    private Integer puntId;
     private String state;
 
     @Id
@@ -34,16 +33,6 @@ public class TrafficlightEntity {
     }
 
     @Basic
-    @Column(name = "punt_id")
-    public Integer getPuntId() {
-        return puntId;
-    }
-
-    public void setPuntId(Integer puntId) {
-        this.puntId = puntId;
-    }
-
-    @Basic
     @Column(name = "state")
     public String getState() {
         return state;
@@ -62,7 +51,6 @@ public class TrafficlightEntity {
 
         if (tlid != that.tlid) return false;
         if (direction != null ? !direction.equals(that.direction) : that.direction != null) return false;
-        if (puntId != null ? !puntId.equals(that.puntId) : that.puntId != null) return false;
         if (state != null ? !state.equals(that.state) : that.state != null) return false;
 
         return true;
@@ -72,7 +60,6 @@ public class TrafficlightEntity {
     public int hashCode() {
         int result = tlid;
         result = 31 * result + (direction != null ? direction.hashCode() : 0);
-        result = 31 * result + (puntId != null ? puntId.hashCode() : 0);
         result = 31 * result + (state != null ? state.hashCode() : 0);
         return result;
     }
