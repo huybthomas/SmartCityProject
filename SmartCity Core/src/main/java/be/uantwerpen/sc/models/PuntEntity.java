@@ -1,0 +1,66 @@
+package be.uantwerpen.sc.models;
+
+import javax.persistence.*;
+
+/**
+ * Created by Niels on 23/03/2016.
+ */
+@Entity
+@Table(name = "Punt", schema = "", catalog = "smartcity")
+public class PuntEntity {
+    private int pid;
+    private String rfid;
+    private String type;
+
+    @Id
+    @Column(name = "PID")
+    public int getPid() {
+        return pid;
+    }
+
+    public void setPid(int pid) {
+        this.pid = pid;
+    }
+
+    @Basic
+    @Column(name = "RFID")
+    public String getRfid() {
+        return rfid;
+    }
+
+    public void setRfid(String rfid) {
+        this.rfid = rfid;
+    }
+
+    @Basic
+    @Column(name = "TYPE")
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        PuntEntity that = (PuntEntity) o;
+
+        if (pid != that.pid) return false;
+        if (rfid != null ? !rfid.equals(that.rfid) : that.rfid != null) return false;
+        if (type != null ? !type.equals(that.type) : that.type != null) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = pid;
+        result = 31 * result + (rfid != null ? rfid.hashCode() : 0);
+        result = 31 * result + (type != null ? type.hashCode() : 0);
+        return result;
+    }
+}
