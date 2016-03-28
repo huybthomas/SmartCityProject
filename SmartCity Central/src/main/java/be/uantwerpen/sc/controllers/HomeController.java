@@ -13,6 +13,12 @@ public class HomeController
     @RequestMapping(value = {"/"})
     public String showHomepage(ModelMap model)
     {
-        return "homepage";
+        return "public/homepage";
+    }
+
+    @RequestMapping(value = {"/about"})
+    public String showAboutpage(ModelMap model)
+    {
+        return "public/about";
     }
 }
