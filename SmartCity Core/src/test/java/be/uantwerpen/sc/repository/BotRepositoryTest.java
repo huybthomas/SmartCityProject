@@ -3,7 +3,7 @@ package be.uantwerpen.sc.repository;
 import be.uantwerpen.sc.SmartCityCoreApplication;
 import be.uantwerpen.sc.configurations.SystemPropertyActiveProfileResolver;
 import be.uantwerpen.sc.models.LinkEntity;
-import be.uantwerpen.sc.models.PuntEntity;
+import be.uantwerpen.sc.models.PointEntity;
 import be.uantwerpen.sc.models.RobotEntity;
 import be.uantwerpen.sc.repositories.BotRepository;
 import org.junit.Test;
@@ -29,8 +29,8 @@ public class BotRepositoryTest {
 
     @Test
     public void testSaveBot(){
-        PuntEntity p1 = new PuntEntity();
-        PuntEntity p2 = new PuntEntity();
+        PointEntity p1 = new PointEntity();
+        PointEntity p2 = new PointEntity();
         LinkEntity l1 = new LinkEntity();
         RobotEntity bot = new RobotEntity();
         bot.setState("Test");

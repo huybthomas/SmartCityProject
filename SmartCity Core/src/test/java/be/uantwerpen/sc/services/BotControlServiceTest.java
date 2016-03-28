@@ -3,7 +3,7 @@ package be.uantwerpen.sc.services;
 import be.uantwerpen.sc.SmartCityCoreApplication;
 import be.uantwerpen.sc.configurations.SystemPropertyActiveProfileResolver;
 import be.uantwerpen.sc.models.LinkEntity;
-import be.uantwerpen.sc.models.PuntEntity;
+import be.uantwerpen.sc.models.PointEntity;
 import be.uantwerpen.sc.models.RobotEntity;
 import be.uantwerpen.sc.repositories.BotRepository;
 import org.junit.Before;
@@ -45,8 +45,8 @@ public class BotControlServiceTest {
     @Before
     public void init() {
 
-        PuntEntity p1 = new PuntEntity();
-        PuntEntity p2 = new PuntEntity();
+        PointEntity p1 = new PointEntity();
+        PointEntity p2 = new PointEntity();
         LinkEntity l1 = new LinkEntity();
         bot1 = new RobotEntity();
         botList = new ArrayList<>();

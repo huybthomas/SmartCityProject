@@ -6,8 +6,8 @@ import javax.persistence.*;
  * Created by Niels on 24/03/2016.
  */
 @Entity
-@Table(name = "punt", schema = "", catalog = "smartcity")
-public class PuntEntity {
+@Table(name = "point", schema = "", catalog = "smartcity")
+public class PointEntity {
     private int pid;
     private String rfid;
     private String type;
@@ -47,7 +47,7 @@ public class PuntEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        PuntEntity that = (PuntEntity) o;
+        PointEntity that = (PointEntity) o;
 
         if (pid != that.pid) return false;
         if (rfid != null ? !rfid.equals(that.rfid) : that.rfid != null) return false;

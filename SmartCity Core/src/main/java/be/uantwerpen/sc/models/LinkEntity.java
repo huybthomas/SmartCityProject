@@ -12,8 +12,8 @@ public class LinkEntity {
     private Integer lengte;
     private String startDirection;
     private String stopDirection;
-    private PuntEntity startId;
-    private PuntEntity stopId;
+    private PointEntity startId;
+    private PointEntity stopId;
 
     @Id
     @Column(name = "lid")
@@ -83,21 +83,21 @@ public class LinkEntity {
 
     @OneToOne
     @JoinColumn(name = "start_id", referencedColumnName = "pid")
-    public PuntEntity getStartId() {
+    public PointEntity getStartId() {
         return startId;
     }
 
-    public void setStartId(PuntEntity startId) {
+    public void setStartId(PointEntity startId) {
         this.startId = startId;
     }
 
     @OneToOne
     @JoinColumn(name = "stop_id", referencedColumnName = "pid")
-    public PuntEntity getStopId() {
+    public PointEntity getStopId() {
         return stopId;
     }
 
-    public void setStopId(PuntEntity stopId) {
+    public void setStopId(PointEntity stopId) {
         this.stopId = stopId;
     }
 }

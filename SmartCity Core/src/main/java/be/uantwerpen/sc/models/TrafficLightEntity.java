@@ -7,11 +7,11 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "trafficlight", schema = "", catalog = "smartcity")
-public class TrafficlightEntity {
+public class TrafficLightEntity {
     private int tlid;
     private String direction;
     private String state;
-    private PuntEntity puntid;
+    private PointEntity puntid;
 
     @Id
     @Column(name = "tlid")
@@ -48,7 +48,7 @@ public class TrafficlightEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        TrafficlightEntity that = (TrafficlightEntity) o;
+        TrafficLightEntity that = (TrafficLightEntity) o;
 
         if (tlid != that.tlid) return false;
         if (direction != null ? !direction.equals(that.direction) : that.direction != null) return false;
@@ -67,11 +67,11 @@ public class TrafficlightEntity {
 
     @OneToOne
     @JoinColumn(name = "punt_id", referencedColumnName = "pid")
-    public PuntEntity getPuntid() {
+    public PointEntity getPuntid() {
         return puntid;
     }
 
-    public void setPuntid(PuntEntity puntid) {
+    public void setPuntid(PointEntity puntid) {
         this.puntid = puntid;
     }
 }

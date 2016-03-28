@@ -4,7 +4,7 @@ import be.uantwerpen.sc.SmartCityCoreApplication;
 import be.uantwerpen.sc.configurations.SystemPropertyActiveProfileResolver;
 import be.uantwerpen.sc.controllers.BotController;
 import be.uantwerpen.sc.models.LinkEntity;
-import be.uantwerpen.sc.models.PuntEntity;
+import be.uantwerpen.sc.models.PointEntity;
 import be.uantwerpen.sc.models.RobotEntity;
 import be.uantwerpen.sc.services.BotControlService;
 import org.junit.Before;
@@ -69,8 +69,8 @@ public class BotControllerTest {
 
     @Test
         public void saveBotTest() throws Exception{
-            PuntEntity p1 = new PuntEntity();
-            PuntEntity p2 = new PuntEntity();
+            PointEntity p1 = new PointEntity();
+            PointEntity p2 = new PointEntity();
             LinkEntity l1 = new LinkEntity();
             bot = new RobotEntity();
 
