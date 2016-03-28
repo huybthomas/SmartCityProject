@@ -2,7 +2,6 @@ package be.uantwerpen.sc.controllers;
 
 import be.uantwerpen.sc.SmartCityCoreApplication;
 import be.uantwerpen.sc.configurations.SystemPropertyActiveProfileResolver;
-import be.uantwerpen.sc.controllers.BotController;
 import be.uantwerpen.sc.models.LinkEntity;
 import be.uantwerpen.sc.models.PointEntity;
 import be.uantwerpen.sc.models.BotEntity;
@@ -20,7 +19,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import sun.net.www.http.HttpClient;
 
 import java.nio.charset.Charset;
 
@@ -61,14 +59,14 @@ public class BotControllerTests {
     }
 
     @Test
-    public void botCallTest() throws Exception
+    public void testBotGetInterface() throws Exception
     {
         mockMvc.perform(get("/bot/test"))
                 .andExpect(status().isOk());
     }
 
     @Test
-    public void saveBotTest() throws Exception
+    public void testSaveBot() throws Exception
     {
         PointEntity p1 = new PointEntity();
         PointEntity p2 = new PointEntity();

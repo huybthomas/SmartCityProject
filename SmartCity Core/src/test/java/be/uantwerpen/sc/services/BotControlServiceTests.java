@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.when;
 
 /**
@@ -33,14 +34,14 @@ import static org.mockito.Mockito.when;
 @WebAppConfiguration
 public class BotControlServiceTests {
 
-    @InjectMocks
-    BotControlService botControlService;
-
     @Mock
     private BotRepository botRepository;
 
-    List<BotEntity> botList;
-    BotEntity bot1;
+    @InjectMocks
+    private BotControlService botControlService;
+
+    private List<BotEntity> botList;
+    private BotEntity bot1;
 
     @Before
     public void init() {
@@ -51,22 +52,29 @@ public class BotControlServiceTests {
         bot1 = new BotEntity();
         botList = new ArrayList<>();
         botList.add(bot1);
+
         MockitoAnnotations.initMocks(this);
     }
 
     @Test
-    public void nonExistingBotTest() throws Exception
+    public void testNonExistingBot() throws Exception
     {
         when(botRepository.findAll()).thenReturn(botList);
+
         botControlService.getBot(10L);
+
+        assertTrue("This test has no value! getBot(10) will return null which will not throw Exceptions. 'throws Exception' for a test is not a good test condition: use assert instead.", false);
     }
 
     @Test
-    public void loadBot()
+    public void testLoadBot()
     {
         when(botRepository.findAll()).thenReturn(botList);
-        BotEntity testBot = botList.get(0);
-        assertEquals(bot1.getRid(),testBot.getRid());
 
+        BotEntity testBot = botList.get(0);
+
+        assertEquals(bot1,testBot);
+
+        assertTrue("This test has no value! No reference to BotControlService.", false);
     }
 }
