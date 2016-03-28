@@ -9,7 +9,7 @@ import javax.persistence.*;
 @Table(name = "link", schema = "", catalog = "smartcity")
 public class LinkEntity {
     private int lid;
-    private Integer lengte;
+    private Integer length;
     private String startDirection;
     private String stopDirection;
     private PointEntity startId;
@@ -26,13 +26,13 @@ public class LinkEntity {
     }
 
     @Basic
-    @Column(name = "lengte")
-    public Integer getLengte() {
-        return lengte;
+    @Column(name = "length")
+    public Integer getLength() {
+        return length;
     }
 
-    public void setLengte(Integer lengte) {
-        this.lengte = lengte;
+    public void setLength(Integer length) {
+        this.length = length;
     }
 
     @Basic
@@ -63,7 +63,7 @@ public class LinkEntity {
         LinkEntity that = (LinkEntity) o;
 
         if (lid != that.lid) return false;
-        if (lengte != null ? !lengte.equals(that.lengte) : that.lengte != null) return false;
+        if (length != null ? !length.equals(that.length) : that.length != null) return false;
         if (startDirection != null ? !startDirection.equals(that.startDirection) : that.startDirection != null)
             return false;
         if (stopDirection != null ? !stopDirection.equals(that.stopDirection) : that.stopDirection != null)
@@ -75,7 +75,7 @@ public class LinkEntity {
     @Override
     public int hashCode() {
         int result = lid;
-        result = 31 * result + (lengte != null ? lengte.hashCode() : 0);
+        result = 31 * result + (length != null ? length.hashCode() : 0);
         result = 31 * result + (startDirection != null ? startDirection.hashCode() : 0);
         result = 31 * result + (stopDirection != null ? stopDirection.hashCode() : 0);
         return result;
