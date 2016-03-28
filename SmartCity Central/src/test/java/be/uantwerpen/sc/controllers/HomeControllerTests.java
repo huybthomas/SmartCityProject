@@ -32,8 +32,14 @@ public class HomeControllerTests
     }
 
     @Test
-    public void viewHomepageTest() throws Exception
+    public void testViewHomepage() throws Exception
     {
-        mockMvc.perform(get("/")).andExpect(view().name("homepage"));
+        mockMvc.perform(get("/")).andExpect(view().name("public/homepage"));
+    }
+
+    @Test
+    public void testViewAboutpage() throws Exception
+    {
+        mockMvc.perform(get("/about")).andExpect(view().name("public/about"));
     }
 }
