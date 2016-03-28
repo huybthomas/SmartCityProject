@@ -30,18 +30,13 @@ public class BotRepositoryTests
     @Autowired
     private BotRepository botRepository;
 
-    private int origBotRepositorySize;
-
-    @Before
-    public void setup()
-    {
-        origBotRepositorySize = (int)botRepository.count();
-    }
-
     @Test
     @Transactional
     public void testSaveBot()
     {
+        //Get repository size before test
+        int origBotRepositorySize = (int)botRepository.count();
+
         //Setup bot
         BotEntity bot = new BotEntity();
         bot.setState("Test");
@@ -85,6 +80,58 @@ public class BotRepositoryTests
 
         //There are originally 'origBotRepositorySize' bots declared in the database (+1 has been added in this test)
         assertEquals(count, origBotRepositorySize + 1);
+    }
+
+    @Test
+    @Transactional
+    public void testDeleteBot()
+    {
+        //Get repository size before test
+        int origBotRepositorySize = (int)botRepository.count();
+
+        //Setup bot
+        BotEntity bot = new BotEntity();
+
+        //Save bot, verify if it has ID value after save
+        assertNull(bot.getRid());           //Null before save
+        botRepository.save(bot);
+        assertNotNull(bot.getRid());        //Not null after save
+
+        //Verify count of bots in database
+        long botCount = botRepository.count();
+        assertEquals(botCount, origBotRepositorySize + 1);      //One bot has been added to the database
+
+        //Fetch from database
+        BotEntity fetchedBot = botRepository.findOne(bot.getRid());
+
+        //Should not be null
+        assertNotNull(fetchedBot);
+
+        //Delete bot from database
+        botRepository.delete(fetchedBot.getRid());
+
+        //Fetch from database (should not exist anymore
+        fetchedBot = botRepository.findOne(fetchedBot.getRid());
+
+        //Should be null
+        assertNull(fetchedBot);
+
+        //Verify count of bots in database
+        botCount = botRepository.count();
+        assertEquals(botCount, origBotRepositorySize);          //One bot has been deleted to the database
+
+        //Get all bots, list should have the same amount than the initial value
+        Iterable<BotEntity> bots = botRepository.findAll();
+
+        int count = 0;
+
+        for(BotEntity p : bots)
+        {
+            count++;
+        }
+
+        //There are originally 'origBotRepositorySize' bots declared in the database
+        assertEquals(count, origBotRepositorySize);
     }
 }
 
