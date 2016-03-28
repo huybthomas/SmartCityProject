@@ -23,7 +23,7 @@ import static org.junit.Assert.*;
 @SpringApplicationConfiguration(classes = SmartCityCoreApplication.class)
 @WebAppConfiguration
 @ActiveProfiles(profiles = {"dev"}, resolver = SystemPropertyActiveProfileResolver.class)
-public class BotRepositoryTest {
+public class BotRepositoryTests {
     @Autowired
     BotRepository botRepository;
 

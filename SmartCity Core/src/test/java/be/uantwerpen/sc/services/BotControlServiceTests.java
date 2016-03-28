@@ -31,7 +31,7 @@ import static org.mockito.Mockito.when;
 @SpringApplicationConfiguration(classes = SmartCityCoreApplication.class)
 @WebAppConfiguration
 @ActiveProfiles(profiles = {"dev"}, resolver = SystemPropertyActiveProfileResolver.class)
-public class BotControlServiceTest {
+public class BotControlServiceTests {
 
     @InjectMocks
     BotControlService botControlService;

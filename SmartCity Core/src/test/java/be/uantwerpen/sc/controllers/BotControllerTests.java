@@ -35,7 +35,7 @@ import com.google.gson.Gson;
 @WebAppConfiguration
 @SpringApplicationConfiguration(classes = SmartCityCoreApplication.class)
 @ActiveProfiles(profiles = {"dev"}, resolver = SystemPropertyActiveProfileResolver.class)
-public class BotControllerTest {
+public class BotControllerTests {
 
     @Mock
     private BotControlService botControlService;
