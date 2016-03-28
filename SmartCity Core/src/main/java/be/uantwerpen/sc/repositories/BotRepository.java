@@ -1,16 +1,16 @@
 package be.uantwerpen.sc.repositories;
 
-import be.uantwerpen.sc.models.LinkEntity;
+import be.uantwerpen.sc.models.RobotEntity;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 /**
- * Created by Thomas on 27/02/2016.
+ * Created by Niels on 16/03/2016.
  */
 @Repository
-public interface LinkRepository extends CrudRepository<LinkEntity, Integer>
-{
-    List<LinkEntity> findAll();
+public interface BotRepository extends CrudRepository<RobotEntity, Integer> {
+
+    List<RobotEntity> findAll();
 }
