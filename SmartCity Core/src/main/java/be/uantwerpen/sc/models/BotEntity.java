@@ -6,8 +6,8 @@ import javax.persistence.*;
  * Created by Niels on 24/03/2016.
  */
 @Entity
-@Table(name = "robot", schema = "", catalog = "smartcity")
-public class RobotEntity {
+@Table(name = "bot", schema = "", catalog = "smartcity")
+public class BotEntity {
     private int rid;
     private Integer jobId;
     private Integer percentageCompleted;
@@ -59,7 +59,7 @@ public class RobotEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        RobotEntity that = (RobotEntity) o;
+        BotEntity that = (BotEntity) o;
 
         if (rid != that.rid) return false;
         if (jobId != null ? !jobId.equals(that.jobId) : that.jobId != null) return false;

@@ -4,7 +4,7 @@ import be.uantwerpen.sc.SmartCityCoreApplication;
 import be.uantwerpen.sc.configurations.SystemPropertyActiveProfileResolver;
 import be.uantwerpen.sc.models.LinkEntity;
 import be.uantwerpen.sc.models.PointEntity;
-import be.uantwerpen.sc.models.RobotEntity;
+import be.uantwerpen.sc.models.BotEntity;
 import be.uantwerpen.sc.repositories.BotRepository;
 import org.junit.Before;
 import org.junit.Test;
@@ -39,8 +39,8 @@ public class BotControlServiceTest {
     @Mock
     private BotRepository botRepository;
 
-    List<RobotEntity> botList;
-    RobotEntity bot1;
+    List<BotEntity> botList;
+    BotEntity bot1;
 
     @Before
     public void init() {
@@ -48,7 +48,7 @@ public class BotControlServiceTest {
         PointEntity p1 = new PointEntity();
         PointEntity p2 = new PointEntity();
         LinkEntity l1 = new LinkEntity();
-        bot1 = new RobotEntity();
+        bot1 = new BotEntity();
         botList = new ArrayList<>();
         botList.add(bot1);
         MockitoAnnotations.initMocks(this);
@@ -62,7 +62,7 @@ public class BotControlServiceTest {
     @Test
     public void loadBot(){
         when(botRepository.findAll()).thenReturn(botList);
-        RobotEntity testBot = botList.get(0);
+        BotEntity testBot = botList.get(0);
         assertEquals(bot1.getRid(),testBot.getRid());
 
     }

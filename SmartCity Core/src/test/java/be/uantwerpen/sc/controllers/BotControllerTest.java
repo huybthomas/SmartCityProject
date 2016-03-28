@@ -1,11 +1,11 @@
-package be.uantwerpen.sc.controller;
+package be.uantwerpen.sc.controllers;
 
 import be.uantwerpen.sc.SmartCityCoreApplication;
 import be.uantwerpen.sc.configurations.SystemPropertyActiveProfileResolver;
 import be.uantwerpen.sc.controllers.BotController;
 import be.uantwerpen.sc.models.LinkEntity;
 import be.uantwerpen.sc.models.PointEntity;
-import be.uantwerpen.sc.models.RobotEntity;
+import be.uantwerpen.sc.models.BotEntity;
 import be.uantwerpen.sc.services.BotControlService;
 import org.junit.Before;
 import org.junit.Test;
@@ -47,7 +47,7 @@ public class BotControllerTest {
             MediaType.APPLICATION_JSON.getType(),
             MediaType.APPLICATION_JSON.getSubtype(), Charset.forName("utf8"));
 
-    private RobotEntity bot;
+    private BotEntity bot;
     private Gson gson = new Gson();
     String json;
     String serviceURL = "http://localhost:8080/bot/";
@@ -72,7 +72,7 @@ public class BotControllerTest {
             PointEntity p1 = new PointEntity();
             PointEntity p2 = new PointEntity();
             LinkEntity l1 = new LinkEntity();
-            bot = new RobotEntity();
+            bot = new BotEntity();
 
             json = gson.toJson(bot);
             System.out.println(json);

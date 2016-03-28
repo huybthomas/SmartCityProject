@@ -1,10 +1,10 @@
-package be.uantwerpen.sc.repository;
+package be.uantwerpen.sc.repositories;
 
 import be.uantwerpen.sc.SmartCityCoreApplication;
 import be.uantwerpen.sc.configurations.SystemPropertyActiveProfileResolver;
 import be.uantwerpen.sc.models.LinkEntity;
 import be.uantwerpen.sc.models.PointEntity;
-import be.uantwerpen.sc.models.RobotEntity;
+import be.uantwerpen.sc.models.BotEntity;
 import be.uantwerpen.sc.repositories.BotRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -32,7 +32,7 @@ public class BotRepositoryTest {
         PointEntity p1 = new PointEntity();
         PointEntity p2 = new PointEntity();
         LinkEntity l1 = new LinkEntity();
-        RobotEntity bot = new RobotEntity();
+        BotEntity bot = new BotEntity();
         bot.setState("Test");
 
         //save product, verify has ID value after save
@@ -41,7 +41,7 @@ public class BotRepositoryTest {
         assertNotNull(bot.getRid()); //not null after save
 
         //fetch from DB
-        RobotEntity fetchBot = botRepository.findOne(bot.getRid());
+        BotEntity fetchBot = botRepository.findOne(bot.getRid());
 
         //should not be null
         assertNotNull(fetchBot);
@@ -55,7 +55,7 @@ public class BotRepositoryTest {
         botRepository.save(fetchBot);
 
         //get from DB, should be updated
-        RobotEntity fetchedUpdatedBot = botRepository.findOne(fetchBot.getRid());
+        BotEntity fetchedUpdatedBot = botRepository.findOne(fetchBot.getRid());
         assertEquals(fetchBot.getState(), fetchedUpdatedBot.getState());
 
         //verify count of products in DB
@@ -63,11 +63,11 @@ public class BotRepositoryTest {
         assertEquals(botCount, 1);
 
         //get all products, list should only have one more then initial value
-        Iterable<RobotEntity> bots = botRepository.findAll();
+        Iterable<BotEntity> bots = botRepository.findAll();
 
         int count = 0;
 
-        for(RobotEntity p : bots){
+        for(BotEntity p : bots){
             count++;
         }
 
