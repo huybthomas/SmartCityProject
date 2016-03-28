@@ -32,9 +32,9 @@ import com.google.gson.Gson;
  * Created by Niels on 17/03/2016.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@WebAppConfiguration
 @SpringApplicationConfiguration(classes = SmartCityCoreApplication.class)
 @ActiveProfiles(profiles = {"dev"}, resolver = SystemPropertyActiveProfileResolver.class)
+@WebAppConfiguration
 public class BotControllerTests {
 
     @Mock
