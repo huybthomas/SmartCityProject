@@ -16,3 +16,9 @@ body {
 .brand-image {
     height: 50px;
 }
+.mobile-element {
+    display: block;
+}
+.non-mobile-element {
+    display: none;
+}

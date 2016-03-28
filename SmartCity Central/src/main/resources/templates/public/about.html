@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head th:replace="layout :: head (pageTitle=#{about.title})"></head>
+<body>
+<!-- Import navigation bar -->
+<div th:replace="layout :: navbar"></div>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xs-12" style="display: table; text-align: center">
+            <div class="about-header">
+                <img alt="Logo" th:src="@{/images/SmartCityLogo.png}" style="vertical-align: middle; height: 100px"/>
+                <span style="padding-left: 8px">
+                    <span class="h1" th:text="#{application.title}"></span>
+                    <!--<span class="h5" th:text="'v.' +  #{application.version.main} + '.' + #{application.version.minor}"></span>-->
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <hr/>
+
+    <h2>About</h2>
+
+    <p>Developed by: Thomas Huybrechts, Arthur Janssens, Dennis Joosens, Niels Vervliet</p>
+    <p></p>
+</div>
+
+<!-- Import footer -->
+<div th:replace="layout :: footer"></div>
+</body>
+</html>
