@@ -55,17 +55,18 @@ public class BotControlServiceTests {
     }
 
     @Test
-    public void nonExistingBotTest() throws Exception{
+    public void nonExistingBotTest() throws Exception
+    {
         when(botRepository.findAll()).thenReturn(botList);
-        botControlService.getBot(10);
+        botControlService.getBot(10L);
     }
+
     @Test
-    public void loadBot(){
+    public void loadBot()
+    {
         when(botRepository.findAll()).thenReturn(botList);
         BotEntity testBot = botList.get(0);
         assertEquals(bot1.getRid(),testBot.getRid());
 
     }
-
-
 }

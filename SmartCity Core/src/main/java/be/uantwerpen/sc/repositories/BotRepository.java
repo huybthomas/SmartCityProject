@@ -10,7 +10,7 @@ import java.util.List;
  * Created by Niels on 16/03/2016.
  */
 @Repository
-public interface BotRepository extends CrudRepository<BotEntity, Integer> {
-
+public interface BotRepository extends CrudRepository<BotEntity, Long>
+{
     List<BotEntity> findAll();
 }

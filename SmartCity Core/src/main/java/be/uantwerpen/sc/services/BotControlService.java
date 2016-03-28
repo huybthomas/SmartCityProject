@@ -20,7 +20,7 @@ public class BotControlService
         botRepository.save(bot);
     }
 
-    public BotEntity getBot(int id){
+    public BotEntity getBot(Long id){
         return botRepository.findOne(id);
     }
 

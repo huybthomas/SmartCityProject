@@ -14,7 +14,6 @@ import java.util.List;
 @RequestMapping("/bot/")
 public class BotController
 {
-
     @Autowired
     private BotControlService botControlService;
 
@@ -25,15 +24,15 @@ public class BotController
     }
 
     @RequestMapping(value = "{id}",method = RequestMethod.GET)
-    public BotEntity getBot(@PathVariable("id") int id){return  botControlService.getBot(id);}
+    public BotEntity getBot(@PathVariable("id") Long id){return  botControlService.getBot(id);}
 
     @RequestMapping(value = "{id}",method = RequestMethod.POST)
-    public void saveBot(@PathVariable("id") int id,@RequestBody BotEntity bot){
+    public void saveBot(@PathVariable("id") Long id,@RequestBody BotEntity bot){
         botControlService.saveBot(bot);
     }
 
     @RequestMapping(value = "{id}",method = RequestMethod.PUT)
-    public void updateBot(@PathVariable("id") int id,@RequestBody BotEntity bot){
+    public void updateBot(@PathVariable("id") Long id,@RequestBody BotEntity bot){
         botControlService.updateBot(bot);
     }
 
@@ -48,7 +47,4 @@ public class BotController
         bot.setState("test");
         botControlService.saveBot(bot);
     }
-
-
-
 }

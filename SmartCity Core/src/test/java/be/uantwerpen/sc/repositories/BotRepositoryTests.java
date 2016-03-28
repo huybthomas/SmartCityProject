@@ -5,7 +5,7 @@ import be.uantwerpen.sc.configurations.SystemPropertyActiveProfileResolver;
 import be.uantwerpen.sc.models.LinkEntity;
 import be.uantwerpen.sc.models.PointEntity;
 import be.uantwerpen.sc.models.BotEntity;
-import be.uantwerpen.sc.repositories.BotRepository;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +13,8 @@ import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
+
+import javax.transaction.Transactional;
 
 import static org.junit.Assert.*;
 
@@ -23,55 +25,66 @@ import static org.junit.Assert.*;
 @SpringApplicationConfiguration(classes = SmartCityCoreApplication.class)
 @ActiveProfiles(profiles = {"dev"}, resolver = SystemPropertyActiveProfileResolver.class)
 @WebAppConfiguration
-public class BotRepositoryTests {
+public class BotRepositoryTests
+{
     @Autowired
-    BotRepository botRepository;
+    private BotRepository botRepository;
+
+    private int origBotRepositorySize;
+
+    @Before
+    public void setup()
+    {
+        origBotRepositorySize = (int)botRepository.count();
+    }
 
     @Test
-    public void testSaveBot(){
-        PointEntity p1 = new PointEntity();
-        PointEntity p2 = new PointEntity();
-        LinkEntity l1 = new LinkEntity();
+    @Transactional
+    public void testSaveBot()
+    {
+        //Setup bot
         BotEntity bot = new BotEntity();
         bot.setState("Test");
 
-        //save product, verify has ID value after save
-        //assertNull(bot.getRid()); //null before save
+        //Save bot, verify has ID value after save
+        assertNull(bot.getRid());       //Null before save
         botRepository.save(bot);
-        assertNotNull(bot.getRid()); //not null after save
+        assertNotNull(bot.getRid());    //Not null after save
 
-        //fetch from DB
-        BotEntity fetchBot = botRepository.findOne(bot.getRid());
+        //Fetch from database
+        BotEntity fetchedBot = botRepository.findOne(bot.getRid());
 
-        //should not be null
-        assertNotNull(fetchBot);
+        //Should not be null
+        assertNotNull(fetchedBot);
 
-        //should equal
-        assertEquals(bot.getRid(), fetchBot.getRid());
-        assertEquals(bot.getState(), fetchBot.getState());
+        //Should equal
+        assertEquals(bot.getRid(), fetchedBot.getRid());
+        assertEquals(bot.getState(), fetchedBot.getState());
 
-        //update description and save
-        fetchBot.setState("NewState");
-        botRepository.save(fetchBot);
+        //Update description and save
+        fetchedBot.setState("NewState");
+        botRepository.save(fetchedBot);
 
-        //get from DB, should be updated
-        BotEntity fetchedUpdatedBot = botRepository.findOne(fetchBot.getRid());
-        assertEquals(fetchBot.getState(), fetchedUpdatedBot.getState());
+        //Get from database, should be updated
+        BotEntity fetchedUpdatedBot = botRepository.findOne(fetchedBot.getRid());
+        assertEquals(fetchedBot.getState(), fetchedUpdatedBot.getState());
 
-        //verify count of products in DB
+        //Verify count of bots in database
         long botCount = botRepository.count();
-        assertEquals(botCount, 1);
+        assertEquals(botCount, origBotRepositorySize + 1);      //One bot has been added to the database
 
-        //get all products, list should only have one more then initial value
+        //Get all bots, list should only have one more then initial value
         Iterable<BotEntity> bots = botRepository.findAll();
 
         int count = 0;
 
-        for(BotEntity p : bots){
+        for(BotEntity p : bots)
+        {
             count++;
         }
 
-        assertEquals(count, 1);// we starten reeds met 2 gebruikers in de database
+        //There are originally 'origBotRepositorySize' bots declared in the database (+1 has been added in this test)
+        assertEquals(count, origBotRepositorySize + 1);
     }
 }
 

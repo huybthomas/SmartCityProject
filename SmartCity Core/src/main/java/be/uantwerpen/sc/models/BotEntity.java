@@ -8,7 +8,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "bot", schema = "", catalog = "smartcity")
 public class BotEntity {
-    private int rid;
+    private Long rid;
     private Integer jobId;
     private Integer percentageCompleted;
     private String state;
@@ -16,11 +16,12 @@ public class BotEntity {
 
     @Id
     @Column(name = "rid")
-    public int getRid() {
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    public Long getRid() {
         return rid;
     }
 
-    public void setRid(int rid) {
+    public void setRid(Long rid) {
         this.rid = rid;
     }
 
@@ -72,7 +73,7 @@ public class BotEntity {
 
     @Override
     public int hashCode() {
-        int result = rid;
+        int result = (int)(rid % Integer.MAX_VALUE);
         result = 31 * result + (jobId != null ? jobId.hashCode() : 0);
         result = 31 * result + (percentageCompleted != null ? percentageCompleted.hashCode() : 0);
         result = 31 * result + (state != null ? state.hashCode() : 0);
