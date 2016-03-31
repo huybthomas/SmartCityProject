@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head th:replace="layout :: head (pageTitle=#{homepage.title})">
+</head>
+<head><link rel="stylesheet" type="text/css" th:href="@{/css/viewerLayout.css}"/></head>
+<body>
+
+<!-- Import navigation bar -->
+<div th:replace="layout :: navbar"></div>
+
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    var carImage = /*[[@{/images/car.png}]]*/;
+    /*]]>*/
+</script>
+
+<div id="myDiv">
+    <div id="myCanvas">
+        <canvas id="canvas" width="1000" height="1000" style="border:1px solid #000000"></canvas>
+    </div>
+    <div id="myLegend">
+        <canvas id="legend" width="200" height="1000" style="border:1px solid #000000;"></canvas>
+    </div>
+</div>
+
+<div id="time"></div>
+<script type="text/javascript" th:src="@{/js/test.js}"></script>
+<script type="text/javascript" th:src="@{/js/map.js}"></script>
+
+
+
+
+<!-- Import footer -->
+<!--<div th:replace="layout :: footer"></div>-->
+
+</body>
+</html>

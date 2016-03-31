@@ -22,7 +22,6 @@ public class SimMap
     {
         return this.sizeX;
     }
-
     public void setSizeX(int size)
     {
         this.sizeX = size;
@@ -32,7 +31,6 @@ public class SimMap
     {
         return this.sizeY;
     }
-
     public void setSizeY(int size)
     {
         this.sizeY = size;
@@ -42,7 +40,6 @@ public class SimMap
     {
         this.links.addAll(links);
     }
-
     public void setLinks(List<SimLink> links)
     {
         this.links = links;

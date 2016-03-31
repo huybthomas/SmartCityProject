@@ -1,0 +1,16 @@
+
+#myDiv {
+    width:1200px;
+    height:1000px;
+    position:relative;
+}
+#myCanvas {
+    position:absolute;
+    top:0;
+    left:0;
+}
+#myLegend {
+    position:absolute;
+    top:0;
+    right:0;
+}
