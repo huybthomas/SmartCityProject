@@ -12,7 +12,7 @@
                 <img alt="Logo" th:src="@{/images/SimCityLogo.png}" style="vertical-align: middle; height: 100px"/>
                 <span style="padding-left: 8px">
                     <span class="h1" th:text="#{application.title}"></span>
-                    <!--<span class="h5" th:text="'v.' +  #{application.version.main} + '.' + #{application.version.minor}"></span>-->
+                    <span class="h5" th:text="'v.' +  #{application.version.main} + '.' + #{application.version.minor}"></span>
                 </span>
             </div>
         </div>
@@ -22,8 +22,9 @@
 
     <h2>About</h2>
 
-    <p>Developed by: Thomas Huybrechts, Arthur Janssens, Dennis Joosens, Niels Vervliet</p>
-    <p></p>
+    <p th:text="'Copyright &copy; 2016 UAntwerpen and its licensors. All Rights Reserved.'">Copyright</p>
+    <h4>Developed by:</h4>
+    <p>Thomas Huybrechts, Arthur Janssens, Dennis Joosens, Niels Vervliet</p>
 </div>
 
 <!-- Import footer -->

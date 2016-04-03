@@ -5,8 +5,18 @@
     <!-- Import navigation bar -->
     <div th:replace="layout :: navbar"></div>
 
-    <h1>SimCity</h1>
-    <h3>Welcome</h3>
+    <div class="container-fluid">
+        <h2 th:text="#{application.title}">SimCity</h2>
+
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title" th:text="#{workers}">Workers</h3>
+            </div>
+            <div class="panel-body">
+                WORKERS
+            </div>
+        </div>
+    </div>
 
     <!-- Import footer -->
     <div th:replace="layout :: footer"></div>
