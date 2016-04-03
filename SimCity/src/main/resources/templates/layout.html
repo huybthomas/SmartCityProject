@@ -46,7 +46,7 @@
                 <!-- Left buttons -->
                 <ul class="nav navbar-nav navbar-left">
                     <li><a th:href="@{/}"><span class="glyphicon glyphicon-home"></span><span> </span><span th:text="#{navbar.home}">Home</span></a></li>
-                    <li><a th:href="@{/}"><span class="glyphicon glyphicon-tasks"></span><span> </span><span th:text="#{navbar.workers}">Workers</span><span> </span><span class="badge">#VALUE</span></a></li>
+                    <li><a th:href="@{/}"><span class="glyphicon glyphicon-tasks"></span><span> </span><span th:text="#{navbar.workers}">Workers</span><span> </span><span class="badge" th:text="${numOfWorkers}">#VALUE</span></a></li>
                 </ul>
                 <!-- Right buttons -->
                 <ul class="nav navbar-nav navbar-right" style="padding-right: 15px">

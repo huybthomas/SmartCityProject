@@ -22,3 +22,6 @@ body {
 .non-mobile-element {
     display: block;
 }
+.front-content {
+    padding: 2% 5% 2% 5%;
+}

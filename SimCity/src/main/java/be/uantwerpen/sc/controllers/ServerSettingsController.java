@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * Created by Thomas on 03/04/2016.
  */
 @Controller
-public class ServerSettingsController
+public class ServerSettingsController extends GlobalModelController
 {
 
 }

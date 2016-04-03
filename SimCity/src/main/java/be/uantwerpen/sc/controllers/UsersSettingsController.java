@@ -6,7 +6,7 @@ import org.springframework.stereotype.Controller;
  * Created by Thomas on 03/04/2016.
  */
 @Controller
-public class UsersSettingsController
+public class UsersSettingsController extends GlobalModelController
 {
 
 }
