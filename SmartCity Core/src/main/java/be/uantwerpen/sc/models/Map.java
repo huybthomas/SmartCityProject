@@ -1,40 +1,47 @@
 package be.uantwerpen.sc.models;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Niels on 26/03/2016.
+ * Created by Niels on 3/04/2016.
  */
 public class Map {
 
-    private List<PointEntity>puntList;
-    private List<LinkEntity> linkList;
-    private List<TrafficlightEntity> trafficLightList;
+    private List<Node> nodeList;
+    private List<BotEntity> botEntities;
+    private List<TrafficlightEntity> trafficlightEntity;
 
-    public Map() {
+    public Map(){
+        nodeList = new ArrayList<>();
+        botEntities = new ArrayList<>();
     }
 
-    public List<PointEntity> getPuntList() {return puntList;}
-
-    public void setPuntList(List<PointEntity> puntList) {this.puntList = puntList;}
-
-    public void addPuntToList(PointEntity punt){
-        puntList.add(punt);
+    public  void addNode(Node node){
+        nodeList.add(node);
     }
 
-    public List<LinkEntity> getLinkList() {return linkList;}
-
-    public void setLinkList(List<LinkEntity> linkList) {this.linkList = linkList;}
-
-    public void addLinkToList(LinkEntity link){
-        linkList.add(link);
+    public void setNodeList(List<Node> nodeList) {
+        this.nodeList = nodeList;
     }
 
-    public List<TrafficlightEntity> getTrafficLightList() {return trafficLightList;}
+    public List<Node> getNodeList() {
+        return nodeList;
+    }
 
-    public void setTrafficLightList(List<TrafficlightEntity> trafficLightList) {this.trafficLightList = trafficLightList;}
+    public List<BotEntity> getBotEntities() {
+        return botEntities;
+    }
 
-    public void addTrafficLightToList(TrafficlightEntity trafficLight){
-        trafficLightList.add(trafficLight);
+    public void setBotEntities(List<BotEntity> botEntities) {
+        this.botEntities = botEntities;
+    }
+
+    public List<TrafficlightEntity> getTrafficlightEntity() {
+        return trafficlightEntity;
+    }
+
+    public void setTrafficlightEntity(List<TrafficlightEntity> trafficlightEntity) {
+        this.trafficlightEntity = trafficlightEntity;
     }
 }

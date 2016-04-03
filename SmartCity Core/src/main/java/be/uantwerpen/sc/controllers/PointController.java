@@ -20,7 +20,7 @@ public class PointController {
     private PointRepository pointRepository;
 
     @RequestMapping(method = RequestMethod.GET)
-    public List<PointEntity> allLinks(){
+    public List<PointEntity> allPoints(){
         List<PointEntity> points = pointRepository.findAll();
         return points;
     }

@@ -6,7 +6,7 @@ import javax.persistence.*;
  * Created by Niels on 24/03/2016.
  */
 @Entity
-@Table(name = "point", schema = "", catalog = "smartcity")
+@Table(name = "punt", schema = "", catalog = "smartcity")
 public class PointEntity {
     private int pid;
     private String rfid;
