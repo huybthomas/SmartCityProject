@@ -24,4 +24,13 @@ public class TrafficLightControlService {
         return trafficLightRepository.findOne(id);
     }
 
+    public void updateTL(TrafficlightEntity trafficlightEntity){
+        TrafficlightEntity dbTL = trafficLightRepository.findOne(trafficlightEntity.getTlid());
+        dbTL = trafficlightEntity;
+        trafficLightRepository.save(dbTL);
+
+    }
+
+
+
 }

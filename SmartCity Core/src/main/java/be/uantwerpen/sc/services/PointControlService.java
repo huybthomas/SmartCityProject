@@ -16,4 +16,6 @@ public class PointControlService {
     private PointRepository pointRepository;
 
     public List<PointEntity> getAllPoints(){return pointRepository.findAll();}
+
+    public PointEntity getPoint(int id){return  pointRepository.findOne(id);}
 }
