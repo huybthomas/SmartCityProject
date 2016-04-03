@@ -13,6 +13,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter
     @Override
     protected void configure(HttpSecurity http) throws Exception
     {
+        //Permit access to H2 console --Development only
+        http.authorizeRequests().antMatchers("/h2console/**")
+                                    .permitAll();
+
         http.authorizeRequests().antMatchers("/webjars/**")
                                     .permitAll();
 
@@ -20,5 +24,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter
                                     .permitAll()
                                     .anyRequest()
                                     .fullyAuthenticated();
+
+        http.csrf().disable();
+        http.headers().frameOptions().disable();
     }
 }
