@@ -6,13 +6,16 @@
 <div th:replace="layout :: navbar"></div>
 
 <div class="container-fluid">
-    <h2 th:text="#{settings.title}">Settings</h2>
+    <div class="front-content">
+        <h2 th:text="#{settings.title}">Settings</h2>
 
-    <ul class="nav nav-tabs">
-        <li role="presentation" class="active"><a href="#" th:text="#{settings.server}">Server</a></li>
-        <li role="presentation"><a th:href="@{/settings/users}" th:text="#{settings.users}">Users</a></li>
-        <li role="presentation"><a th:href="@{/settings/workers}" th:text="#{settings.workers}">Workers</a></li>
-    </ul></div>
+        <ul class="nav nav-tabs">
+            <li role="presentation" class="active"><a href="#" th:text="#{settings.server}">Server</a></li>
+            <li role="presentation"><a th:href="@{/settings/users}" th:text="#{settings.users}">Users</a></li>
+            <li role="presentation"><a th:href="@{/settings/workers}" th:text="#{settings.workers}">Workers</a></li>
+        </ul>
+    </div>
+</div>
 
 <!-- Import footer -->
 <div th:replace="layout :: footer"></div>

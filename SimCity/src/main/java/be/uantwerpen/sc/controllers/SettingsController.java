@@ -31,10 +31,6 @@ public class SettingsController extends GlobalModelController
     @RequestMapping(value = {"/settings/workers"})
     public String showWorkersSettings(ModelMap model)
     {
-        Iterable<SimWorker> workers = simWorkerService.findAll();
-
-        model.addAttribute("allWorkers", workers);
-
         return "protected/settings/workersSettings";
     }
 }

@@ -1,5 +1,6 @@
 package be.uantwerpen.sc.controllers;
 
+import be.uantwerpen.sc.models.sim.SimWorker;
 import be.uantwerpen.sc.services.SimWorkerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,5 +19,11 @@ public class GlobalModelController
     public int getNumberOfWorkers()
     {
         return simWorkerService.getNumberOfWorkers();
+    }
+
+    @ModelAttribute("allWorkers")
+    public Iterable<SimWorker> getAllWorkers()
+    {
+        return simWorkerService.findAll();
     }
 }
