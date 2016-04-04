@@ -16,18 +16,18 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * Created by Thomas on 03/04/2016.
+ * Created by Thomas on 04/04/2016.
  */
 @Service
-@Profile("dev")
-public class DatabaseLoaderDevelopment
+@Profile({"default","standalone"})
+public class DatabaseLoader
 {
     private final PermissionRepository permissionRepository;
     private final RoleRepository roleRepository;
     private final UserRepository userRepository;
 
     @Autowired
-    public DatabaseLoaderDevelopment(PermissionRepository permissionR, RoleRepository roleR, UserRepository userR)
+    public DatabaseLoader(PermissionRepository permissionR, RoleRepository roleR, UserRepository userR)
     {
         this.permissionRepository = permissionR;
         this.roleRepository = roleR;
