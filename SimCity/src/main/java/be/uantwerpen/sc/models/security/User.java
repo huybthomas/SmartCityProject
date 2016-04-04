@@ -21,6 +21,8 @@ public class User extends MyAbstractPersistable<Long>
     @ManyToMany
     @JoinTable(
             name="USER_ROLE",
+            schema = "",
+            catalog = "sc_security",
             joinColumns = {
                     @JoinColumn(name = "USER_ID", referencedColumnName = "ID")},
             inverseJoinColumns = {

@@ -32,11 +32,11 @@
                     <div class="loginFormBorder">
                         <form name="loginForm" th:action="@{/login}" action="/login" method="POST">
                             <div class="input-group">
-                                <span class="input-group-addon" th:text="#{login.username}" id="usernameAddon">username</span>
+                                <span class="input-group-addon" id="usernameAddon"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></span>
                                 <input type="text" class="form-control" id="username" name="username" value="" th:placeholder="#{login.username}" aria-describedby="usernameAddon"/>
                             </div>
                             <div class="input-group">
-                                <span class="input-group-addon" th:text="#{login.password}" id="passwordAddon">password</span>
+                                <span class="input-group-addon" id="passwordAddon"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span></span>
                                 <input type="password" class="form-control" id="password" name="password" th:placeholder="#{login.password}" aria-describedby="passwordAddon"/>
                             </div>
                             <div class="btn-group btn-group-lg">

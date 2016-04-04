@@ -39,13 +39,13 @@
                             <th th:text="''">Place holder - Edit Button</th>
                             <th th:text="''">Place holder - Delete Button</th>
                         </tr>
-                       <!-- <tr th:each="worker : ${allWorkers}">
-                            <td th:text="${worker.id}">ID</td>
-                            <td th:text="${worker.workerName}">Worker name</td>
-                            <td>Unknown</td>
+                        <tr th:each="user : ${allUsers}">
+                            <td th:text="${user.id}">ID</td>
+                            <td th:text="${user.firstName} + ' ' + ${user.lastName}">Name</td>
+                            <td th:text="${user.username}">Username</td>
                             <td><button type="button" class="btn btn-default btn-sm" th:title="#{settings.edit}"><span class="glyphicon glyphicon-pencil"></span></button></td>
                             <td><button type="button" class="btn btn-danger btn-sm" th:title="#{settings.delete}"><span class="glyphicon glyphicon-trash"></span></button></td>
-                        </tr>-->
+                        </tr>
                     </table>
                 </div>
             </div>

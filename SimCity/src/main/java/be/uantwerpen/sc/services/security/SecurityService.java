@@ -40,9 +40,9 @@ public class SecurityService implements UserDetailsService
         {
             Collection<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
 
-            authorities.addAll(StreamSupport.stream(permissionRepository.findAllForUser(user).spliterator(), false).map(permission -> new SimpleGrantedAuthority(permission.getName())).collect(Collectors.toList()));
+            authorities.addAll(StreamSupport.stream(permissionRepository.findAllForUser(user).spliterator(), false).map(permission -> new SimpleGrantedAuthority("ROLE_" + permission.getName())).collect(Collectors.toList()));
 
-            userDetails = new org.springframework.security.core.userdetails.User(username, user.getPassword(), true, true, true, true, authorities);
+            userDetails = new org.springframework.security.core.userdetails.User(username, user.getPassword(), authorities);
         }
         else
         {

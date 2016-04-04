@@ -27,11 +27,11 @@ public class DatabaseLoader
     private final UserRepository userRepository;
 
     @Autowired
-    public DatabaseLoader(PermissionRepository permissionR, RoleRepository roleR, UserRepository userR)
+    public DatabaseLoader(PermissionRepository permissionRepository, RoleRepository roleRepository, UserRepository userRepository)
     {
-        this.permissionRepository = permissionR;
-        this.roleRepository = roleR;
-        this.userRepository = userR;
+        this.permissionRepository = permissionRepository;
+        this.roleRepository = roleRepository;
+        this.userRepository = userRepository;
     }
 
     @PostConstruct

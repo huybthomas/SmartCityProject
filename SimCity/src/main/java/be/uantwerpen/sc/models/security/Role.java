@@ -17,6 +17,8 @@ public class Role extends MyAbstractPersistable<Long>
     @ManyToMany
     @JoinTable(
             name = "ROLE_PERMISSION",
+            schema = "",
+            catalog = "sc_security",
             joinColumns = {
                     @JoinColumn(name = "ROLE_ID", referencedColumnName = "ID")},
             inverseJoinColumns = {

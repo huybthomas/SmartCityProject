@@ -52,7 +52,18 @@
                 <!-- Right buttons -->
                 <ul class="nav navbar-nav navbar-right" style="padding-right: 15px">
                     <li sec:authorize="hasRole('logon')"><a th:href="@{/settings}"><span class="glyphicon glyphicon-cog"></span><span> </span><span th:text="#{navbar.settings}">Settings</span></a></li>
-                    <li><a th:href="@{/about}"><span class="glyphicon glyphicon-info-sign"></span><span> </span><span th:text="#{navbar.about}">About</span></a></li>
+                    <li sec:authorize="!hasRole('logon')"><a th:href="@{/about}"><span class="glyphicon glyphicon-info-sign"></span><span> </span><span th:text="#{navbar.about}">About</span></a></li>
+                    <li sec:authorize="hasRole('logon')" class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-user"></span><span> </span><span th:text="${#authentication.name}">Username</span><span> </span><span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li class="dropdown-header"><span>FULL NAME</span></li>
+                            <li><a href="#"><span class="glyphicon glyphicon-dashboard"></span><span> </span><span th:text="#{navbar.profile}">Profile</span></a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a th:href="@{/about}"><span class="glyphicon glyphicon-info-sign"></span><span> </span><span th:text="#{navbar.about}">About</span></a></li>
+                            <li role="seperator" class="divider"></li>
+                            <li><a th:href="@{/logout}"><span class="glyphicon glyphicon-log-out"></span><span> </span><span th:text="#{navbar.logout}">Logout</span></a></li>
+                        </ul>
+                    </li>
                 </ul>
             </div>
         </div>
