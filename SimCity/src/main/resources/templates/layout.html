@@ -45,12 +45,13 @@
             <div class="collapse navbar-collapse" id="navbar-collapse-1">
                 <!-- Left buttons -->
                 <ul class="nav navbar-nav navbar-left">
-                    <li><a th:href="@{/}"><span class="glyphicon glyphicon-home"></span><span> </span><span th:text="#{navbar.home}">Home</span></a></li>
-                    <li><a th:href="@{/}"><span class="glyphicon glyphicon-tasks"></span><span> </span><span th:text="#{navbar.workers}">Workers</span><span> </span><span class="badge" th:text="${numOfWorkers}">#VALUE</span></a></li>
+                    <li sec:authorize="!hasRole('logon')"><a th:href="@{/login}"><span class="glyphicon glyphicon-log-in"></span><span> </span><span th:text="#{navbar.login}">Login</span></a></li>
+                    <li sec:authorize="hasRole('logon')"><a th:href="@{/}"><span class="glyphicon glyphicon-home"></span><span> </span><span th:text="#{navbar.home}">Home</span></a></li>
+                    <li sec:authorize="hasRole('logon')"><a th:href="@{/}"><span class="glyphicon glyphicon-tasks"></span><span> </span><span th:text="#{navbar.workers}">Workers</span><span> </span><span class="badge" th:text="${numOfWorkers}">#VALUE</span></a></li>
                 </ul>
                 <!-- Right buttons -->
                 <ul class="nav navbar-nav navbar-right" style="padding-right: 15px">
-                    <li><a th:href="@{/settings}"><span class="glyphicon glyphicon-cog"></span><span> </span><span th:text="#{navbar.settings}">Settings</span></a></li>
+                    <li sec:authorize="hasRole('logon')"><a th:href="@{/settings}"><span class="glyphicon glyphicon-cog"></span><span> </span><span th:text="#{navbar.settings}">Settings</span></a></li>
                     <li><a th:href="@{/about}"><span class="glyphicon glyphicon-info-sign"></span><span> </span><span th:text="#{navbar.about}">About</span></a></li>
                 </ul>
             </div>

@@ -1,7 +1,6 @@
 package be.uantwerpen.sc.controllers;
 
-import be.uantwerpen.sc.models.sim.SimWorker;
-import be.uantwerpen.sc.services.SimWorkerService;
+import be.uantwerpen.sc.services.sim.SimWorkerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;

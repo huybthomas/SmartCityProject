@@ -7,6 +7,7 @@ import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
@@ -60,5 +61,11 @@ public class WebMVCConfiguration extends WebMvcConfigurerAdapter
         messageSource.setDefaultEncoding("UTF-8");
 
         return messageSource;
+    }
+
+    @Override
+    public void addViewControllers(ViewControllerRegistry registry)
+    {
+        registry.addViewController("/login").setViewName("public/login");
     }
 }

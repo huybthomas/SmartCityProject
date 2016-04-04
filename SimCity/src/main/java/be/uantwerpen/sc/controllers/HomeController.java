@@ -13,7 +13,7 @@ public class HomeController extends GlobalModelController
     @RequestMapping(value = {"/"})
     public String showHomepage(ModelMap model)
     {
-        return "public/homepage";
+        return "protected/homepage";
     }
 
     @RequestMapping(value = {"/about"})
