@@ -1,7 +1,7 @@
-package be.uantwerpen.sc.services;
+package be.uantwerpen.sc.services.sim;
 
 import be.uantwerpen.sc.models.sim.SimWorker;
-import be.uantwerpen.sc.repositories.SimWorkerRepository;
+import be.uantwerpen.sc.repositories.sim.SimWorkerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

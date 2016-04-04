@@ -31,7 +31,6 @@ public class BotRepositoryTests
     private BotRepository botRepository;
 
     @Test
-    @Transactional
     public void testSaveBot()
     {
         //Get repository size before test
@@ -83,7 +82,6 @@ public class BotRepositoryTests
     }
 
     @Test
-    @Transactional
     public void testDeleteBot()
     {
         //Get repository size before test
@@ -118,7 +116,7 @@ public class BotRepositoryTests
 
         //Verify count of bots in database
         botCount = botRepository.count();
-        assertEquals(botCount, origBotRepositorySize);          //One bot has been deleted to the database
+        assertEquals(botCount, origBotRepositorySize);          //One bot has been deleted from the database
 
         //Get all bots, list should have the same amount than the initial value
         Iterable<BotEntity> bots = botRepository.findAll();

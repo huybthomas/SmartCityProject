@@ -1,4 +1,4 @@
-package be.uantwerpen.sc.repositories;
+package be.uantwerpen.sc.repositories.sim;
 
 import be.uantwerpen.sc.models.sim.SimWorker;
 import org.springframework.data.repository.CrudRepository;
