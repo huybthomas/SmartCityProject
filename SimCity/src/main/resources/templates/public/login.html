@@ -1,22 +1,56 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
-<head th:replace="layout :: head (pageTitle=#{error.title})"></head>
-<body>
+<head th:replace="layout :: head (pageTitle=#{login.title})"></head>
+<body onload="document.loginForm.username.focus();">
 <!-- Import navigation bar -->
 <div th:replace="layout :: navbar"></div>
 
 <div class="container-fluid">
     <div class="front-content">
-        <h2 th:text="#{error.title}">Error</h2>
+        <div class="messagesContent">
+            <div th:if="${param.logout}" class="alert alertbox alert-success alert-dismissible fade in" role="alert">
+                <button class="close" data-dismiss="alert" aria-label="Close" aria-hidden="true">&times;</button>
+                <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
+                <span class="sr-only">Info: </span>
+                <span th:text="#{login.alerts.logout}">Logout message</span>
+            </div>
+            <div th:if="${param.error}" class="alert alertbox alert-danger alert-dismissible fade in" role="alert">
+                <button class="close" data-dismiss="alert" aria-label="Close" aria-hidden="true">&times;</button>
+                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                <span class="sr-only">Error: </span>
+                <span th:text="#{login.alerts.error}">Error message</span>
+            </div>
+        </div>
+        <h2 th:text="#{login.title}">Login</h2>
 
         <div class="front-content">
-            <div class="alert alert-danger" role="alert">
-                <span class="glyphicon glyphicon-exclamation-sign"></span>
-                <span class="sr-only" th:text="#{error.title} + ': '">Error:</span>
-                <span th:text="#{error.apology}">Apology</span>
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title" th:text="#{login.header}">Login</h3>
+                </div>
+                <div class="panel-body" style="padding: 0">
+                    <div class="loginFormBorder">
+                        <form name="loginForm" th:action="@{/login}" action="/login" method="POST">
+                            <div class="input-group">
+                                <span class="input-group-addon" th:text="#{login.username}" id="usernameAddon">username</span>
+                                <input type="text" class="form-control" id="username" name="username" value="" th:placeholder="#{login.username}" aria-describedby="usernameAddon"/>
+                            </div>
+                            <div class="input-group">
+                                <span class="input-group-addon" th:text="#{login.password}" id="passwordAddon">password</span>
+                                <input type="password" class="form-control" id="password" name="password" th:placeholder="#{login.password}" aria-describedby="passwordAddon"/>
+                            </div>
+                            <div class="btn-group btn-group-lg">
+                                <input type="submit" id="login" th:value="#{login.login}" class="btn btn-primary" style="margin-top:10px"/>
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
-            <div th:text="${message}">Placeholder error message</div>
-            <div th:text="#{error.contactoperator}">Contact operator</div>
+            <div class="languageselect" style="margin-top:20px">
+                <span th:text="#{languageselect.languages}">Languages</span>:
+                <a href="?lang=en" th:text="#{languageselect.english}">English</a> -
+                <a href="?lang=nl" th:text="#{languageselect.dutch}">Dutch</a>
+            </div>
         </div>
     </div>
 </div>

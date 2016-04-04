@@ -25,3 +25,13 @@ body {
 .front-content {
     padding: 2% 5% 2% 5%;
 }
+.alertbox
+{
+    text-align:center;
+    width:500px;
+    left:0;
+    right:0;
+    margin-left:auto;
+    margin-right:auto;
+    position:absolute;
+}
