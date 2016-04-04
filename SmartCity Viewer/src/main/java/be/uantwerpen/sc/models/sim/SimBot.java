@@ -1,11 +1,9 @@
 package be.uantwerpen.sc.models.sim;
 
-import be.uantwerpen.sc.models.Bot;
-
 /**
  * Created by Thomas on 27/02/2016.
  */
-public class SimBot extends Bot{
+public class SimBot {
 
     double[] loc;
 

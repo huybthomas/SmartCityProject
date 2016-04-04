@@ -11,10 +11,44 @@ public class SimPoint
 
     public SimPoint()
     {
-        this.id = 0;
+        this.id = -1;
         this.posX = 0;
         this.posY = 0;
         this.rfId = "";
+    }
+
+    public SimPoint(int id)
+    {
+        this.id = id;
+        this.posX = 0;
+        this.posY = 0;
+        this.rfId = "";
+    }
+
+    public SimPoint(int id, int posX, int posY)
+    {
+        this.id = id;
+        this.posX = posX;
+        this.posY = posY;
+        this.rfId = "";
+    }
+
+    public void up(){this.posY++;}
+    public void right(){this.posX++;}
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (!SimPoint.class.isAssignableFrom(obj.getClass())) {
+            return false;
+        }
+        final SimPoint other = (SimPoint) obj;
+        if ((this.id == -1) ? (other.id != -1) : !this.id.equals(other.id)) {
+            return false;
+        }
+        return true;
     }
 
     public int getId()

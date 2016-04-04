@@ -1,126 +1,94 @@
 package be.uantwerpen.sc.tools;
 
+import be.uantwerpen.sc.models.LinkEntity;
+import be.uantwerpen.sc.models.PointEntity;
 import be.uantwerpen.sc.models.sim.SimLink;
 import be.uantwerpen.sc.models.sim.SimMap;
 import be.uantwerpen.sc.models.sim.SimPoint;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Queue;
-import java.util.Spliterators;
+import java.util.*;
 
-/**
- * Created by Thomas on 27/02/2016.
- */
+enum ProcessingType{
+    STRAIGHT,
+    BEND,
+    ADVANCED,
+}
+
+enum Update{
+    UP,
+    RIGHT
+}
+
+//TODO If a road is already detected at a location -> upgrade road to intersection
 public class MapBuilder{
 
     SimMap simMap;
-    Queue<SimPoint> toProcessNodes;
 
-    public MapBuilder(){
+    ArrayList<LinkEntity> linkEntities;
+    ArrayList<PointEntity> pointEntities;
+
+    //Keep track of point locations
+    ArrayList<SimPoint> simPoints = new ArrayList<>();
+
+    int locX, locY = 0;
+    int currSizeX = 0;
+    int currSizeY = 1;
+
+    public MapBuilder(LinkEntity[] linkEntities, PointEntity[] pointEntities){
+
+        this.linkEntities = new ArrayList<LinkEntity>(Arrays.asList(linkEntities));
+        this.pointEntities = new ArrayList<PointEntity>(Arrays.asList(pointEntities));
+
         simMap = new SimMap();
         buildMap();
     }
 
-    private void buildMap() {
-        int locX, locY = 0;
+    public SimMap getSimMap(){
+        return simMap;
+    }
 
-        /*
+    private void logMap(){
+        Iterator<ArrayList<Tile>> iterator = simMap.mapTiles.iterator();
+        while(iterator.hasNext()){
+            ArrayList<Tile> second = iterator.next();
+            Iterator<Tile> iterator1 = second.iterator();
+            while(iterator1.hasNext()){
+                Tile tile = iterator1.next();
+                switch(tile){
+                    case POINT:
+                        System.out.print("P");
+                        break;
+                    case HORIZONTAL:
+                        System.out.print("-");
+                        break;
+                    case VERTICAL:
+                        System.out.print("|");
+                        break;
+                }
+            }
+            System.out.println();
 
-        //Current placeholder variables
-        ArrayList<SimPoint> simPoints = new ArrayList<>();
-        ArrayList<SimPoint> processedPoints = new ArrayList<>();
-        ArrayList<SimLink> simLinks = new ArrayList<>();
-
-        //Generate SimPoints from SQL Database
-        //Get database from SQL (Possibly create connection)
-        SimPoint tempPoint;
-        //PLACEHOLDER
-        while (SQLPoints.next()) {
-            tempPoint = new SimPoint();
-            //Fill tempPoint with variables
-            simPoints.add(tempPoint);
         }
-        SimLink tempLink;
-        SimPoint tempStart, tempEnd;
-        while (SQLLinks.next()) {
-            //Process Link data from SQL
+    }
 
-            //Generate Link
-            tempLink = new SimLink(tempStart, tempEnd);
-            simLinks.add(tempLink);
-        }
+    private int buildMap(){
 
-        //Get 'random' simPoint from Array (First?)
+        ProcessingType processingType = ProcessingType.STRAIGHT;
 
-        //Fill SimMap with SimPoints relative to the first one (and generate SimLinks)
-        SimPoint simPoint = simPoints.get(0);
-        simPoint.setPos(0, 0);
-        locX = 0;
-        locY = 0;
+        //Links need to be processed
+        Iterator<LinkEntity> linkIterator = linkEntities.iterator();
 
-        boolean found = false;
-        boolean normalLinkFound = false;
-        boolean bendProcessing = false;
-        boolean bendLinkFound = false;
-        boolean lastResortProcessing = false;
-        Iterator pointItr = simPoints.iterator();
-        //Iterate until all points have been processed fully
-        while (!(simPoints.isEmpty())) {
-            //Iterate all points, then remove them if they have no links left
-            while (pointItr.hasNext()) {
+        if(!linkIterator.hasNext()) //No links
+            return -1;
 
-                //As long as we find links with the node; process its links
-                do {
-                    found = false;
-                    normalLinkFound = false;
-                    //Iterate all links in search for link with first node
-                    Iterator itr = simLinks.iterator();
-                    while (itr.hasNext()) {
-                        SimLink link = (SimLink) itr.next();
-                        if (link.getStart().getId() == simPoint.getId()) {
-
-                            if (Start.Dir = End.Dir) //PLACEHOLDER
-                                normalLinkFound = true;
-                            else if (lastResortProcessing) {
-                                //Make an educated guess
-                                //Link Processed -> remove
-                                itr.remove();
-                                found = true;
-                            } else if (bendProcessing) {
-                                //Process Bend Logic
-                                //Process link
-                                //if Start and End Already have coordinates (Check processedPoints)
-                                //Place link bend on their intersection
-                                //bendLinkFound = true;
-                                //else
-                                //Continue searching
-                                //Link Processed -> remove
-                                itr.remove();
-                                found = true;
-                            } else {
-                                //Normal link processing
-                                //Process link
-                                //Calculate direction of Link
-                                //Set coordinates for nex SimPoint
-                                //Link Processed -> remove
-                                itr.remove();
-                                found = true;
-                            }
-                        }
-                    }
-                } while (found);
-            }
-            if (!normalLinkFound && !bendProcessing) {
-                bendProcessing = true;
-            }
-            if (!bendLinkFound && !lastResortProcessing) {
-                lastResortProcessing = true;
-            }
+        //Process first link
+        LinkEntity link = linkIterator.next();
+        //Check if we can process this link with the current processing type
+        if(canProcessWithCurrentProcessingType(link, processingType)){
+            processLink(link, processingType);
         }
 
-        //Reset Iterator
-        pointItr = simPoints.iterator();
+        processLink(link, processingType);
 
         //Start with all normal links (i.e. no turns)
         //Generate corners last from already existing data as best as possible
@@ -128,7 +96,220 @@ public class MapBuilder{
         //Add the coordiates of the most negative (-x, -y) point to all other SimPoints
         //(Makes the map completely positive again)
 
-        */
+        return 0;
+    }
+
+    private boolean canProcessWithCurrentProcessingType(LinkEntity link, ProcessingType type){
+        boolean possible = false;
+        switch(type){
+            case STRAIGHT:
+                if(link.getStartDirection() == "NORTH" && link.getStopDirection() == "SOUTH" || link.getStartDirection() == "SOUTH" && link.getStopDirection() == "NORTH")  // Vertical
+                    possible = true;
+                if(link.getStartDirection() == "WEST" && link.getStopDirection() == "EAST" || link.getStartDirection() == "EAST" && link.getStopDirection() == "WEST")      //Horizontal
+                    possible = true;
+                break;
+            case BEND:
+            case ADVANCED:
+                if(link.getStartDirection() == "NORTH" && link.getStopDirection() == "EAST" || link.getStartDirection() == "EAST" && link.getStopDirection() == "SOUTH" || link.getStartDirection() == "SOUTH" && link.getStopDirection() == "WEST" || link.getStartDirection() == "WEST" && link.getStopDirection() == "NORTH")     // clockwise
+                    possible = true;
+                if(link.getStartDirection() == "NORTH" && link.getStopDirection() == "WEST" || link.getStartDirection() == "WEST" && link.getStopDirection() == "SOUTH" || link.getStartDirection() == "SOUTH" && link.getStopDirection() == "EAST" || link.getStartDirection() == "EAST" && link.getStopDirection() == "NORTH")      //counter-clockwise
+                    possible = true;
+                break;
+        }
+        return possible;
+    }
+
+    private void processLink(LinkEntity link, ProcessingType type){
+        SimPoint point = new SimPoint(link.getStartId().getPid(), locX, locY);
+        //If starting point of link not yet in list -> add      //This also means that this is the first point -> so locX and locY will be 0
+        if(!(simPoints.contains(point))){
+            simPoints.add(point);
+            //Add link's start point to map
+            simMap.mapTiles.get(locY).set(locX, Tile.POINT);
+        }else{
+            //Point already in list and thus already on map
+            //We know we can process -> switch current locX and locY to preexisting point
+            point = simPoints.get(simPoints.indexOf(point));
+            locX = point.getPosX();
+            locY = point.getPosY();
+        }
+
+        switch(type){
+            case STRAIGHT:
+                switch (link.getStartDirection()){
+                    case "NORTH":
+                        addTileAbove(link.getLength());
+                        break;
+                    case "EAST":
+                        addTileRight(link.getLength());
+                        break;
+                    case "SOUTH":
+                        addTileBelow(link.getLength());
+                        break;
+                    case "WEST":
+                        addTileLeft(link.getLength());
+                        break;
+                }
+                break;
+            case BEND:
+
+                break;
+            case ADVANCED:
+
+                break;
+        }
+    }
+
+    private void updateSimPointLocations(Update update){
+        Iterator<SimPoint> it = simPoints.iterator();
+        SimPoint point = it.next();
+        while(it.hasNext()) {
+            switch (update) {
+                case UP:
+                    point.up();
+                    break;
+                case RIGHT:
+                    point.right();
+                    break;
+            }
+        }
+    }
+
+    /*private void updateSimPointLocations(Update update, int constraint){
+        Iterator<SimPoint> it = simPoints.iterator();
+        SimPoint point = it.next();
+        while(it.hasNext()) {
+            switch (update) {
+                case UP:
+                    if(point.getPosY() >= constraint)
+                        point.up();
+                    break;
+                case RIGHT:
+                    if(point.getPosX() >= constraint)
+                        point.right();
+                    break;
+            }
+        }
+    }*/
+
+    private void addTileAbove(int length){
+        //Create road up untill the last 'length'
+        while(length > 0){
+            addTileAbove(Tile.VERTICAL);
+        }
+        addTileAbove(Tile.POINT);
+    }
+
+    private void addTileAbove(Tile tile){
+        if(locY == 0){
+            simMap.mapTiles.add(0, new ArrayList<Tile>());  //Add new arraylist at first position
+            //Update all point's location data
+            updateSimPointLocations(Update.UP);
+            //Fill new arrayList untill equal in size to current map
+            for(int i = 0; i< currSizeX; i++){
+                if(locX != i)
+                    simMap.mapTiles.get(0).add(currSizeX, null);
+                else
+                    simMap.mapTiles.get(0).set(locX, tile);
+            }
+            currSizeY++;
+        }else{
+            simMap.mapTiles.get(locY).set(locX, tile);
+            locY--;
+        }
+
+    }
+
+    private void addTileBelow(int length) {
+        //Create road up untill the last 'length'
+        while (length > 0) {
+            addTileBelow(Tile.VERTICAL);
+        }
+        addTileBelow(Tile.POINT);
+    }
+
+    private void addTileBelow(Tile tile){
+        if(locY == simMap.mapTiles.size()){
+            simMap.mapTiles.add(new ArrayList<Tile>()); //Add new arraylist
+            //No need to update simPoints
+            currSizeY++;
+            //Fill new arrayList untill equal in size to current map
+            for(int i = 0; i< currSizeX; i++){
+                if(locX != i)
+                    simMap.mapTiles.get(currSizeY).add(currSizeX, null);
+                else
+                    simMap.mapTiles.get(currSizeY).set(locX, tile);
+            }
+        }else{
+            simMap.mapTiles.get(currSizeY).set(locX, tile);
+        }
+        locY++;
+    }
+
+    private void addTileLeft(int length) {
+        //Create road up untill the last 'length'
+        while (length > 0) {
+            addTileLeft(Tile.HORIZONTAL);
+        }
+        addTileLeft(Tile.POINT);
+    }
+
+    private void addTileLeft(Tile tile){
+        if(locX == 0){  //Add one element at start of every every row
+            int i = -1;
+            Iterator<ArrayList<Tile>> iterator = simMap.mapTiles.iterator();
+            while(iterator.hasNext()) {
+                ArrayList<Tile> second = iterator.next();
+                i++;
+                if (i == locX) {
+                    second.add(0, tile);
+                } else {
+                    second.add(0, null);
+                }
+            }
+            updateSimPointLocations(Update.RIGHT);
+            currSizeX++;
+        }else {  //Add one element
+            int i = -1;
+            Iterator<ArrayList<Tile>> iterator = simMap.mapTiles.iterator();
+            while (iterator.hasNext()) {
+                ArrayList<Tile> second = iterator.next();
+                i++;
+                if (i == locX) {
+                    second.set(locX, tile);
+                }
+                //Simpoints does not need to be updated
+                locX--;
+            }
+        }
+    }
+
+    private void addTileRight(int length) {
+        //Create road up untill the last 'length'
+        while (length > 0) {
+            addTileRight(Tile.HORIZONTAL);
+        }
+        addTileRight(Tile.POINT);
+    }
+
+    private void addTileRight(Tile tile){
+        if(locX == simMap.mapTiles.get(locY).size()){   //Add one element at end of every row
+            int i = -1;
+            Iterator<ArrayList<Tile>> iterator = simMap.mapTiles.iterator();
+            while(iterator.hasNext()) {
+                ArrayList<Tile> second = iterator.next();
+                i++;
+                if (i == locX) {
+                    second.add(tile);
+                } else {
+                    second.add(null);
+                }
+            }
+            currSizeX++;
+        }else{  //Add one element
+            simMap.mapTiles.get(locY).set(locX, tile);
+        }
+
 
     }
 

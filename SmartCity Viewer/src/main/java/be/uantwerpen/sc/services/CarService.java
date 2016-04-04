@@ -1,7 +1,12 @@
 package be.uantwerpen.sc.services;
 
+import be.uantwerpen.sc.models.BotEntity;
+import be.uantwerpen.sc.models.LinkEntity;
+import be.uantwerpen.sc.models.PointEntity;
 import be.uantwerpen.sc.models.sim.SimBot;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 
@@ -11,12 +16,26 @@ import java.util.ArrayList;
 @Service
 public class CarService {
 
-    public ArrayList<SimBot> simBots;
+    BotEntity[] botList;
+    ArrayList<SimBot> simBots;
 
     public CarService(){
+        //getBots();
+
         simBots = new ArrayList<>();
+
         //For testing
         addTestBots();
+
+
+    }
+
+    //TODO Test this method
+    private void getBots(){
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<BotEntity[]> responseList;
+        responseList = restTemplate.getForEntity("coreIP"+"/bot", BotEntity[].class);
+        botList = responseList.getBody();
     }
 
     private void addTestBots(){
