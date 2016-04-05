@@ -27,24 +27,24 @@ public class DatabaseLoader
     private final UserRepository userRepository;
 
     @Autowired
-    public DatabaseLoader(PermissionRepository permissionRepository, RoleRepository roleRepository, UserRepository userRepository)
+    public DatabaseLoader(PermissionRepository permissionRepos, RoleRepository roleRepos, UserRepository userRepos)
     {
-        this.permissionRepository = permissionRepository;
-        this.roleRepository = roleRepository;
-        this.userRepository = userRepository;
+        this.permissionRepository = permissionRepos;
+        this.roleRepository = roleRepos;
+        this.userRepository = userRepos;
     }
 
     @PostConstruct
     private void initDatabase()
     {
-        //Check if tables are initialized or empty
+        //Check if tables are initialised or empty
         if(permissionRepository.findAll().iterator().hasNext())
         {
-            //Tables are initialized, no need to refill database
+            //Tables are initialised, no need to refill database
             return;
         }
 
-        //Initialize user database
+        //Initialise user database
         initUserDatabase();
     }
 

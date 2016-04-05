@@ -27,24 +27,24 @@ public class DatabaseLoaderDevelopment
     private final UserRepository userRepository;
 
     @Autowired
-    public DatabaseLoaderDevelopment(PermissionRepository permissionRepository, RoleRepository roleRepository, UserRepository userRepository)
+    public DatabaseLoaderDevelopment(PermissionRepository permissionRepos, RoleRepository roleRepos, UserRepository userRepos)
     {
-        this.permissionRepository = permissionRepository;
-        this.roleRepository = roleRepository;
-        this.userRepository = userRepository;
+        this.permissionRepository = permissionRepos;
+        this.roleRepository = roleRepos;
+        this.userRepository = userRepos;
     }
 
     @PostConstruct
     private void initDatabase()
     {
-        //Check if tables are initialized or empty
+        //Check if tables are initialised or empty
         if(permissionRepository.findAll().iterator().hasNext())
         {
-            //Tables are initialized, no need to refill database
+            //Tables are initialised, no need to refill database
             return;
         }
 
-        //Initialize user database
+        //Initialise user database
         initUserDatabase();
     }
 
@@ -80,7 +80,23 @@ public class DatabaseLoaderDevelopment
         roles.add(administrator);
         adminUser.setRoles(roles);
 
+        //Test users
+        User user1 = new User("Thomas", "Huybrechts", "thomas.huybrechts", "test");
+        User user2 = new User("Arthur", "Janssens", "arthur.janssens", "test");
+        User user3 = new User("Dennis", "Joosens", "dennis.joosens", "test");
+        User user4 = new User("Niels", "Vervliet", "niels.vervliet", "test");
+
+        //Set test users
+        user1.setRoles(roles);
+        user2.setRoles(roles);
+        user3.setRoles(roles);
+        user4.setRoles(roles);
+
         //Save users to database
         userRepository.save(adminUser);
+        userRepository.save(user1);
+        userRepository.save(user2);
+        userRepository.save(user3);
+        userRepository.save(user4);
     }
 }

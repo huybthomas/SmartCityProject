@@ -25,14 +25,14 @@ public class DatabaseLoaderDevelopment
     @PostConstruct
     private void initDatabase()
     {
-        //Check if tables are initialized or empty
+        //Check if tables are initialised or empty
         if(true)
         {
-            //Tables are initialized, no need to refill database
+            //Tables are initialised, no need to refill database
             return;
         }
 
-        //Initialize point table
+        //Initialise point table
         initPointTable();
     }
 
