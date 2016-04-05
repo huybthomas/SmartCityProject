@@ -34,8 +34,8 @@
         </ul>
 
         <div class="buttons" style="margin-top: 10px; margin-bottom: 10px">
-            <button onclick="history.go(0)" value="refresh" type="button" class="btn btn-default btn-lg" th:title="#{refresh}"><span class="glyphicon glyphicon-refresh"></span></button>
-            <a type="button" class="btn btn-success btn-lg" th:title="#{createNew}"><span class="glyphicon glyphicon-plus"></span></a>
+            <button type="button" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-refresh"></span></button>
+            <button type="button" class="btn btn-success btn-lg"><span class="glyphicon glyphicon-plus"></span></button>
         </div>
 
         <div class="panel panel-primary">
@@ -61,8 +61,8 @@
                             <td th:text="${user.id}">ID</td>
                             <td th:text="${user.firstName} + ' ' + ${user.lastName}">Name</td>
                             <td th:text="${user.username}">Username</td>
-                            <td><a th:href="@{'/users/' + ${user.username} + '/'}" type="button" class="btn btn-default btn-sm" th:title="#{settings.edit}"><span class="glyphicon glyphicon-pencil"></span></a></td>
-                            <td><a th:href="@{'/users/' + ${user.username} + '/delete'}" type="button" class="btn btn-danger btn-sm" th:title="#{settings.delete}"><span class="glyphicon glyphicon-trash"></span></a></td>
+                            <td><button th:href="@{'/users/' + ${u.username} + '/'}" type="button" class="btn btn-default btn-sm" th:title="#{settings.edit}"><span class="glyphicon glyphicon-pencil"></span></button></td>
+                            <td><button type="button" class="btn btn-danger btn-sm" th:title="#{settings.delete}"><span class="glyphicon glyphicon-trash"></span></button></td>
                         </tr>
                     </table>
                 </div>
