@@ -16,7 +16,8 @@
                 <span th:text="#{error.apology}">Apology</span>
             </div>
             <div th:text="${message}">Placeholder error message</div>
-            <div th:text="#{error.contactoperator}">Contact operator</div>
+            <div th:text="#{error.contactOperator}">Contact operator</div>
+            <a type="button" th:href="@{/}" class="btn btn-primary btn-lg" style="margin-top: 25px"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span><span> </span><span th:text="#{error.backToHome}">Back to home</span></a>
         </div>
     </div>
 </div>
