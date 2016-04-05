@@ -45,7 +45,7 @@ public class SimPoint
             return false;
         }
         final SimPoint other = (SimPoint) obj;
-        if ((this.id == -1) ? (other.id != -1) : !this.id.equals(other.id)) {
+        if ((this.id == -1) ? (other.id != -1) : !(this.id == other.id)) {
             return false;
         }
         return true;
