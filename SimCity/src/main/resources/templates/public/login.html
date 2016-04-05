@@ -6,21 +6,22 @@
 <div th:replace="layout :: navbar"></div>
 
 <div class="container-fluid">
-    <div class="front-content">
-        <div class="messagesContent">
-            <div th:if="${param.logout}" class="alert alertbox alert-success alert-dismissible fade in" role="alert">
-                <button class="close" data-dismiss="alert" aria-label="Close" aria-hidden="true">&times;</button>
-                <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
-                <span class="sr-only">Info: </span>
-                <span th:text="#{login.alerts.logout}">Logout message</span>
-            </div>
-            <div th:if="${param.error}" class="alert alertbox alert-danger alert-dismissible fade in" role="alert">
-                <button class="close" data-dismiss="alert" aria-label="Close" aria-hidden="true">&times;</button>
-                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-                <span class="sr-only">Error: </span>
-                <span th:text="#{login.alerts.error}">Error message</span>
-            </div>
+    <div class="messagesContent">
+        <div th:if="${param.logout}" class="alert alertbox alert-success alert-dismissible fade in" role="alert">
+            <button class="close" data-dismiss="alert" aria-label="Close" aria-hidden="true">&times;</button>
+            <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
+            <span class="sr-only">Info: </span>
+            <span th:text="#{login.alerts.logout}">Logout message</span>
         </div>
+        <div th:if="${param.error}" class="alert alertbox alert-danger alert-dismissible fade in" role="alert">
+            <button class="close" data-dismiss="alert" aria-label="Close" aria-hidden="true">&times;</button>
+            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+            <span class="sr-only">Error: </span>
+            <span th:text="#{login.alerts.error}">Error message</span>
+        </div>
+    </div>
+
+    <div class="front-content">
         <h2 th:text="#{login.title}">Login</h2>
 
         <div class="front-content">
