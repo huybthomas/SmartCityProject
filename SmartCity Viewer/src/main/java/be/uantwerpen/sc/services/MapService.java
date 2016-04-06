@@ -67,6 +67,8 @@ public class MapService {
 
         //build Sim Map
         MapBuilder mapBuilder = new MapBuilder(linkList, pointList);
+        System.out.println("Map Created");
+        mapBuilder.logMap();
 
     }
 

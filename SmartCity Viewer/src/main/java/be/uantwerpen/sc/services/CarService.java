@@ -17,7 +17,7 @@ import java.util.ArrayList;
 public class CarService {
 
     BotEntity[] botList;
-    ArrayList<SimBot> simBots;
+    public ArrayList<SimBot> simBots;
 
     public CarService(){
         //getBots();

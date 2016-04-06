@@ -18,6 +18,8 @@ public class SimMap
         this.sizeX = 0;
         this.sizeY = 0;
         mapTiles = new ArrayList<>();
+        mapTiles.add(new ArrayList<Tile>());
+        mapTiles.get(0).add(null);
     }
 
     public int getSizeX()
