@@ -6,14 +6,24 @@
 <div th:replace="layout :: navbar"></div>
 
 <div class="container-fluid">
-    <div class="front-content">
-        <h2 th:text="#{settings.title}">Settings</h2>
+    <div class="row">
+        <div class="col-sm-3 col-md-3 sidebar non-mobile-element">
+            <ul class="nav nav-pills nav-stacked">
+                <li role="presentation" class="active"><a href="#" th:text="#{settings.server}">Server</a></li>
+                <li role="presentation"><a th:href="@{/settings/users}" th:text="#{settings.users}">Users</a></li>
+                <li role="presentation"><a th:href="@{/settings/workers}" th:text="#{settings.workers}">Workers</a></li>
+            </ul>
+        </div>
 
-        <ul class="nav nav-tabs">
-            <li role="presentation" class="active"><a href="#" th:text="#{settings.server}">Server</a></li>
-            <li role="presentation"><a th:href="@{/settings/users}" th:text="#{settings.users}">Users</a></li>
-            <li role="presentation"><a th:href="@{/settings/workers}" th:text="#{settings.workers}">Workers</a></li>
-        </ul>
+        <div class="col-sm-9 col-sm-offset-3 col-md-9 col-md-offset-3 front-content">
+            <h2 th:text="#{settings.title}">Settings</h2>
+
+            <ul class="nav nav-tabs mobile-element">
+                <li role="presentation" class="active"><a href="#" th:text="#{settings.server}">Server</a></li>
+                <li role="presentation"><a th:href="@{/settings/users}" th:text="#{settings.users}">Users</a></li>
+                <li role="presentation"><a th:href="@{/settings/workers}" th:text="#{settings.workers}">Workers</a></li>
+            </ul>
+        </div>
     </div>
 </div>
 

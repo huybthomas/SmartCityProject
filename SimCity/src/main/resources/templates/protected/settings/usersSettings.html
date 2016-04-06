@@ -6,65 +6,79 @@
 <div th:replace="layout :: navbar"></div>
 
 <div class="container-fluid">
+    <div th:replace="protected/modals/newUserModal :: newUserModal"></div>
     <div class="messagesContent">
-        <div th:if="${param.userAdded}" class="alert alertbox alert-success" role="alert">
+        <div th:if="${param.userAdded}" class="alert alertbox alert-success fade in" role="alert">
+            <button class="close" data-dismiss="alert" aria-label="Close" aria-hidden="true">&times;</button>
             <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
             <span class="sr-only">Info: </span>
             <span id="userAddedAlert" th:text="#{settings.alerts.userAdded}">New user has been created</span>
         </div>
-        <div th:if="${param.userEdited}" class="alert alertbox alert-success" role="alert">
+        <div th:if="${param.userEdited}" class="alert alertbox alert-success fade in" role="alert">
+            <button class="close" data-dismiss="alert" aria-label="Close" aria-hidden="true">&times;</button>
             <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
             <span class="sr-only">Info: </span>
             <span id="userEditedAlert" th:text="#{settings.alerts.userEdited}">User has been edited</span>
         </div>
-        <div th:if="${param.userRemoved}" class="alert alertbox alert-warning" role="alert">
+        <div th:if="${param.userRemoved}" class="alert alertbox alert-warning fade in" role="alert">
+            <button class="close" data-dismiss="alert" aria-label="Close" aria-hidden="true">&times;</button>
             <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
             <span class="sr-only">Info: </span>
             <span id="userRemovedAlert" th:text="#{settings.alerts.userRemoved}">User has been removed</span>
         </div>
     </div>
 
-    <div class="front-content">
-        <h2 th:text="#{settings.title}">Settings</h2>
-
-        <ul class="nav nav-tabs">
-            <li role="presentation"><a th:href="@{/settings/server}" th:text="#{settings.server}">Server</a></li>
-            <li role="presentation" class="active"><a href="#" th:text="#{settings.users}">Users</a></li>
-            <li role="presentation"><a th:href="@{/settings/workers}" th:text="#{settings.workers}">Workers</a></li>
-        </ul>
-
-        <div class="buttons" style="margin-top: 10px; margin-bottom: 10px">
-            <button onclick="history.go(0)" value="refresh" type="button" class="btn btn-default btn-lg" th:title="#{refresh}"><span class="glyphicon glyphicon-refresh"></span></button>
-            <a type="button" class="btn btn-success btn-lg" th:title="#{createNew}"><span class="glyphicon glyphicon-plus"></span></a>
+    <div class="row">
+        <div class="col-sm-3 col-md-3 sidebar non-mobile-element">
+            <ul class="nav nav-pills nav-stacked">
+                <li role="presentation"><a th:href="@{/settings/server}" th:text="#{settings.server}">Server</a></li>
+                <li role="presentation" class="active"><a href="#" th:text="#{settings.users}">Users</a></li>
+                <li role="presentation"><a th:href="@{/settings/workers}" th:text="#{settings.workers}">Workers</a></li>
+            </ul>
         </div>
 
-        <div class="panel panel-primary">
-            <div class="panel-heading">
-                <h3 class="panel-title" th:text="#{users}">Users</h3>
+        <div class="col-sm-9 col-sm-offset-3 col-md-9 col-md-offset-3 front-content">
+            <h2 th:text="#{settings.title}">Settings</h2>
+
+            <ul class="nav nav-tabs mobile-element">
+                <li role="presentation"><a th:href="@{/settings/server}" th:text="#{settings.server}">Server</a></li>
+                <li role="presentation" class="active"><a href="#" th:text="#{settings.users}">Users</a></li>
+                <li role="presentation"><a th:href="@{/settings/workers}" th:text="#{settings.workers}">Workers</a></li>
+            </ul>
+
+            <div class="buttons" style="margin-top: 10px; margin-bottom: 10px">
+                <button onclick="history.go(0)" value="refresh" type="button" class="btn btn-default btn-lg" th:title="#{refresh}"><span class="glyphicon glyphicon-refresh"></span></button>
+                <button type="button" class="btn btn-success btn-lg" th:title="#{createNew}" data-toggle="modal" data-target="#newUserModal"><span class="glyphicon glyphicon-plus"></span></button>
             </div>
-            <div class="panel-body" style="padding: 0">
-                <div style="height: 40vh; overflow-y: auto">
-                    <table class="table table-striped">
-                        <col width="10%"/>
-                        <col width="40%"/>
-                        <col width="40%"/>
-                        <col width="5%"/>
-                        <col width="5%"/>
-                        <tr style="font-size:120%">
-                            <th th:text="#{user.id}">ID</th>
-                            <th th:text="#{user}">User</th>
-                            <th th:text="#{user.username}">Username</th>
-                            <th th:text="''">Place holder - Edit Button</th>
-                            <th th:text="''">Place holder - Delete Button</th>
-                        </tr>
-                        <tr th:each="user : ${allUsers}">
-                            <td th:text="${user.id}">ID</td>
-                            <td th:text="${user.firstName} + ' ' + ${user.lastName}">Name</td>
-                            <td th:text="${user.username}">Username</td>
-                            <td><a th:href="@{'/users/' + ${user.username} + '/'}" type="button" class="btn btn-default btn-sm" th:title="#{settings.edit}"><span class="glyphicon glyphicon-pencil"></span></a></td>
-                            <td><a th:href="@{'/users/' + ${user.username} + '/delete'}" type="button" class="btn btn-danger btn-sm" th:title="#{settings.delete}"><span class="glyphicon glyphicon-trash"></span></a></td>
-                        </tr>
-                    </table>
+
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title" th:text="#{users}">Users</h3>
+                </div>
+                <div class="panel-body" style="padding: 0">
+                    <div style="height: 40vh; overflow-y: auto">
+                        <table class="table table-striped">
+                            <col width="10%"/>
+                            <col width="40%"/>
+                            <col width="40%"/>
+                            <col width="5%"/>
+                            <col width="5%"/>
+                            <tr style="font-size:120%">
+                                <th th:text="#{user.id}">ID</th>
+                                <th th:text="#{user}">User</th>
+                                <th th:text="#{user.username}">Username</th>
+                                <th th:text="''">Place holder - Edit Button</th>
+                                <th th:text="''">Place holder - Delete Button</th>
+                            </tr>
+                            <tr th:each="user : ${allUsers}">
+                                <td th:text="${user.id}">ID</td>
+                                <td th:text="${user.firstName} + ' ' + ${user.lastName}">Name</td>
+                                <td th:text="${user.username}">Username</td>
+                                <td><a th:href="@{'/users/' + ${user.username} + '/'}" type="button" class="btn btn-default btn-sm" th:title="#{settings.edit}"><span class="glyphicon glyphicon-pencil"></span></a></td>
+                                <td><a th:href="@{'/users/' + ${user.username} + '/delete'}" type="button" class="btn btn-danger btn-sm" th:title="#{settings.delete}"><span class="glyphicon glyphicon-trash"></span></a></td>
+                            </tr>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>

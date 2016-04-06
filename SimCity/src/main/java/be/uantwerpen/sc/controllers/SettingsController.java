@@ -1,6 +1,7 @@
 package be.uantwerpen.sc.controllers;
 
 import be.uantwerpen.sc.models.security.User;
+import be.uantwerpen.sc.services.security.RoleService;
 import be.uantwerpen.sc.services.security.UserService;
 import be.uantwerpen.sc.services.sim.SimWorkerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,9 @@ public class SettingsController extends GlobalModelController
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private RoleService roleService;
+
     @RequestMapping(value = {"/settings", "/settings/server"})
     @PreAuthorize("hasRole('logon')")
     public String showServerSettings(ModelMap model)
@@ -35,6 +39,7 @@ public class SettingsController extends GlobalModelController
         Iterable<User> users = userService.findAll();
 
         model.addAttribute("allUsers", users);
+        model.addAttribute("allRoles", roleService.findAll());
 
         return "protected/settings/usersSettings";
     }

@@ -50,16 +50,16 @@ public class UsersController extends GlobalModelController
             return "redirect:/settings/users?errorUserNotFound";
         }
 
-        return "protected/settings/forms/userForm";
+        return "protected/forms/userForm";
     }
 
     @RequestMapping(value="/users/{username}/", method=RequestMethod.POST)
     @PreAuthorize("hasRole('logon')")
-    public String postUser(@Validated @ModelAttribute("user") User user, BindingResult result, HttpServletRequest request, SessionStatus sessionStatus, ModelMap model)
+    public String editUser(@Validated @ModelAttribute("user") User user, BindingResult result, HttpServletRequest request, SessionStatus sessionStatus, ModelMap model)
     {
         if(result.hasErrors())
         {
-            return "protected/settings/forms/userForm";
+            return "protected/forms/userForm";
         }
 
         if(userService.save(user))

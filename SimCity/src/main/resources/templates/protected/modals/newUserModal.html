@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+
+<!-- New User Modal Form -->
+<div th:fragment="newUserModal">
+    <div class="modal fade" id="newUserModal" tabindex="-1" role="dialog" aria-labelledby="newUserModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="newUserModalLabel" th:text="#{modal.newuser.title}">Create new user</h4>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="firstName" class="control" th:text="#{user.firstName} + ':'">First name:</label>
+                            <input type="text" class="form-control" id="firstName"/>
+                            <label for="lastName" class="control" th:text="#{user.lastName} + ':'">Last name:</label>
+                            <input type="text" class="form-control" id="lastName"/>
+                            <label for="username" class="control" th:text="#{user.username} + ':'">Username:</label>
+                            <input type="text" class="form-control" id="username"/>
+                        </div>
+                        <hr/>
+                        <div class="form-group">
+                            <label for="newPassword" class="control" th:text="#{modal.newuser.newPassword} + ':'">New password:</label>
+                            <input type="text" class="form-control" id="newPassword"/>
+                            <label for="repeatPassword" class="control" th:text="#{modal.newuser.repeatPassword} + ':'">Repeat password:</label>
+                            <input type="text" class="form-control" id="repeatPassword"/>
+                        </div>
+                        <hr/>
+                        <div class="form-group">
+                            <label for="role" class="control" th:text="#{user.role} + ':'">Role:</label>
+                            <select class="form-control" id="role">
+                                <option th:each="role:${allRoles}" th:value="${{role}}" th:text="${role.name}"></option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" th:text="#{cancel}">Cancel</button>
+                    <button type="button" class="btn btn-primary" th:text="#{create}">Create</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</html>
