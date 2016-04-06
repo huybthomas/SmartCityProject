@@ -42,28 +42,36 @@ public class MapService {
         pointList = new PointEntity[]{point1, point2, point3, point4};
         
         LinkEntity link = new LinkEntity();
-        link.setLength(1);
+        link.setLength(3);
         link.setLid(1);
         link.setStartDirection("EAST");
         link.setStopDirection("WEST");
         link.setStartId(point1);
         link.setStopId(point2);
         LinkEntity link2 = new LinkEntity();
-        link2.setLength(1);
+        link2.setLength(2);
         link2.setLid(2);
         link2.setStartDirection("EAST");
         link2.setStopDirection("WEST");
         link2.setStartId(point2);
         link2.setStopId(point3);
         LinkEntity link3 = new LinkEntity();
-        link3.setLength(2);
+        link3.setLength(4);
         link3.setLid(3);
         link3.setStartDirection("SOUTH");
-        link3.setStopDirection("NORTH");
+        link3.setStopDirection("WEST");
         link3.setStartId(point2);
         link3.setStopId(point4);
+        LinkEntity link4 = new LinkEntity();
+        link4.setLength(2);
+        link4.setLid(4);
+        link4.setStartDirection("SOUTH");
+        link4.setStopDirection("NORTH");
+        link4.setStartId(point3);
+        link4.setStopId(point4);
+        
 
-        linkList = new LinkEntity[]{link, link2, link3};
+        linkList = new LinkEntity[]{link, link2, link3, link4};
 
         //build Sim Map
         MapBuilder mapBuilder = new MapBuilder(linkList, pointList);

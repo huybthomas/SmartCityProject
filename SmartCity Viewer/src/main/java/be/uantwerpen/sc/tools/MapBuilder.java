@@ -125,23 +125,33 @@ public class MapBuilder{
     }
 
     private boolean canProcessWithCurrentProcessingType(LinkEntity link, ProcessingType type){
-        boolean possible = false;
         switch(type){
             case STRAIGHT:
                 if(link.getStartDirection() == "NORTH" && link.getStopDirection() == "SOUTH" || link.getStartDirection() == "SOUTH" && link.getStopDirection() == "NORTH")  // Vertical
-                    possible = true;
+                    return true;
                 if(link.getStartDirection() == "WEST" && link.getStopDirection() == "EAST" || link.getStartDirection() == "EAST" && link.getStopDirection() == "WEST")      //Horizontal
-                    possible = true;
+                    return true;
                 break;
-            case BEND:
+            case BEND:  //Both start and stop are already on map
+                SimPoint point = new SimPoint(link.getStartId().getPid());
+                SimPoint point2 = new SimPoint(link.getStopId().getPid());
+                //check if start already on map
+                if(!(simPoints.contains(point)) || !(simPoints.contains(point2)))
+                    return false;
+
+                if(link.getStartDirection() == "NORTH" && link.getStopDirection() == "EAST" || link.getStartDirection() == "EAST" && link.getStopDirection() == "SOUTH" || link.getStartDirection() == "SOUTH" && link.getStopDirection() == "WEST" || link.getStartDirection() == "WEST" && link.getStopDirection() == "NORTH")     // clockwise
+                    return true;
+                if(link.getStartDirection() == "NORTH" && link.getStopDirection() == "WEST" || link.getStartDirection() == "WEST" && link.getStopDirection() == "SOUTH" || link.getStartDirection() == "SOUTH" && link.getStopDirection() == "EAST" || link.getStartDirection() == "EAST" && link.getStopDirection() == "NORTH")      //counter-clockwise
+                    return true;
+
             case ADVANCED:
                 if(link.getStartDirection() == "NORTH" && link.getStopDirection() == "EAST" || link.getStartDirection() == "EAST" && link.getStopDirection() == "SOUTH" || link.getStartDirection() == "SOUTH" && link.getStopDirection() == "WEST" || link.getStartDirection() == "WEST" && link.getStopDirection() == "NORTH")     // clockwise
-                    possible = true;
+                    return true;
                 if(link.getStartDirection() == "NORTH" && link.getStopDirection() == "WEST" || link.getStartDirection() == "WEST" && link.getStopDirection() == "SOUTH" || link.getStartDirection() == "SOUTH" && link.getStopDirection() == "EAST" || link.getStartDirection() == "EAST" && link.getStopDirection() == "NORTH")      //counter-clockwise
-                    possible = true;
+                    return true;
                 break;
         }
-        return possible;
+        return false;
     }
 
     private boolean processFirstLink(LinkEntity link, ProcessingType type){
@@ -214,13 +224,22 @@ public class MapBuilder{
                 //Add info to map
                 int distVect = locY - intersect[1];
                 int distHor = locX - intersect[0];
+                int distVert2 = intersect[1] - intersect[3];
+                int distHor2 = intersect[0] - intersect[2];
+                //Add route to intersect
                 if(link.getStartDirection()=="NORTH" || link.getStartDirection() == "SOUTH"){
                     addTileVertical(distVect, true);
-                    addTileHorizontal(distHor, false);
+                    locX = intersect[0];
+                    locY = intersect[1];
+                    addTileHorizontal(distHor2, true);
                 }else{
                     addTileHorizontal(distHor, true);
-                    addTileVertical(distVect, false);
+                    locX = intersect[0];
+                    locY = intersect[1];
+                    addTileVertical(distVert2, true);
                 }
+                //add route from intersect to end
+
                 break;
             case ADVANCED:  //Only one point needs to exist
                 //TODO Advanced
@@ -235,7 +254,7 @@ public class MapBuilder{
     }
 
     private int[] findIntersect(LinkEntity link){
-        int[] intersect = {-1,-1};
+        int[] intersect = {-1,-1,-1,-1};
 
         int startId = link.getStartId().getPid();
         SimPoint startPoint = new SimPoint(startId);
@@ -255,6 +274,8 @@ public class MapBuilder{
             intersect[1] = startPoint.getPosY();
             intersect[0] = stopPoint.getPosY();
         }
+        intersect[2] = stopPoint.getPosX();
+        intersect[3] = stopPoint.getPosY();
 
         return intersect;
     }
@@ -292,8 +313,10 @@ public class MapBuilder{
 
     private void addTileVertical(int length, boolean noPoint){
         boolean up = true;
-        if(length < 0)
+        if(length < 0) {
             up = false;
+            length = -length;
+        }
         //Create road up untill the last 'length'
         if(up) {
             while (length > 1) {
@@ -370,15 +393,17 @@ public class MapBuilder{
                     simMap.mapTiles.get(currSizeY-1).add(tile);
             }
         }else{
-            simMap.mapTiles.get(currSizeY-1).set(locX, tile);
+            simMap.mapTiles.get(locY+1).set(locX, tile);
         }
         locY++;
     }
 
     private void addTileHorizontal(int length, boolean noPoint){
-        boolean right = true;
-        if(length < 0)
-            right = false;
+        boolean right = false;
+        if(length < 0) {
+            right = true;
+            length = -length;
+        }
         //Create road up untill the last 'length'
         if(right){
             while (length > 1) {
@@ -417,29 +442,20 @@ public class MapBuilder{
             int i = -1;
             Iterator<ArrayList<Tile>> iterator = simMap.mapTiles.iterator();
             while(iterator.hasNext()) {
-                ArrayList<Tile> second = iterator.next();
+                ArrayList<Tile> rows = iterator.next();
                 i++;
                 if (i == locX) {
-                    second.add(0, tile);
+                    rows.add(0, tile);
                 } else {
-                    second.add(0, null);
+                    rows.add(0, null);
                 }
             }
             updateSimPointLocations(Update.RIGHT);
             currSizeX++;
         }else {  //Add one element
-            int i = -1;
-            Iterator<ArrayList<Tile>> iterator = simMap.mapTiles.iterator();
-            while (iterator.hasNext()) {
-                ArrayList<Tile> second = iterator.next();
-                i++;
-                if (i == locX) {
-                    second.set(locX, tile);
-                }
-                //Simpoints does not need to be updated
-                locX--;
-            }
+            simMap.mapTiles.get(locY).set(locX, tile);
         }
+        locX--;
     }
 
     private void addTileRight(int length) {
@@ -465,10 +481,10 @@ public class MapBuilder{
                 }
             }
             currSizeX++;
-            locX++;
         }else{  //Add one element
             simMap.mapTiles.get(locY).set(locX, tile);
         }
+        locX++;
 
 
     }
