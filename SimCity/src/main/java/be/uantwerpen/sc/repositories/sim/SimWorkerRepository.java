@@ -13,4 +13,6 @@ import java.util.List;
 public interface SimWorkerRepository extends CrudRepository<SimWorker,Long>
 {
     List<SimWorker> findAll();
+
+    SimWorker findByWorkerName(String workerName);
 }

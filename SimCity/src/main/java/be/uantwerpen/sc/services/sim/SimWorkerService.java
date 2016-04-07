@@ -1,5 +1,6 @@
 package be.uantwerpen.sc.services.sim;
 
+import be.uantwerpen.sc.models.security.User;
 import be.uantwerpen.sc.models.sim.SimWorker;
 import be.uantwerpen.sc.repositories.sim.SimWorkerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,26 +20,30 @@ public class SimWorkerService
 
     public Iterable<SimWorker> findAll()
     {
-        //return this.simWorkerRepository.findAll();
+        return this.simWorkerRepository.findAll();
+    }
 
-        List<SimWorker> workers = new ArrayList<SimWorker>();
+    public boolean delete(String workerName)
+    {
+        SimWorker w = findByWorkerName(workerName);
 
-        SimWorker worker1 = new SimWorker();
-        worker1.setId(1L);
-        worker1.setWorkerName("Worker1");
+        if(w != null)
+        {
+            this.simWorkerRepository.delete(w.getId());
 
-        SimWorker worker2 = new SimWorker();
-        worker2.setId(2L);
-        worker2.setWorkerName("Worker2");
+            return true;
+        }
 
-        workers.add(worker1);
-        workers.add(worker2);
-
-        return workers;
+        return false;
     }
 
     public int getNumberOfWorkers()
     {
         return this.simWorkerRepository.findAll().size();
+    }
+
+    public SimWorker findByWorkerName(String workerName)
+    {
+        return simWorkerRepository.findByWorkerName(workerName);
     }
 }

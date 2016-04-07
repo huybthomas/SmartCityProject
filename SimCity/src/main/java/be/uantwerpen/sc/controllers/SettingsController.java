@@ -1,6 +1,7 @@
 package be.uantwerpen.sc.controllers;
 
 import be.uantwerpen.sc.models.security.User;
+import be.uantwerpen.sc.models.sim.SimWorker;
 import be.uantwerpen.sc.services.security.RoleService;
 import be.uantwerpen.sc.services.security.UserService;
 import be.uantwerpen.sc.services.sim.SimWorkerService;
@@ -36,8 +37,10 @@ public class SettingsController extends GlobalModelController
     @PreAuthorize("hasRole('logon')")
     public String showUsersSettings(ModelMap model)
     {
+        User user = new User();
         Iterable<User> users = userService.findAll();
 
+        model.addAttribute("user", user);
         model.addAttribute("allUsers", users);
         model.addAttribute("allRoles", roleService.findAll());
 
@@ -48,6 +51,10 @@ public class SettingsController extends GlobalModelController
     @PreAuthorize("hasRole('logon')")
     public String showWorkersSettings(ModelMap model)
     {
+        SimWorker worker = new SimWorker();
+
+        model.addAttribute("worker", worker);
+
         return "protected/settings/workersSettings";
     }
 }

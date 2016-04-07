@@ -78,6 +78,25 @@ public class UsersController extends GlobalModelController
         }
     }
 
+    @RequestMapping(value="/user/create", method=RequestMethod.POST)
+    @PreAuthorize("hasRole('logon')")
+    public String createUser(@Validated @ModelAttribute("user") User user, BindingResult result, HttpServletRequest request, SessionStatus sessionStatus, ModelMap model)
+    {
+        if(result.hasErrors())
+        {
+            return "protected/settings/users";
+        }
+
+        if(userService.add(user))
+        {
+            return "redirect:/settings/users?userAdded";
+        }
+        else
+        {
+            return "redirect:/settings/users?errorAlreadyExists";
+        }
+    }
+
     @RequestMapping(value="/users/{username}/delete")
     @PreAuthorize("hasRole('logon')")
     public String deleteUser(@PathVariable String username, HttpServletRequest request, ModelMap model)

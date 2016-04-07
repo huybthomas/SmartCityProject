@@ -30,6 +30,23 @@ public class UserService
         return this.userRepository.findAll();
     }
 
+    public boolean add(final User user)
+    {
+        if(isDuplicatedUsername(user))
+        {
+            return false;
+        }
+
+        if(this.userRepository.save(user) != null)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
     public boolean save(User user)
     {
         for(User u : findAll())

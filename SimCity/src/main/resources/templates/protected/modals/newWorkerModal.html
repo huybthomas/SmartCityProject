@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+
+<!-- New Worker Modal Form -->
+<div th:fragment="newWorkerModal">
+    <div class="modal fade" id="newWorkerModal" tabindex="-1" role="dialog" aria-labelledby="newWorkerModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="newWorkerModalLabel" th:text="#{modal.newworker.title}">Add new worker</h4>
+                </div>
+                <form id="newWorkerForm" th:action="@{/worker/add}" th:object="${worker}" method="post">
+                    <div class="modal-body">
+                        <div class="form-group">
+
+                        </div>
+                        <hr/>
+                        <div class="form-group">
+
+                        </div>
+                        <hr/>
+                        <div class="form-group">
+
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal" th:text="#{cancel}">Cancel</button>
+                        <button type="submit" class="btn btn-primary" th:text="#{add}">Add</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+</html>
