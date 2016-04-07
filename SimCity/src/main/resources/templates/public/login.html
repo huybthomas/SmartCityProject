@@ -21,31 +21,21 @@
         </div>
     </div>
 
-    <div class="front-content">
-        <h2 th:text="#{login.title}">Login</h2>
-
+    <div class="front-content" style="max-width: 500px; margin: 0 auto">
         <div class="front-content">
-            <div class="panel panel-primary">
-                <div class="panel-heading">
-                    <h3 class="panel-title" th:text="#{login.header}">Login</h3>
-                </div>
-                <div class="panel-body" style="padding: 0">
-                    <div class="loginFormBorder">
-                        <form name="loginForm" th:action="@{/login}" action="/login" method="POST">
-                            <div class="input-group">
-                                <span class="input-group-addon" id="usernameAddon"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></span>
-                                <input type="text" class="form-control" id="username" name="username" value="" th:placeholder="#{login.username}" aria-describedby="usernameAddon"/>
-                            </div>
-                            <div class="input-group">
-                                <span class="input-group-addon" id="passwordAddon"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span></span>
-                                <input type="password" class="form-control" id="password" name="password" th:placeholder="#{login.password}" aria-describedby="passwordAddon"/>
-                            </div>
-                            <div class="btn-group btn-group-lg">
-                                <input type="submit" id="login" th:value="#{login.login}" class="btn btn-primary" style="margin-top:10px"/>
-                            </div>
-                        </form>
+            <h2 th:text="#{login.title}" style="padding-bottom: 10px">Login</h2>
+            <div class="loginFormBorder" style="max-width: 330px; margin: 0 auto">
+                <form name="loginForm" th:action="@{/login}" action="/login" method="POST">
+                    <div class="input-group">
+                        <span class="input-group-addon" id="usernameAddon" style="margin-bottom: -1px; border-bottom-left-radius: 0"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></span>
+                        <input type="text" class="form-control" id="username" name="username" value="" th:placeholder="#{login.username}" style="font-size: 16px; padding: 10px; height: auto; margin-bottom: -1px; border-bottom-right-radius: 0" aria-describedby="usernameAddon"/>
                     </div>
-                </div>
+                    <div class="input-group">
+                        <span class="input-group-addon" id="passwordAddon" style="border-top-left-radius: 0"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span></span>
+                        <input type="password" class="form-control" id="password" name="password" th:placeholder="#{login.password}" style="font-size: 16px; padding: 10px; height: auto; border-top-right-radius: 0" aria-describedby="passwordAddon"/>
+                    </div>
+                    <input type="submit" id="login" th:value="#{login.login}" class="btn btn-primary btn-lg btn-block" style="margin-top:10px"/>
+                </form>
             </div>
             <div class="languageselect" style="margin-top:20px">
                 <span th:text="#{languageselect.languages}">Languages</span>:
