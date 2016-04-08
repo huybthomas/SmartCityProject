@@ -5,6 +5,7 @@ import be.uantwerpen.sc.models.PointEntity;
 import be.uantwerpen.sc.models.sim.SimLink;
 import be.uantwerpen.sc.models.sim.SimMap;
 import be.uantwerpen.sc.models.sim.SimPoint;
+import org.springframework.security.access.method.P;
 
 import java.util.*;
 
@@ -68,7 +69,7 @@ public class MapBuilder{
                             System.out.print("|");
                             break;
                         default:
-                            System.out.print("ERR");
+                            System.out.print("X");
                     }
                 }
             }
@@ -102,6 +103,7 @@ public class MapBuilder{
                 if(canProcessWithCurrentProcessingType(link, processingType)){
                     //Removes link on success, thus, we need to start linkIterator again    //TODO Find alternative
                     processLink(link, processingType);
+                    logMap();
                     linkIterator = linkEntities.iterator();
                     nextMode = false;
                 }
@@ -222,21 +224,52 @@ public class MapBuilder{
                 //Calculate intersection
                 int[] intersect = findIntersect(link);
                 //Add info to map
-                int distVect = locY - intersect[1];
+                int distVert = locY - intersect[1];
                 int distHor = locX - intersect[0];
                 int distVert2 = intersect[1] - intersect[3];
                 int distHor2 = intersect[0] - intersect[2];
                 //Add route to intersect
                 if(link.getStartDirection()=="NORTH" || link.getStartDirection() == "SOUTH"){
-                    addTileVertical(distVect, true);
+                    if(link.getStartDirection()=="NORTH") {
+                        if (link.getStopDirection() == "EAST") {
+                            addTileVertical(distVert, Tile.SOUTH_WEST);
+                        } else {   //WEST
+                            addTileVertical(distVert, Tile.SOUTH_EAST);
+                        }
+                    }else{  //SOUTH
+                        if (link.getStopDirection() == "EAST") {
+                            addTileVertical(distVert, Tile.NORTH_WEST);
+                        } else {   //WEST
+                            addTileVertical(distVert, Tile.NORTH_EAST);
+                        }
+                    }
                     locX = intersect[0];
                     locY = intersect[1];
-                    addTileHorizontal(distHor2, true);
+                    addTileHorizontal(distHor2, Tile.POINT);
                 }else{
-                    addTileHorizontal(distHor, true);
+                    if(link.getStartDirection()=="EAST"){
+                        if (link.getStopDirection() == "NORTH") {
+                            addTileVertical(distHor, Tile.SOUTH_WEST);
+                        } else {   //SOUTH
+                            addTileVertical(distHor, Tile.NORTH_WEST);
+                        }
+                    }else{  //WEST
+                        if (link.getStopDirection() == "NORTH") {
+                            addTileVertical(distHor, Tile.SOUTH_EAST);
+                        } else {   //SOUTH
+                            addTileVertical(distHor, Tile.NORTH_EAST);
+                        }
+                    }
                     locX = intersect[0];
                     locY = intersect[1];
-                    addTileVertical(distVert2, true);
+                    if(distVert2 > 0){
+                        locY++;
+                        distVert2--;
+                    }else{
+                        locY--;
+                        distVert2--;
+                    }
+                    addTileVertical(distVert2, Tile.POINT);
                 }
                 //add route from intersect to end
 
@@ -311,7 +344,7 @@ public class MapBuilder{
         }
     }*/
 
-    private void addTileVertical(int length, boolean noPoint){
+    private void addTileVertical(int length, Tile tile){
         boolean up = true;
         if(length < 0) {
             up = false;
@@ -323,21 +356,38 @@ public class MapBuilder{
                 addTileAbove(Tile.VERTICAL);
                 length--;
             }
-            if(!noPoint)
-                addTileAbove(Tile.POINT);
-            else
-                addTileAbove(Tile.VERTICAL);
+            addTileAbove(tile);
+
         }else{
             while (length > 1) {
                 addTileBelow(Tile.VERTICAL);
                 length--;
             }
-            if(!noPoint)
-                addTileBelow(Tile.POINT);
-            else
-                addTileBelow(Tile.VERTICAL);
+            addTileBelow(tile);
         }
+    }
 
+    private void addTileHorizontal(int length, Tile tile){
+        boolean right = false;
+        if(length < 0) {
+            right = true;
+            length = -length;
+        }
+        //Create road up untill the last 'length'
+        if(right){
+            while (length > 1) {
+                addTileRight(Tile.HORIZONTAL);
+                length--;
+            }
+            addTileRight(tile);
+
+        }else{
+            while (length > 1) {
+                addTileLeft(Tile.HORIZONTAL);
+                length--;
+            }
+            addTileLeft(tile);
+        }
     }
 
     private void addTileAbove(int length){
@@ -365,8 +415,9 @@ public class MapBuilder{
             }
             currSizeY++;
         }else{
-            simMap.mapTiles.get(locY).set(locX, tile);
             locY--;
+            updateTile(simMap.mapTiles.get(locY).get(locX), tile);
+
         }
 
     }
@@ -381,7 +432,8 @@ public class MapBuilder{
     }
 
     private void addTileBelow(Tile tile){
-        if(locY == currSizeY-1){
+        locY++;
+        if(locY > currSizeY-1){
             simMap.mapTiles.add(new ArrayList<Tile>()); //Add new arraylist
             //No need to update simPoints
             currSizeY++;
@@ -393,39 +445,8 @@ public class MapBuilder{
                     simMap.mapTiles.get(currSizeY-1).add(tile);
             }
         }else{
-            simMap.mapTiles.get(locY+1).set(locX, tile);
+            updateTile(simMap.mapTiles.get(locY).get(locX), tile);
         }
-        locY++;
-    }
-
-    private void addTileHorizontal(int length, boolean noPoint){
-        boolean right = false;
-        if(length < 0) {
-            right = true;
-            length = -length;
-        }
-        //Create road up untill the last 'length'
-        if(right){
-            while (length > 1) {
-                addTileRight(Tile.HORIZONTAL);
-                length--;
-            }
-            if(!noPoint)
-                addTileRight(Tile.POINT);
-            else
-                addTileRight(Tile.HORIZONTAL);
-        }else{
-            while (length > 1) {
-                addTileLeft(Tile.HORIZONTAL);
-                length--;
-            }
-            if(!noPoint)
-                addTileLeft(Tile.POINT);
-            else
-                addTileLeft(Tile.HORIZONTAL);
-        }
-
-
     }
 
     private void addTileLeft(int length) {
@@ -453,9 +474,10 @@ public class MapBuilder{
             updateSimPointLocations(Update.RIGHT);
             currSizeX++;
         }else {  //Add one element
-            simMap.mapTiles.get(locY).set(locX, tile);
+            locX--;
+            updateTile(simMap.mapTiles.get(locY).get(locX), tile);
         }
-        locX--;
+
     }
 
     private void addTileRight(int length) {
@@ -468,7 +490,8 @@ public class MapBuilder{
     }
 
     private void addTileRight(Tile tile){
-        if(locX == currSizeX-1){   //Add one element at end of every row
+        locX++;
+        if(locX > currSizeX-1){   //Add one element at end of every row
             int i = -1;
             Iterator<ArrayList<Tile>> iterator = simMap.mapTiles.iterator();
             while(iterator.hasNext()) {
@@ -482,11 +505,214 @@ public class MapBuilder{
             }
             currSizeX++;
         }else{  //Add one element
-            simMap.mapTiles.get(locY).set(locX, tile);
+            updateTile(simMap.mapTiles.get(locY).get(locX), tile);
         }
-        locX++;
+    }
 
+    private void updateTile(Tile originalTile, Tile newTile){
+        if(newTile == Tile.POINT){
+            simMap.mapTiles.get(locY).set(locX, Tile.POINT);
+            return;
+        }else if(newTile == Tile.INTERSECT){
+            simMap.mapTiles.get(locY).set(locX, Tile.INTERSECT);
+            return;
+        }else if(originalTile == Tile.INTERSECT){
+            return;
+        }
 
+        if(originalTile == null){
+            simMap.mapTiles.get(locY).set(locX, newTile);
+            return;
+        }
+
+        switch(originalTile){
+            case POINT:
+                //Tile stays a point
+                break;
+            case VERTICAL:
+                switch(newTile){
+                    case HORIZONTAL:
+                    case NORTH_EAST_WEST:
+                    case SOUTH_WEST_EAST:
+                        simMap.mapTiles.get(locY).set(locX, Tile.INTERSECT);
+                        break;
+                    case NORTH_EAST:
+                    case NORTH_WEST:
+                    case WEST_NORTH_SOUTH:
+                        simMap.mapTiles.get(locY).set(locX, Tile.WEST_NORTH_SOUTH);
+                        break;
+                    case SOUTH_EAST:
+                    case SOUTH_WEST:
+                    case EAST_SOUTH_NORTH:
+                        simMap.mapTiles.get(locY).set(locX, Tile.EAST_SOUTH_NORTH);
+                        break;
+                    default:
+                        //Do nothing
+                }
+                break;
+            case HORIZONTAL:
+                switch(newTile){
+                    case VERTICAL:
+                    case EAST_SOUTH_NORTH:
+                    case WEST_NORTH_SOUTH:
+                        simMap.mapTiles.get(locY).set(locX, Tile.INTERSECT);
+                        break;
+                    case NORTH_EAST:
+                    case NORTH_WEST:
+                    case NORTH_EAST_WEST:
+                        simMap.mapTiles.get(locY).set(locX, Tile.NORTH_EAST_WEST);
+                        break;
+                    case SOUTH_EAST:
+                    case SOUTH_WEST:
+                    case SOUTH_WEST_EAST:
+                        simMap.mapTiles.get(locY).set(locX, Tile.SOUTH_WEST_EAST);
+                        break;
+                    default:
+                        //Do nothing
+                }
+            case NORTH_EAST:
+                switch (newTile){
+                    case VERTICAL:
+                    case SOUTH_EAST:
+                    case EAST_SOUTH_NORTH:
+                        simMap.mapTiles.get(locY).set(locX, Tile.EAST_SOUTH_NORTH);
+                        break;
+                    case HORIZONTAL:
+                    case NORTH_WEST:
+                    case NORTH_EAST_WEST:
+                        simMap.mapTiles.get(locY).set(locX, Tile.NORTH_EAST_WEST);
+                        break;
+                    case SOUTH_WEST:
+                    case SOUTH_WEST_EAST:
+                    case WEST_NORTH_SOUTH:
+                        simMap.mapTiles.get(locY).set(locX, Tile.INTERSECT);
+                        break;
+                    default:
+                        //do nothing
+                }
+            case NORTH_WEST:
+                switch(newTile){
+                    case VERTICAL:
+                    case SOUTH_WEST:
+                    case WEST_NORTH_SOUTH:
+                        simMap.mapTiles.get(locY).set(locX, Tile.WEST_NORTH_SOUTH);
+                        break;
+                    case HORIZONTAL:
+                    case NORTH_EAST:
+                    case NORTH_EAST_WEST:
+                        simMap.mapTiles.get(locY).set(locX, Tile.NORTH_EAST_WEST);
+                        break;
+                    case SOUTH_EAST:
+                    case EAST_SOUTH_NORTH:
+                    case SOUTH_WEST_EAST:
+                        simMap.mapTiles.get(locY).set(locX, Tile.INTERSECT);
+                        break;
+                    default:
+                        //Do nothing
+                }
+                break;
+            case SOUTH_EAST:
+                switch (newTile){
+                    case VERTICAL:
+                    case NORTH_EAST:
+                    case EAST_SOUTH_NORTH:
+                        simMap.mapTiles.get(locY).set(locX, Tile.EAST_SOUTH_NORTH);
+                        break;
+                    case HORIZONTAL:
+                    case SOUTH_WEST:
+                    case SOUTH_WEST_EAST:
+                        simMap.mapTiles.get(locY).set(locX, Tile.SOUTH_WEST_EAST);
+                        break;
+                    case NORTH_WEST:
+                    case NORTH_EAST_WEST:
+                    case WEST_NORTH_SOUTH:
+                        simMap.mapTiles.get(locY).set(locX, Tile.INTERSECT);
+                        break;
+                    default:
+                        //do nothing
+                }
+                break;
+            case SOUTH_WEST:
+                switch(newTile){
+                    case VERTICAL:
+                    case NORTH_WEST:
+                    case WEST_NORTH_SOUTH:
+                        simMap.mapTiles.get(locY).set(locX, Tile.WEST_NORTH_SOUTH);
+                        break;
+                    case HORIZONTAL:
+                    case SOUTH_EAST:
+                    case SOUTH_WEST_EAST:
+                        simMap.mapTiles.get(locY).set(locX, Tile.SOUTH_WEST_EAST);
+                        break;
+                    case NORTH_EAST:
+                    case NORTH_EAST_WEST:
+                    case EAST_SOUTH_NORTH:
+                        simMap.mapTiles.get(locY).set(locX, Tile.INTERSECT);
+                        break;
+                    default:
+                        ///do nothing
+                }
+                break;
+            case NORTH_EAST_WEST:
+                switch (newTile){
+                    case VERTICAL:
+                    case SOUTH_EAST:
+                    case SOUTH_WEST:
+                    case EAST_SOUTH_NORTH:
+                    case SOUTH_WEST_EAST:
+                    case WEST_NORTH_SOUTH:
+                        simMap.mapTiles.get(locY).set(locX, Tile.INTERSECT);
+                        break;
+                    default:
+                        //do nothing
+                }
+                break;
+            case EAST_SOUTH_NORTH:
+                switch (newTile){
+                    case HORIZONTAL:
+                    case NORTH_WEST:
+                    case SOUTH_WEST:
+                    case NORTH_EAST_WEST:
+                    case SOUTH_WEST_EAST:
+                    case WEST_NORTH_SOUTH:
+                        simMap.mapTiles.get(locY).set(locX, Tile.INTERSECT);
+                        break;
+                    default:
+                        //do nothing
+                }
+                break;
+            case SOUTH_WEST_EAST:
+                switch (newTile){
+                    case VERTICAL:
+                    case NORTH_EAST:
+                    case NORTH_WEST:
+                    case NORTH_EAST_WEST:
+                    case EAST_SOUTH_NORTH:
+                    case WEST_NORTH_SOUTH:
+                        simMap.mapTiles.get(locY).set(locX, Tile.INTERSECT);
+                        break;
+                    default:
+                        //do nothing
+                }
+                break;
+            case WEST_NORTH_SOUTH:
+                switch (newTile){
+                    case HORIZONTAL:
+                    case NORTH_EAST:
+                    case SOUTH_EAST:
+                    case NORTH_EAST_WEST:
+                    case EAST_SOUTH_NORTH:
+                    case SOUTH_WEST_EAST:
+                        simMap.mapTiles.get(locY).set(locX, Tile.INTERSECT);
+                        break;
+                    default:
+                        //do nothing
+                }
+                break;
+            default:
+                //do nothing
+                break;
+        }
     }
 
 }

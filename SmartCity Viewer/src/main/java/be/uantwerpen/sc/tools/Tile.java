@@ -7,9 +7,16 @@ public enum Tile {
     POINT,
     VERTICAL,
     HORIZONTAL,
-    INTERSECT,
-    NORTH_TO_EAST,
-    NORTH_TO_WEST,
-    SOUTH_TO_EAST,
-    SOUTH_TO_WEST;
+    //bend
+    NORTH_EAST,
+    NORTH_WEST,
+    SOUTH_EAST,
+    SOUTH_WEST,
+    //3way-intersect
+    NORTH_EAST_WEST,
+    EAST_SOUTH_NORTH,
+    SOUTH_WEST_EAST,
+    WEST_NORTH_SOUTH,
+    //4way-intersect
+    INTERSECT
 }
