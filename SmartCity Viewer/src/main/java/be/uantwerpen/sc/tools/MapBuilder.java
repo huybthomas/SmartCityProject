@@ -122,7 +122,8 @@ public class MapBuilder{
                 }
             }
         }
-
+        simMap.setSizeX(currSizeX);
+        simMap.setSizeY(currSizeY);
         return 0;
     }
 

@@ -22,6 +22,8 @@ public class MapService {
     //TODO set correct IP
     String coreIP = "146.175.140.150";
 
+    public MapBuilder mapBuilder;
+
     LinkEntity[] linkList;
     PointEntity[] pointList;
 
@@ -74,7 +76,7 @@ public class MapService {
         linkList = new LinkEntity[]{link, link2, link3, link4};
 
         //build Sim Map
-        MapBuilder mapBuilder = new MapBuilder(linkList, pointList);
+        mapBuilder = new MapBuilder(linkList, pointList);
         System.out.println("Map Created");
         mapBuilder.logMap();
 

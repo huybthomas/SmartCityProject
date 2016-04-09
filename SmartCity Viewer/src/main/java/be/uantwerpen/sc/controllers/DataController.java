@@ -1,7 +1,9 @@
 package be.uantwerpen.sc.controllers;
 
 import be.uantwerpen.sc.models.sim.SimBot;
+import be.uantwerpen.sc.models.sim.SimMap;
 import be.uantwerpen.sc.services.CarService;
+import be.uantwerpen.sc.services.MapService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,11 +24,18 @@ public class DataController {
     }*/
     @Autowired
     CarService carService;
+    @Autowired
+    MapService mapService;
+
     SimBot simBot;
+
+    @RequestMapping("/map")
+    public SimMap returnSimMap() {
+        return mapService.mapBuilder.getSimMap();
+    }
 
     @RequestMapping("/update")
     public ArrayList<SimBot> returnSimBot() {
-
         if(simBot == null){
             simBot = new SimBot();
         }
