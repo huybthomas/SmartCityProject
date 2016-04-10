@@ -7,7 +7,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "bot", schema = "", catalog = "smartcity")
-public class BotEntity {
+public class BotEntity{
     private Long rid;
     private Integer jobId;
     private Integer percentageCompleted;
@@ -47,11 +47,11 @@ public class BotEntity {
 
     @Basic
     @Column(name = "state")
-    public String getState() {
+    public String getRobotState() {
         return state;
     }
 
-    public void setState(String state) {
+    public void setRobotState(String state) {
         this.state = state;
     }
 

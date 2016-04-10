@@ -39,7 +39,7 @@ public class BotRepositoryTests
 
         //Setup bot
         BotEntity bot = new BotEntity();
-        bot.setState("Test");
+        bot.setRobotState("Test");
 
         //Save bot, verify has ID value after save
         assertNull(bot.getRid());       //Null before save
@@ -54,15 +54,15 @@ public class BotRepositoryTests
 
         //Should equal
         assertEquals(bot.getRid(), fetchedBot.getRid());
-        assertEquals(bot.getState(), fetchedBot.getState());
+        assertEquals(bot.getRobotState(), fetchedBot.getRobotState());
 
         //Update description and save
-        fetchedBot.setState("NewState");
+        fetchedBot.setRobotState("NewState");
         botRepository.save(fetchedBot);
 
         //Get from database, should be updated
         BotEntity fetchedUpdatedBot = botRepository.findOne(fetchedBot.getRid());
-        assertEquals(fetchedBot.getState(), fetchedUpdatedBot.getState());
+        assertEquals(fetchedBot.getRobotState(), fetchedUpdatedBot.getRobotState());
 
         //Verify count of bots in database
         long botCount = botRepository.count();
