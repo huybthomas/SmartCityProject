@@ -1,6 +1,6 @@
 package be.uantwerpen.sc.services;
 
-import be.uantwerpen.sc.models.TrafficlightEntity;
+import be.uantwerpen.sc.models.TrafficLightEntity;
 import be.uantwerpen.sc.repositories.TrafficLightRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,16 +16,16 @@ public class TrafficLightControlService {
     @Autowired
     private TrafficLightRepository trafficLightRepository;
 
-    public List<TrafficlightEntity> getAlTrafficLights(){
+    public List<TrafficLightEntity> getAlTrafficLights(){
         return trafficLightRepository.findAll();
     }
 
-    public TrafficlightEntity getTrafficLight(int id){
+    public TrafficLightEntity getTrafficLight(int id){
         return trafficLightRepository.findOne(id);
     }
 
-    public void updateTL(TrafficlightEntity trafficlightEntity){
-        TrafficlightEntity dbTL = trafficLightRepository.findOne(trafficlightEntity.getTlid());
+    public void updateTL(TrafficLightEntity trafficlightEntity){
+        TrafficLightEntity dbTL = trafficLightRepository.findOne(trafficlightEntity.getTlid());
         dbTL = trafficlightEntity;
         trafficLightRepository.save(dbTL);
 

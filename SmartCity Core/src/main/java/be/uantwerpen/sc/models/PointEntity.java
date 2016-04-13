@@ -7,7 +7,7 @@ import java.util.concurrent.Semaphore;
  * Created by Niels on 24/03/2016.
  */
 @Entity
-@Table(name = "punt", schema = "", catalog = "smartcity")
+@Table(name = "punt", schema = "", catalog = "smartcitydb")
 public class PointEntity {
     private int pid;
     private String rfid;

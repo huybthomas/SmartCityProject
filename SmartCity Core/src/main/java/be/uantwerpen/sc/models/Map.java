@@ -10,7 +10,7 @@ public class Map {
 
     private List<Node> nodeList;
     private List<BotEntity> botEntities;
-    private List<TrafficlightEntity> trafficlightEntity;
+    private List<TrafficLightEntity> trafficlightEntity;
 
     public Map(){
         nodeList = new ArrayList<>();
@@ -37,11 +37,11 @@ public class Map {
         this.botEntities = botEntities;
     }
 
-    public List<TrafficlightEntity> getTrafficlightEntity() {
+    public List<TrafficLightEntity> getTrafficlightEntity() {
         return trafficlightEntity;
     }
 
-    public void setTrafficlightEntity(List<TrafficlightEntity> trafficlightEntity) {
+    public void setTrafficlightEntity(List<TrafficLightEntity> trafficlightEntity) {
         this.trafficlightEntity = trafficlightEntity;
     }
 }

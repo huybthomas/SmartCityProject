@@ -1,6 +1,6 @@
 package be.uantwerpen.sc.controllers;
 
-import be.uantwerpen.sc.models.TrafficlightEntity;
+import be.uantwerpen.sc.models.TrafficLightEntity;
 import be.uantwerpen.sc.services.TrafficLightControlService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,10 +21,10 @@ public class TrafficLightController {
     private TrafficLightControlService trafficLightControlService;
 
     @RequestMapping(method = RequestMethod.GET)
-    public List<TrafficlightEntity> allBots(){
+    public List<TrafficLightEntity> allBots(){
         return trafficLightControlService.getAlTrafficLights();
     }
 
     @RequestMapping(value = "{id}",method = RequestMethod.GET)
-    public TrafficlightEntity getBot(@PathVariable("id") int id){return  trafficLightControlService.getTrafficLight(id);}
+    public TrafficLightEntity getBot(@PathVariable("id") int id){return  trafficLightControlService.getTrafficLight(id);}
 }
