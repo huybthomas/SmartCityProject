@@ -6,7 +6,7 @@ import javax.persistence.*;
  * Created by Niels on 24/03/2016.
  */
 @Entity
-@Table(name = "link", schema = "", catalog = "smartcity")
+@Table(name = "link", schema = "", catalog = "smartcitydb")
 public class LinkEntity {
     private int lid;
     private Integer length;

@@ -6,8 +6,8 @@ import javax.persistence.*;
  * Created by Niels on 24/03/2016.
  */
 @Entity
-@Table(name = "trafficlight", schema = "", catalog = "smartcity")
-public class TrafficlightEntity {
+@Table(name = "trafficlight", schema = "", catalog = "smartcitydb")
+public class TrafficLightEntity {
     private int tlid;
     private String direction;
     private String state;
@@ -48,7 +48,7 @@ public class TrafficlightEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        TrafficlightEntity that = (TrafficlightEntity) o;
+        TrafficLightEntity that = (TrafficLightEntity) o;
 
         if (tlid != that.tlid) return false;
         if (direction != null ? !direction.equals(that.direction) : that.direction != null) return false;
