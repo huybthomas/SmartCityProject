@@ -96,5 +96,10 @@
     <orderEntry type="library" name="Maven: com.h2database:h2:1.4.190" level="project" />
     <orderEntry type="library" name="Maven: mysql:mysql-connector-java:5.1.38" level="project" />
     <orderEntry type="library" name="Maven: com.google.code.gson:gson:2.4" level="project" />
+    <orderEntry type="library" name="Maven: org.jgrapht:jgrapht-core:0.9.1" level="project" />
+    <orderEntry type="library" name="Maven: org.jgrapht:jgrapht-jdk1.5:0.7.3" level="project" />
+    <orderEntry type="library" name="Maven: jgraph:jgraph:5.13.0.0" level="project" />
+    <orderEntry type="library" name="Maven: org.jgrapht:jgrapht-ext:0.9.1" level="project" />
+    <orderEntry type="library" name="Maven: org.tinyjee.jgraphx:jgraphx:2.0.0.1" level="project" />
   </component>
 </module>

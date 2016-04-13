@@ -26,7 +26,7 @@ public class LinkEntity {
     }
 
     @Basic
-    @Column(name = "length")
+    @Column(name = "lengte")
     public Integer getLength() {
         return length;
     }
