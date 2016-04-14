@@ -1,7 +1,6 @@
 package be.uantwerpen.sc.models;
 
 import javax.persistence.*;
-import java.util.concurrent.Semaphore;
 
 /**
  * Created by Niels on 24/03/2016.
@@ -12,10 +11,6 @@ public class PointEntity {
     private int pid;
     private String rfid;
     private String type;
-
-    @Transient
-    private static final int MAX_CONCURRENT_THREADS = 1;
-    private final Semaphore pointLock = new Semaphore(MAX_CONCURRENT_THREADS, true);
 
     @Id
     @Column(name = "pid")
@@ -47,11 +42,6 @@ public class PointEntity {
         this.type = type;
     }
 
-    @Transient
-    public Semaphore getPointLock() {
-        return pointLock;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -72,15 +62,5 @@ public class PointEntity {
         result = 31 * result + (rfid != null ? rfid.hashCode() : 0);
         result = 31 * result + (type != null ? type.hashCode() : 0);
         return result;
-    }
-
-    @Override
-    public String toString() {
-        return "PointEntity{" +
-                "pid=" + pid +
-                ", rfid='" + rfid + '\'' +
-                ", type='" + type + '\'' +
-                ", pointLock=" + pointLock +
-                '}';
     }
 }

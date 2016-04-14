@@ -17,16 +17,16 @@ public class RobotThread extends Thread {
     @Override
     public void run() {
         System.out.println(this.getId() + " is running");
-        try {
+        /*try {
 
             //Lock on his location
-            botEntity.getLinkId().getStartId().getPointLock().acquire();
+            //botEntity.getLinkId().getStartId().getPointLock().acquire();
             // Acquire Lock for next point
-            botEntity.getLinkId().getStopId().getPointLock().acquire();
+           // botEntity.getLinkId().getStopId().getPointLock().acquire();
         } catch (InterruptedException e) {
             System.out.println("received InterruptedException");
             return;
-        }
+        }*/
         System.out.println(this.toString() + " is going to " + botEntity.getLinkId().getStopId().toString() + ", because its free, but now its locked.");
         try {
             sleep(1000);
@@ -35,7 +35,7 @@ public class RobotThread extends Thread {
         } finally {
 
             // Release Lock
-            botEntity.getLinkId().getStartId().getPointLock().release();
+            //botEntity.getLinkId().getStartId().getPointLock().release();
         }
         System.out.println( botEntity.getLinkId().getStopId().toString().toString() + "is free again.");
 

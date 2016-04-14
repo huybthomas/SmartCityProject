@@ -1,15 +1,11 @@
 package be.uantwerpen.sc.controllers;
 
 import be.uantwerpen.sc.models.BotEntity;
-import be.uantwerpen.sc.models.RobotThread;
 import be.uantwerpen.sc.services.BotControlService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.lang.reflect.Field;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * Created by Thomas on 25/02/2016.
@@ -48,7 +44,7 @@ public class BotController
     @RequestMapping(value = "savetest",method = RequestMethod.GET)
     public void saveBotTest(){
         BotEntity bot = new BotEntity();
-        bot.setRobotState("test");
+        bot.setState("test");
         botControlService.saveBot(bot);
     }
 
@@ -56,22 +52,15 @@ public class BotController
     public String goTo(@PathVariable("id") Long id, @PathVariable("rid") Long rid){
 
         BotEntity botEntity = botControlService.getBot(rid);
-        if (botEntity != null){
-           // RobotThread robotThread = new RobotThread(botEntity);
-            //robotThread.start();
-            try {
-                //Release location
-                // Acquire Lock for next point
-                if(botEntity.getPercentageCompleted() >= 50){
-                    botEntity.getLinkId().getStopId().getPointLock().acquire();
-                    botEntity.getLinkId().getStartId().getPointLock().release();
-                }
-            } catch (InterruptedException e) {
-                System.out.println("received InterruptedException");
+        /*if (!pointEntities.contains(botEntity.getLinkId().getStopId())){
+            pointEntities.add(botEntity.getLinkId().getStopId());
+        }*/
+        if (botEntity != null) {
+            if (botEntity.getPercentageCompleted() >= 50) {
+               // stack.push(botEntity.getLinkId().getStopId());
             }
         }
         else{System.out.println("Robot doesnt exist");}
-
 
         return "Something";
     }

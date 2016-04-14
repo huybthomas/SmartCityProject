@@ -13,4 +13,5 @@ import java.util.List;
 public interface BotRepository extends CrudRepository<BotEntity, Long>
 {
     List<BotEntity> findAll();
+
 }
