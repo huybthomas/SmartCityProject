@@ -4,6 +4,7 @@ package be.uantwerpen.sc.tools;
  * Created by Arthur on 3/04/2016.
  */
 public enum Tile {
+    PARKING,
     POINT,
     VERTICAL,
     HORIZONTAL,

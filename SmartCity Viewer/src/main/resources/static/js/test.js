@@ -9,21 +9,6 @@ var ctx2;
 var car = [];
 var map = [];
 
-function checkTime(i) {
-    return (i < 10) ? "0" + i : i;
-}
-
-function startTime() {
-    var today = new Date(),
-        h = checkTime(today.getHours()),
-        m = checkTime(today.getMinutes()),
-        s = checkTime(today.getSeconds());
-    document.getElementById('time').innerHTML = h + ":" + m + ":" + s;
-    t = setTimeout(function () {
-        startTime()
-    }, 500);
-}
-
 function start(){
     c = document.getElementById("canvas");
     ctx = c.getContext("2d");
@@ -44,10 +29,11 @@ function refresh() {
 
     //Draw Cars
     //drawCars();
-
+    /*
     t = setTimeout(function () {
         refresh()
-    }, 500);
+    }, 2000);
+    */
 }
 
 function refreshTiles(){
@@ -69,6 +55,9 @@ function tile(){
         for(var j=0; j<tilesY; j++){
             ctx.rect(w*i, h*j, w, h);
             //ctx.drawImage(POINT, 50, 50);
+            var type = {id:""};
+            type.id = map.mapTiles[j][i];
+            drawTile(type, w, h, i, j);
             ctx.stroke();
         }
     }
@@ -131,11 +120,49 @@ function loadTiles(){
     INTERSECT*/
 }
 
+function drawTile(type, w, h, i, j){
+    switch (type.id){
+        case "POINT":
+            ctx.drawImage(mapPic, 0, 0, 100, 100, w*i, h*j, w, h)
+            break;
+        case "VERTICAL":
+            ctx.drawImage(mapPic, 100, 0, 100, 100, w*i, h*j, w, h)
+            break;
+        case "HORIZONTAL":
+            ctx.drawImage(mapPic, 200, 0, 100, 100, w*i, h*j, w, h)
+            break;
+        case "NORTH_EAST":
+            ctx.drawImage(mapPic, 300, 0, 100, 100, w*i, h*j, w, h)
+            break;
+        case "NORTH_WEST":
+            ctx.drawImage(mapPic, 400, 0, 100, 100, w*i, h*j, w, h)
+            break;
+        case "SOUTH_EAST":
+            ctx.drawImage(mapPic, 500, 0, 100, 100, w*i, h*j, w, h)
+            break;
+        case "SOUTH_WEST":
+            ctx.drawImage(mapPic, 0, 100, 100, 100, w*i, h*j, w, h)
+            break;
+        case "NORTH_EAST_WEST":
+            ctx.drawImage(mapPic, 100, 100, 100, 100, w*i, h*j, w, h)
+            break;
+        case "EAST_NORTH_SOUTH":
+            ctx.drawImage(mapPic, 100, 200, 100, 100, w*i, h*j, w, h)
+            break;
+        case "SOUTH_WEST_EAST":
+            ctx.drawImage(mapPic, 100, 300, 100, 100, w*i, h*j, w, h)
+            break;
+        case "WEST_NORTH_SOUTH":
+            ctx.drawImage(mapPic, 100, 400, 100, 100, w*i, h*j, w, h)
+            break;
+        default:
+            ctx.rect(w*i,h*j,w,h);
+    }
+}
+
 loadImages();
 loadTiles();
 getMap();
-setInterval(getCars,1000);
-
-startTime();
+//setInterval(getCars,1000);
 
 start();

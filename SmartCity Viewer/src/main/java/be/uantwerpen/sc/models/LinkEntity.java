@@ -25,15 +25,15 @@ public class LinkEntity {
         this.length = length;
     }
 
-    public String getStartDirection() {
-        return startDirection;
+    public char getStartDirection() {
+        return startDirection.charAt(0);
     }
     public void setStartDirection(String startDirection) {
         this.startDirection = startDirection;
     }
 
-    public String getStopDirection() {
-        return stopDirection;
+    public char getStopDirection() {
+        return stopDirection.charAt(0);
     }
     public void setStopDirection(String stopDirection) {
         this.stopDirection = stopDirection;

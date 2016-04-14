@@ -8,9 +8,6 @@
 <!-- Import navigation bar -->
 <div th:replace="layout :: navbar"></div>
 
-<!--initialize images-->
-<img id="POINT"/>
-
 <script th:inline="javascript">
     /*<![CDATA[*/
     var mapImage = /*[[@{/images/tiles.png}]]*/;
@@ -19,17 +16,20 @@
 </script>
 
 <div id="myDiv">
-    <div id="myCanvas">
+    <div id="myCanvas" width="1000" height="1000">
         <canvas id="canvas" width="1000" height="1000" style="border:1px solid #000000"></canvas>
     </div>
-    <div id="myLegend">
+    <div id="myLegend" width="200" height="1000">
         <canvas id="legend" width="200" height="1000" style="border:1px solid #000000;"></canvas>
     </div>
 </div>
 
 <div id="time"></div>
 <script type="text/javascript" th:src="@{/js/test.js}"></script>
+<!--
+<script type="text/javascript" th:src="@{/js/test.js}"></script>
 <script type="text/javascript" th:src="@{/js/map.js}"></script>
+-->
 
 
 
