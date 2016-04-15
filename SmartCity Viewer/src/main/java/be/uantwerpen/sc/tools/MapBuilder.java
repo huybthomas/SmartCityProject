@@ -28,6 +28,8 @@ public class MapBuilder{
     ArrayList<LinkEntity> linkEntities;
     ArrayList<PointEntity> pointEntities;
 
+    ArrayList<LinkEntity> linkEntitiesPointGeneration;
+
     //Keep track of point locations
     ArrayList<SimPoint> simPoints = new ArrayList<>();
 
@@ -38,6 +40,7 @@ public class MapBuilder{
     public MapBuilder(LinkEntity[] linkEntities, PointEntity[] pointEntities){
 
         this.linkEntities = new ArrayList<LinkEntity>(Arrays.asList(linkEntities));
+        this.linkEntitiesPointGeneration = new ArrayList<LinkEntity>(Arrays.asList(linkEntities));
         this.pointEntities = new ArrayList<PointEntity>(Arrays.asList(pointEntities));
 
         simMap = new SimMap();
@@ -59,7 +62,7 @@ public class MapBuilder{
                     System.out.print(" ");
                 }else {
                     switch (tile) {
-                        case POINT:
+                        case PARKING:
                             System.out.print("P");
                             break;
                         case HORIZONTAL:
@@ -131,6 +134,7 @@ public class MapBuilder{
                 }
             }
         }
+        updatePoints();
         simMap.setSizeX(currSizeX);
         simMap.setSizeY(currSizeY);
         return 0;
@@ -168,7 +172,7 @@ public class MapBuilder{
         //Add first point to map
         simPoints.add(point);
         //Add link's start point to map
-        simMap.mapTiles.get(0).set(0, Tile.POINT);
+        simMap.mapTiles.get(0).set(0, Tile.PARKING);
 
         return processLink(link, type);
     }
@@ -725,4 +729,93 @@ public class MapBuilder{
         }
     }
 
+    private void updatePoints() {
+        //for every point -> FInd its location on the map and its type, then update
+        Iterator<SimPoint> simPointIterator = simPoints.iterator();
+        while (simPointIterator.hasNext()){
+            SimPoint point = simPointIterator.next();
+            //Find out type
+            updateType(point);
+        }
+    }
+
+    private void updateType(SimPoint point){
+        int id = point.getId();
+
+        int up, down, left, right;
+        up = 0;
+        down = 0;
+        left = 0;
+        right = 0;
+
+        //search for all of a point's accessed directions
+        Iterator<LinkEntity> linkEntityIterator = linkEntitiesPointGeneration.iterator();
+        char c = '!';
+        while(linkEntityIterator.hasNext()){
+            LinkEntity link = linkEntityIterator.next();
+            if(link.getStartId().getPid()==id) {
+                c = link.getStartDirection();
+            }else if(link.getStopId().getPid() == id) {
+                c = link.getStopDirection();
+            }
+            switch (c){
+                case 'N':
+                    up = 1;
+                    break;
+                case 'E':
+                    right = 1;
+                    break;
+                case 'S':
+                    down = 1;
+                    break;
+                case 'W':
+                    left = 1;
+                    break;
+                default:
+                    break;
+            }
+        }
+        setType(point.getPosY(), point.getPosX(), up, right, down, left);
+    }
+    
+    private void setType(int i, int j, int up, int right, int down, int left){
+        //SetType
+        switch(up+down+right+left){
+            case 0:
+                //impossible
+                break;
+            case 1:
+                simMap.mapTiles.get(i).set(j, Tile.PARKING);
+                break;
+            case 2:
+                if(up+down == 2)
+                    simMap.mapTiles.get(i).set(j, Tile.VERTICAL);
+                if(left+right == 2)
+                    simMap.mapTiles.get(i).set(j, Tile.HORIZONTAL);
+                if(up+right == 2)
+                    simMap.mapTiles.get(i).set(j, Tile.NORTH_EAST);
+                if(up+left == 2)
+                    simMap.mapTiles.get(i).set(j, Tile.NORTH_WEST);
+                if(down+right == 2)
+                    simMap.mapTiles.get(i).set(j, Tile.SOUTH_EAST);
+                if(down+left == 2)
+                    simMap.mapTiles.get(i).set(j, Tile.SOUTH_WEST);
+                break;
+            case 3:
+                if(up+left+right == 3)
+                    simMap.mapTiles.get(i).set(j, Tile.NORTH_EAST_WEST);
+                if(left+down+up == 3)
+                    simMap.mapTiles.get(i).set(j, Tile.EAST_SOUTH_NORTH);
+                if(down+left+right == 3)
+                    simMap.mapTiles.get(i).set(j, Tile.SOUTH_WEST_EAST);
+                if(left+down+up ==3)
+                    simMap.mapTiles.get(i).set(j, Tile.WEST_NORTH_SOUTH);
+                break;
+            case 4:
+                simMap.mapTiles.get(i).set(j, Tile.INTERSECT);
+                break;
+            default:
+                break;
+        }
+    }
 }

@@ -17,7 +17,8 @@ function start(){
 
     drawLegend();
 
-    refresh();
+    drawMap();
+    //setInterval(drawCars, 2000);
 }
 
 function refresh() {
@@ -41,7 +42,7 @@ function refreshTiles(){
     tile();
 }
 
-function tile(){
+function drawMap(){
     var tilesX = map.sizeX;
     var tilesY = map.sizeY;
     var w = c.width/tilesX;
@@ -53,12 +54,13 @@ function tile(){
     }
     for(var i=0; i<tilesX; i++){
         for(var j=0; j<tilesY; j++){
-            ctx.rect(w*i, h*j, w, h);
-            //ctx.drawImage(POINT, 50, 50);
-            var type = {id:""};
-            type.id = map.mapTiles[j][i];
-            drawTile(type, w, h, i, j);
-            ctx.stroke();
+            if(map.mapTiles[j][i] == null){
+                //Do nothing
+            }else{
+                var type = {id:""};
+                type.id = map.mapTiles[j][i];
+                drawTile(type, w, h, i, j);
+            }
         }
     }
 }
@@ -165,4 +167,4 @@ loadTiles();
 getMap();
 //setInterval(getCars,1000);
 
-start();
+setTimeout(start, 500);
