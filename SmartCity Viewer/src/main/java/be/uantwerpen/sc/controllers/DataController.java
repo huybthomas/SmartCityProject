@@ -1,7 +1,9 @@
 package be.uantwerpen.sc.controllers;
 
 import be.uantwerpen.sc.models.sim.SimBot;
+import be.uantwerpen.sc.models.sim.SimCar;
 import be.uantwerpen.sc.models.sim.SimMap;
+import be.uantwerpen.sc.models.sim.SimPath;
 import be.uantwerpen.sc.services.CarService;
 import be.uantwerpen.sc.services.MapService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,18 +36,23 @@ public class DataController {
         return mapService.mapBuilder.getSimMap();
     }
 
+    @RequestMapping("/paths")
+    public ArrayList<SimPath> returnPaths() {
+        return mapService.mapBuilder.getSimPaths();
+    }
+
     @RequestMapping("/update")
     public ArrayList<SimBot> returnSimBot() {
-        if(simBot == null){
-            simBot = new SimBot();
-        }
-        else{
-            double[] loc = simBot.getLoc();
-            loc[0]++;
-            loc[1]++;
-            simBot.setLoc(loc);
-        }
-        //return simBot;
         return carService.simBots;
+    }
+
+    @RequestMapping("/testcar")
+    public SimBot updateSimBot(){
+        SimPath path = mapService.mapBuilder.getSimPaths().get(3);
+        SimBot bot = carService.simBots.get(0);
+        bot.setLinkID(path.getLinkID());
+        bot.add10percent();
+        bot.update(path);
+        return bot;
     }
 }

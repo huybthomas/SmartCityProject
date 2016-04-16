@@ -4,10 +4,16 @@
     height:1000px;
     position:relative;
 }
-#myCanvas {
+#myMapCanvas {
     position:absolute;
     top:0;
     left:0;
+}
+#myCarCanvas {
+    position:absolute;
+    top:0;
+    left:0;
+    z-index: 10;
 }
 #myLegend {
     position:absolute;

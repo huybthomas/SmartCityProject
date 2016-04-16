@@ -40,12 +40,6 @@ public class CarService {
 
     private void addTestBots(){
         SimBot simBot = new SimBot();
-        double[] loc = {50,50};
-        simBot.setLoc(loc);
-        simBots.add(simBot);
-        simBot = new SimBot();
-        loc = new double[]{100, 100};
-        simBot.setLoc(loc);
         simBots.add(simBot);
     }
 

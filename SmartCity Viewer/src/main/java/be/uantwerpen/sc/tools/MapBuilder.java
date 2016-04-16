@@ -4,6 +4,7 @@ import be.uantwerpen.sc.models.LinkEntity;
 import be.uantwerpen.sc.models.PointEntity;
 import be.uantwerpen.sc.models.sim.SimLink;
 import be.uantwerpen.sc.models.sim.SimMap;
+import be.uantwerpen.sc.models.sim.SimPath;
 import be.uantwerpen.sc.models.sim.SimPoint;
 import org.springframework.security.access.method.P;
 
@@ -33,6 +34,10 @@ public class MapBuilder{
     //Keep track of point locations
     ArrayList<SimPoint> simPoints = new ArrayList<>();
 
+    //Keep track of paths
+    SimPath path;
+    ArrayList<SimPath> simPaths = new ArrayList<>();
+
     int locX, locY = 0;
     int currSizeX = 1;
     int currSizeY = 1;
@@ -49,6 +54,9 @@ public class MapBuilder{
 
     public SimMap getSimMap(){
         return simMap;
+    }
+    public ArrayList<SimPath> getSimPaths(){
+        return simPaths;
     }
 
     public void logMap(){
@@ -172,12 +180,15 @@ public class MapBuilder{
         //Add first point to map
         simPoints.add(point);
         //Add link's start point to map
-        simMap.mapTiles.get(0).set(0, Tile.PARKING);
+        simMap.mapTiles.get(0).set(0, Tile.POINT);
 
         return processLink(link, type);
     }
 
     private boolean processLink(LinkEntity link, ProcessingType type){
+        //Create new path
+        path = new SimPath(link.getLid());
+
         SimPoint point = new SimPoint(link.getStartId().getPid(), locX, locY);
         SimPoint point2 = new SimPoint(link.getStopId().getPid(), locX, locY);
         boolean swap = false;
@@ -199,6 +210,8 @@ public class MapBuilder{
             point = simPoints.get(simPoints.indexOf(point));
             locX = point.getPosX();
             locY = point.getPosY();
+            //add Starting point to path
+            path.addLoc(locX, locY);
         }
 
         switch(type){
@@ -295,6 +308,8 @@ public class MapBuilder{
         }
         //Remove link from LinkEntities
         linkEntities.remove(link);
+        //Finalize path
+        simPaths.add(path);
         return true;
     }
 
@@ -326,9 +341,7 @@ public class MapBuilder{
     }
 
     private void updateSimPointLocations(Update update){
-        Iterator<SimPoint> it = simPoints.iterator();
-        while(it.hasNext()) {
-            SimPoint point = it.next();
+        for (SimPoint point : simPoints) {
             switch (update) {
                 case UP:
                     point.up();
@@ -338,23 +351,17 @@ public class MapBuilder{
                     break;
             }
         }
-    }
-    /*private void updateSimPointLocations(Update update, int constraint){
-        Iterator<SimPoint> it = simPoints.iterator();
-        SimPoint point = it.next();
-        while(it.hasNext()) {
+        for(SimPath simPath : simPaths){
             switch (update) {
                 case UP:
-                    if(point.getPosY() >= constraint)
-                        point.up();
+                    simPath.up();
                     break;
                 case RIGHT:
-                    if(point.getPosX() >= constraint)
-                        point.right();
+                    simPath.right();
                     break;
             }
         }
-    }*/
+    }
 
     private void addTileVertical(int length, Tile tile){
         boolean up = true;
@@ -429,9 +436,8 @@ public class MapBuilder{
         }else{
             locY--;
             updateTile(simMap.mapTiles.get(locY).get(locX), tile);
-
         }
-
+        path.addLoc(locX, locY);
     }
 
     private void addTileBelow(int length) {
@@ -458,7 +464,9 @@ public class MapBuilder{
             }
         }else{
             updateTile(simMap.mapTiles.get(locY).get(locX), tile);
+
         }
+        path.addLoc(locX, locY);
     }
 
     private void addTileLeft(int length) {
@@ -489,6 +497,7 @@ public class MapBuilder{
             locX--;
             updateTile(simMap.mapTiles.get(locY).get(locX), tile);
         }
+        path.addLoc(locX, locY);
 
     }
 
@@ -519,6 +528,7 @@ public class MapBuilder{
         }else{  //Add one element
             updateTile(simMap.mapTiles.get(locY).get(locX), tile);
         }
+        path.addLoc(locX, locY);
     }
 
     private void updateTile(Tile originalTile, Tile newTile){
@@ -731,9 +741,7 @@ public class MapBuilder{
 
     private void updatePoints() {
         //for every point -> FInd its location on the map and its type, then update
-        Iterator<SimPoint> simPointIterator = simPoints.iterator();
-        while (simPointIterator.hasNext()){
-            SimPoint point = simPointIterator.next();
+        for (SimPoint point : simPoints) {
             //Find out type
             updateType(point);
         }
@@ -749,10 +757,9 @@ public class MapBuilder{
         right = 0;
 
         //search for all of a point's accessed directions
-        Iterator<LinkEntity> linkEntityIterator = linkEntitiesPointGeneration.iterator();
         char c = '!';
-        while(linkEntityIterator.hasNext()){
-            LinkEntity link = linkEntityIterator.next();
+        for(LinkEntity link : linkEntitiesPointGeneration){
+            c='!';
             if(link.getStartId().getPid()==id) {
                 c = link.getStartDirection();
             }else if(link.getStopId().getPid() == id) {

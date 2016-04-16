@@ -29,9 +29,9 @@ public class MapService {
 
     public MapService(){
         //Disabled for testing
-        getMap();
+        //getMap();
 
-        /*
+
         //Create Test Map
         PointEntity point1 = new PointEntity();
         point1.setPid(1);
@@ -75,7 +75,7 @@ public class MapService {
         
 
         linkList = new LinkEntity[]{link, link2, link3, link4};
-        */
+
 
         //build Sim Map
         mapBuilder = new MapBuilder(linkList, pointList);
@@ -84,7 +84,6 @@ public class MapService {
 
     }
 
-    //TODO Test this method
     private void getMap(){
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<PointEntity[]> responseList;
