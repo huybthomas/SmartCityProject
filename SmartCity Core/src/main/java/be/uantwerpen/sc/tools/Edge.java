@@ -5,7 +5,7 @@ package be.uantwerpen.sc.tools;
  */
 public class Edge {
     public final Vertex target;
-    public final double weight;
-    public Edge(Vertex argTarget, double argWeight)
+    public final int weight;
+    public Edge(Vertex argTarget, int argWeight)
     { target = argTarget; weight = argWeight; }
 }
