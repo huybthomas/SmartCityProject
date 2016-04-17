@@ -1,4 +1,7 @@
-package be.uantwerpen.sc.models;
+package be.uantwerpen.sc.models.map;
+
+import be.uantwerpen.sc.models.BotEntity;
+import be.uantwerpen.sc.models.TrafficLightEntity;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -14,6 +14,8 @@ public class LinkEntity {
     private String stopDirection;
     private PointEntity startId;
     private PointEntity stopId;
+    private int weight;
+    private int pointlock;
 
     @Id
     @Column(name = "lid")
@@ -99,5 +101,25 @@ public class LinkEntity {
 
     public void setStopId(PointEntity stopId) {
         this.stopId = stopId;
+    }
+
+    @Basic
+    @Column(name = "gewicht")
+    public int getWeight() {
+        return weight;
+    }
+
+    public void setWeight(int weight) {
+        this.weight = weight;
+    }
+
+    @Basic
+    @Column(name = "pointlock")
+    public int getPointlock() {
+        return pointlock;
+    }
+
+    public void setPointlock(int pointlock) {
+        this.pointlock = pointlock;
     }
 }

@@ -1,4 +1,7 @@
-package be.uantwerpen.sc.models;
+package be.uantwerpen.sc.models.map;
+
+import be.uantwerpen.sc.models.LinkEntity;
+import be.uantwerpen.sc.models.PointEntity;
 
 import java.util.List;
 
