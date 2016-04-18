@@ -11,17 +11,22 @@ import java.util.List;
  */
 public class Vertex implements Comparable<Vertex> {
 
-    public final int id;
-    public List<Edge> adjacencies = new ArrayList<>();
-    public double minDistance = Double.POSITIVE_INFINITY;
-    public Vertex previous;
+    private int id;
+    private List<Edge> adjacencies = new ArrayList<>();
+    private double minDistance = Double.POSITIVE_INFINITY;
+    private Vertex previous;
 
     public Vertex(NodeJson nodeJson) {
         this.id = nodeJson.getPointEntity().getPid();
     }
+    public Vertex(int id){this.id=id;}
 
     public int getId() {
         return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public List<Edge> getAdjacencies() {
@@ -30,6 +35,23 @@ public class Vertex implements Comparable<Vertex> {
 
     public void setAdjacencies(List<Edge> adjacencies) {
         this.adjacencies = adjacencies;
+    }
+
+
+    public double getMinDistance() {
+        return minDistance;
+    }
+
+    public void setMinDistance(double minDistance) {
+        this.minDistance = minDistance;
+    }
+
+    public Vertex getPrevious() {
+        return previous;
+    }
+
+    public void setPrevious(Vertex previous) {
+        this.previous = previous;
     }
 
     @Override

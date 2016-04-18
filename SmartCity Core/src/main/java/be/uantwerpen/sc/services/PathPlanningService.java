@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -38,26 +39,32 @@ public class PathPlanningService
             vertexes.add(new Vertex(nj));
         }
 
-        List<Edge> edges;
+        ArrayList<Edge> edges;
+        List<ArrayList<Edge>> edgeslistinlist = new ArrayList<>();
         int i = 0;
         for (NodeJson nj : mapJson.getNodeJsons()){
             edges = new ArrayList<>();
             for (Neighbour neighbour : nj.getNeighbours()){
                 for (Vertex v : vertexes){
                     if(v.getId() == neighbour.getPointEntity().getPid()){
-                        edges.add(new Edge(v,neighbour.getWeight(),linkControlService.getLink(neighbour.getPointEntity().getPid())));
+                        edges.add(new Edge(v.getId(),neighbour.getWeight(),linkControlService.getLink(neighbour.getPointEntity().getPid())));
+
                     }
                 }
             }
-            vertexes.get(i).setAdjacencies(edges);
+            edgeslistinlist.add(i, (edges));
             i++;
+        }
+
+         for (int j = 0; j < vertexes.size();j++){
+            vertexes.get(j).setAdjacencies(edgeslistinlist.get(j));
         }
 
         Vertex v = vertexes.get(start-1);
 
-        dijkstra.computePaths(v); // run Dijkstra
-        System.out.println("Distance to " + vertexes.get(stop-1) + ": " + vertexes.get(stop-1).minDistance);
-        List<Vertex> path = dijkstra.getShortestPathTo(vertexes.get(stop-1));
+        dijkstra.computePaths(v,vertexes); // run Dijkstra
+        System.out.println("Distance to " + vertexes.get(stop-1) + ": " + vertexes.get(stop-1).getMinDistance());
+        List<Vertex> path = dijkstra.getShortestPathTo(vertexes.get(stop-1),vertexes);
         System.out.println("Path: " + path);
         //return ("Distance to " + vertexes.get(stop-1) + ": " + vertexes.get(stop-1).minDistance) + ( "Path: " + path);
         return path;

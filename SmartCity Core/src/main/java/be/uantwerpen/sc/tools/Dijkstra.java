@@ -10,37 +10,71 @@ import java.util.PriorityQueue;
  */
 public class Dijkstra
 {
-    public void computePaths(Vertex source)
+    public void computePaths(Vertex source, List<Vertex> vertexes)
     {
-        source.minDistance = 0.;
+        source.setMinDistance(0);
         PriorityQueue<Vertex> vertexQueue = new PriorityQueue<Vertex>();
         vertexQueue.add(source);
-
+        List<Vertex> vertexList = new ArrayList<>();
         while (!vertexQueue.isEmpty()) {
             Vertex u = vertexQueue.poll();
-
+            Vertex v = new Vertex(1);
             // Visit each edge exiting u
-            for (Edge e : u.adjacencies)
+            for (Edge e : u.getAdjacencies())
             {
-                Vertex v = e.target;
-                double weight = e.weight;
-                double distanceThroughU = u.minDistance + weight;
-                if (distanceThroughU < v.minDistance) {
+                for (Vertex w : vertexes){
+                    if(w.getId() == e.getTarget()){
+                        v =w;
+                        vertexList.add(v);
+                    }
+                }
+
+                double weight = e.getWeight();
+                double distanceThroughU = u.getMinDistance() + weight;
+                if (distanceThroughU < v.getMinDistance()) {
                     vertexQueue.remove(v);
 
-                    v.minDistance = distanceThroughU ;
-                    v.previous = u;
+                    v.setMinDistance(distanceThroughU) ;
+                    v.setPrevious(u);
                     vertexQueue.add(v);
                 }
             }
         }
     }
 
-    public List<Vertex> getShortestPathTo(Vertex target)
+    public List<Vertex> getShortestPathTo(Vertex target, List<Vertex> vertexes)
     {
         List<Vertex> path = new ArrayList<Vertex>();
-        for (Vertex vertex = target; vertex != null; vertex = vertex.previous)
+       /* int i;
+        for (Vertex vertex = target; vertex != null;  i = vertex.getPrevious())
             path.add(vertex);
+        int i;
+        Vertex vertex = target;
+        path.add(vertex);
+        i = vertex.getPrevious();
+        vertex= vertexes.get(i);*/
+
+
+        int i = target.getId();
+        do {
+            for (Vertex v : vertexes){
+                if(v.getId() == i)
+                    path.add(vertexes.get(i-1));
+            }
+            try {
+                i = vertexes.get(i-1).getPrevious().getId();
+            }catch (Exception e){
+               i = 0;
+            }
+        } while (i != 0);
+
+       /* for (int i = target.getId(); vertexes.get(i).getPrevious() != null; i = vertexes.get(i).getPrevious()){
+            for (Vertex v : vertexes){
+                if(v.getId() == i)
+                    path.add(vertexes.get(i-1));
+            }
+        }*/
+
 
         Collections.reverse(path);
         return path;
