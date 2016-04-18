@@ -20,6 +20,8 @@ public class PathPlanningService
 {
 
     @Autowired
+    private LinkControlService linkControlService;
+    @Autowired
     private MapControlService mapControlService;
 
     private Dijkstra dijkstra;
@@ -29,7 +31,7 @@ public class PathPlanningService
         this.dijkstra = new Dijkstra();
     }
 
-    public void Calculatepath(int start,int stop){
+    public List<Vertex> Calculatepath(int start,int stop){
         MapJson mapJson = mapControlService.buildMapJson();
         List<Vertex> vertexes = new ArrayList<>();
         for (NodeJson nj : mapJson.getNodeJsons()){
@@ -43,7 +45,7 @@ public class PathPlanningService
             for (Neighbour neighbour : nj.getNeighbours()){
                 for (Vertex v : vertexes){
                     if(v.getId() == neighbour.getPointEntity().getPid()){
-                        edges.add(new Edge(v,neighbour.getWeight()));
+                        edges.add(new Edge(v,neighbour.getWeight(),linkControlService.getLink(neighbour.getPointEntity().getPid())));
                     }
                 }
             }
@@ -57,5 +59,7 @@ public class PathPlanningService
         System.out.println("Distance to " + vertexes.get(stop-1) + ": " + vertexes.get(stop-1).minDistance);
         List<Vertex> path = dijkstra.getShortestPathTo(vertexes.get(stop-1));
         System.out.println("Path: " + path);
+        //return ("Distance to " + vertexes.get(stop-1) + ": " + vertexes.get(stop-1).minDistance) + ( "Path: " + path);
+        return path;
     }
 }
