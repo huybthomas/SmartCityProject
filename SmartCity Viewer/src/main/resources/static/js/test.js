@@ -129,9 +129,11 @@ function drawTile(type, w, h, i, j){
         case "WEST_NORTH_SOUTH":
             ctx.drawImage(mapPic, 400, 100, 100, 100, w*i, h*j, w, h);
             break;
+        case "INTERSECT":
+            ctx.drawImage(mapPic, 500, 100, 100, 100, w*i, h*j, w, h);
+            break;
         default:
-            ctx.rect(w*i,h*j,w,h);
-            ctx.stroke();
+            break;
     }
 }
 
