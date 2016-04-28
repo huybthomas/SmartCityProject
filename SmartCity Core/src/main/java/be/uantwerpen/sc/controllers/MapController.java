@@ -54,6 +54,12 @@ public class MapController {
         return path;
     }
 
+    @RequestMapping(value = "testpath/{start}/path/{stop}", method = RequestMethod.GET)
+    public List<Vertex> PathPlanning2(@PathVariable("start") int start, @PathVariable("stop") int stop){
+        List<Vertex> path = pathPlanningService.CalculatepathNonInterface(start,stop);
+        return path;
+    }
+
     @RequestMapping(value = "stringmapjson", method = RequestMethod.GET)
     public String mapStringJson(){
         return mapControlService.buildMapJson().toString();

@@ -1,9 +1,7 @@
 package be.uantwerpen.sc.services;
 
 import be.uantwerpen.sc.models.LinkEntity;
-import be.uantwerpen.sc.models.map.MapJson;
-import be.uantwerpen.sc.models.map.Neighbour;
-import be.uantwerpen.sc.models.map.NodeJson;
+import be.uantwerpen.sc.models.map.*;
 import be.uantwerpen.sc.tools.pathplanning.Dijkstra;
 import be.uantwerpen.sc.tools.Edge;
 import be.uantwerpen.sc.tools.Vertex;
@@ -34,22 +32,33 @@ public class PathPlanningService implements IPathplanning
     }
 
     public List<Vertex> CalculatepathNonInterface(int start,int stop){
-        MapJson mapJson = mapControlService.buildMapJson();
+        Map map = mapControlService.buildMap();
+        List<LinkEntity> linkEntityList = new ArrayList<>();
         List<Vertex> vertexes = new ArrayList<>();
-        for (NodeJson nj : mapJson.getNodeJsons()){
+        for (Node nj : map.getNodeList()){
             vertexes.add(new Vertex(nj));
+            for(LinkEntity linkEntity : nj.getNeighbours()){
+                linkEntityList.add(linkEntity);
+            }
         }
 
         ArrayList<Edge> edges;
         List<ArrayList<Edge>> edgeslistinlist = new ArrayList<>();
+        LinkEntity realLink = new LinkEntity();
         int i = 0;
-        for (NodeJson nj : mapJson.getNodeJsons()){
+        for (Node nj : map.getNodeList()){
             edges = new ArrayList<>();
-            for (Neighbour neighbour : nj.getNeighbours()){
+            for (LinkEntity neighbour : nj.getNeighbours()){
                 for (Vertex v : vertexes){
-                    if(v.getId() == neighbour.getPointEntity().getPid()){
-                        edges.add(new Edge(v.getId(),neighbour.getWeight(),linkControlService.getLink(neighbour.getPointEntity().getPid())));
-
+                    if(v.getId() == neighbour.getStopId().getPid()){
+                        for(LinkEntity linkEntity: linkEntityList){
+                            if(linkEntity.getStopId().getPid() == v.getId() && linkEntity.getStartId().getPid() == nj.getPointEntity().getPid()){
+                                System.out.println(linkEntity.toString() +" " + linkEntity);
+                                realLink = linkEntity;
+                            }
+                        }
+                        //edges.add(new Edge(v.getId(),neighbour.getWeight(),linkControlService.getLink(neighbour.getPointEntity().getPid())));
+                        edges.add(new Edge(v.getId(),neighbour.getWeight(),realLink));
                     }
                 }
             }

@@ -1,5 +1,6 @@
 package be.uantwerpen.sc.tools;
 
+import be.uantwerpen.sc.models.map.Node;
 import be.uantwerpen.sc.models.map.NodeJson;
 
 import java.util.ArrayList;
@@ -19,6 +20,7 @@ public class Vertex implements Comparable<Vertex> {
     public Vertex(NodeJson nodeJson) {
         this.id = nodeJson.getPointEntity().getPid();
     }
+    public Vertex(Node node){this.id = node.getNodeId();}
     public Vertex(int id){this.id=id;}
 
     public int getId() {
