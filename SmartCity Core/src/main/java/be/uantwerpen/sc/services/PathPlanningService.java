@@ -1,5 +1,6 @@
 package be.uantwerpen.sc.services;
 
+import be.uantwerpen.sc.models.LinkEntity;
 import be.uantwerpen.sc.models.map.MapJson;
 import be.uantwerpen.sc.models.map.Neighbour;
 import be.uantwerpen.sc.models.map.NodeJson;
@@ -69,6 +70,7 @@ public class PathPlanningService implements IPathplanning
         //return ("Distance to " + vertexes.get(stop-1) + ": " + vertexes.get(stop-1).minDistance) + ( "Path: " + path);
         return path;
     }
+    private List<LinkEntity> linkEntityList;
 
     @Override
     public List<Vertex> Calculatepath(MapJson mapJson, int start, int stop) {
@@ -80,14 +82,21 @@ public class PathPlanningService implements IPathplanning
 
         ArrayList<Edge> edges;
         List<ArrayList<Edge>> edgeslistinlist = new ArrayList<>();
+        LinkEntity realLink = new LinkEntity();
         int i = 0;
         for (NodeJson nj : mapJsonServer.getNodeJsons()){
             edges = new ArrayList<>();
             for (Neighbour neighbour : nj.getNeighbours()){
                 for (Vertex v : vertexes){
                     if(v.getId() == neighbour.getPointEntity().getPid()){
-                        edges.add(new Edge(v.getId(),neighbour.getWeight(),linkControlService.getLink(neighbour.getPointEntity().getPid())));
-
+                        for(LinkEntity linkEntity: linkControlService.getAllLinks()){
+                            if(linkEntity.getStopId().getPid() == v.getId() && linkEntity.getStartId().getPid() == nj.getPointEntity().getPid()){
+                                System.out.println(linkEntity.toString() +" " + linkEntity);
+                                realLink = linkEntity;
+                            }
+                        }
+                        //edges.add(new Edge(v.getId(),neighbour.getWeight(),linkControlService.getLink(neighbour.getPointEntity().getPid())));
+                        edges.add(new Edge(v.getId(),neighbour.getWeight(),realLink));
                     }
                 }
             }
