@@ -41,6 +41,11 @@ public class BotController
         return new BotEntity();
     }
 
+    @RequestMapping(value = "test2",method = RequestMethod.GET)
+    public String testString(){
+        return "dsdsdsddssdds";
+    }
+
     @RequestMapping(value = "savetest",method = RequestMethod.GET)
     public void saveBotTest(){
         BotEntity bot = new BotEntity();

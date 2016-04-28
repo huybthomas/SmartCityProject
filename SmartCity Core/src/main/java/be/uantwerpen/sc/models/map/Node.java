@@ -42,4 +42,13 @@ public class Node {
     public void setNeighbours(List<LinkEntity> neighbours) {
         this.neighbours = neighbours;
     }
+
+    @Override
+    public String toString() {
+        return "Node{" +
+                "nodeId=" + nodeId +
+                ", pointEntity=" + pointEntity +
+                ", neighbours=" + neighbours +
+                '}';
+    }
 }

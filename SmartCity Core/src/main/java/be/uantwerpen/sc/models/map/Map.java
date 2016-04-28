@@ -47,4 +47,14 @@ public class Map {
     public void setTrafficlightEntity(List<TrafficLightEntity> trafficlightEntity) {
         this.trafficlightEntity = trafficlightEntity;
     }
+
+    @Override
+    public String toString() {
+        return "Map{" +
+                "nodeList=" + nodeList +
+                ", botEntities=" + botEntities +
+                ", trafficlightEntity=" + trafficlightEntity +
+                '}';
+    }
 }
+

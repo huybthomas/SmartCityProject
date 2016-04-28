@@ -44,15 +44,23 @@ public class MapController {
     MapJson mapJson = null;
     @RequestMapping(value = "json", method = RequestMethod.GET)
     public MapJson getMapJson(){
-        System.out.println("DoSomething");
         mapJson = mapControlService.buildMapJson();
         return mapJson;
     }
 
     @RequestMapping(value = "{start}/path/{stop}", method = RequestMethod.GET)
     public List<Vertex> PathPlanning(@PathVariable("start") int start, @PathVariable("stop") int stop){
-        List<Vertex> path = pathPlanningService.Calculatepath(start,stop);
+        List<Vertex> path = pathPlanningService.Calculatepath(null,start,stop);
         return path;
     }
 
+    @RequestMapping(value = "stringmapjson", method = RequestMethod.GET)
+    public String mapStringJson(){
+        return mapControlService.buildMapJson().toString();
+    }
+
+    @RequestMapping(value = "stringmap", method = RequestMethod.GET)
+    public String mapString(){
+        return mapControlService.buildMap().toString();
+    }
 }

@@ -41,4 +41,13 @@ public class Neighbour {
     public void setWeight(int weight) {
         this.weight = weight;
     }
+
+    @Override
+    public String toString() {
+        return "Neighbour{" +
+                "pointEntity=" + pointEntity +
+                ", length=" + length +
+                ", weight=" + weight +
+                '}';
+    }
 }

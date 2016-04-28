@@ -1,4 +1,7 @@
-package be.uantwerpen.sc.tools;
+package be.uantwerpen.sc.tools.pathplanning;
+
+import be.uantwerpen.sc.tools.Edge;
+import be.uantwerpen.sc.tools.Vertex;
 
 import java.util.ArrayList;
 import java.util.Collections;

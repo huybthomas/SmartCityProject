@@ -30,4 +30,12 @@ public class NodeJson {
     public void setNeighbours(List<Neighbour> neighbours) {
         this.neighbours = neighbours;
     }
+
+    @Override
+    public String toString() {
+        return "NodeJson{" +
+                "pointEntity=" + pointEntity +
+                ", neighbours=" + neighbours +
+                '}';
+    }
 }

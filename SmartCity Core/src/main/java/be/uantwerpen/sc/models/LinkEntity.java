@@ -15,7 +15,6 @@ public class LinkEntity {
     private PointEntity startId;
     private PointEntity stopId;
     private int weight;
-    private int pointlock;
 
     @Id
     @Column(name = "lid")
@@ -113,13 +112,16 @@ public class LinkEntity {
         this.weight = weight;
     }
 
-    @Basic
-    @Column(name = "pointlock")
-    public int getPointlock() {
-        return pointlock;
-    }
-
-    public void setPointlock(int pointlock) {
-        this.pointlock = pointlock;
+    @Override
+    public String toString() {
+        return "LinkEntity{" +
+                "lid=" + lid +
+                ", length=" + length +
+                ", startDirection='" + startDirection + '\'' +
+                ", stopDirection='" + stopDirection + '\'' +
+                ", startId=" + startId +
+                ", stopId=" + stopId +
+                ", weight=" + weight +
+                '}';
     }
 }

@@ -34,4 +34,12 @@ public class MapJson {
     public void setSize(int size) {
         this.size = size;
     }
+
+    @Override
+    public String toString() {
+        return "MapJson{" +
+                "nodeJsons=" + nodeJsons +
+                ", size=" + size +
+                '}';
+    }
 }
