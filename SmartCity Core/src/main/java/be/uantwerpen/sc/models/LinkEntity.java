@@ -18,6 +18,7 @@ public class LinkEntity {
 
     @Id
     @Column(name = "lid")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     public int getLid() {
         return lid;
     }

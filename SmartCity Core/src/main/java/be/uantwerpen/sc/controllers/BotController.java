@@ -36,14 +36,17 @@ public class BotController
         botControlService.updateBot(bot);
     }
 
+    @RequestMapping(value = "updateBotTest/{id}",method = RequestMethod.GET)
+    public void updateBotTest(@PathVariable("id") Long id){
+        BotEntity botEntity = new BotEntity();
+        botEntity.setRid(id);
+        botEntity.setState("Updated");
+        botControlService.updateBot(botEntity);
+    }
+
     @RequestMapping(value = "test",method = RequestMethod.GET)
     public BotEntity testRestBot(){
         return new BotEntity();
-    }
-
-    @RequestMapping(value = "test2",method = RequestMethod.GET)
-    public String testString(){
-        return "dsdsdsddssdds";
     }
 
     @RequestMapping(value = "savetest",method = RequestMethod.GET)

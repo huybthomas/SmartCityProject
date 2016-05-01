@@ -15,6 +15,7 @@ public class PointEntity {
 
     @Id
     @Column(name = "pid")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     public int getPid() {
         return pid;
     }

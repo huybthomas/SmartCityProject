@@ -15,6 +15,7 @@ public class TrafficLightEntity {
 
     @Id
     @Column(name = "tlid")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     public int getTlid() {
         return tlid;
     }

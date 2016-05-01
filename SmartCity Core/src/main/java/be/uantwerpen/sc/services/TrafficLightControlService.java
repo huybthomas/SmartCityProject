@@ -28,7 +28,10 @@ public class TrafficLightControlService {
         TrafficLightEntity dbTL = trafficLightRepository.findOne(trafficlightEntity.getTlid());
         dbTL = trafficlightEntity;
         trafficLightRepository.save(dbTL);
+    }
 
+    public void saveTl(TrafficLightEntity tl){
+        trafficLightRepository.save(tl);
     }
 
 
