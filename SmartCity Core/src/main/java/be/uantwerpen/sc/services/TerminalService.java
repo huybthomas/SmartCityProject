@@ -1,6 +1,8 @@
 package be.uantwerpen.sc.services;
 
+import be.uantwerpen.sc.controllers.JobController;
 import be.uantwerpen.sc.tools.Terminal;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -10,6 +12,8 @@ import org.springframework.stereotype.Service;
 public class TerminalService
 {
     private Terminal terminal;
+    @Autowired
+    private JobController jobController;
 
     public TerminalService()
     {
@@ -37,6 +41,23 @@ public class TerminalService
 
         switch(command)
         {
+            case "job":
+                try {
+                    String command2 = commandString.split(" ", 2)[1].toLowerCase();
+                    String robot = command2.split(" ", 2)[0].toLowerCase();
+                    String job = command2.split(" ", 2)[1].toLowerCase();
+                    System.out.println(robot + " do " + job);
+                    try {
+                        int robotId = Integer.parseInt(robot);
+                        sendJobs(robotId, job);
+                    } catch (NumberFormatException e) {
+                        terminal.printTerminalError(e.getMessage());
+                        terminal.printTerminal("Usage: navigate start end");
+                    }
+                }catch (Exception e){
+                    terminal.printTerminal(e.getMessage());
+                }
+                break;
             case "exit":
                 exitSystem();
                 break;
@@ -62,8 +83,22 @@ public class TerminalService
             default:
                 terminal.printTerminal("Available commands:");
                 terminal.printTerminal("-------------------");
+                terminal.printTerminal("'job {robotId} {doSomething}': send a command to the robot");
                 terminal.printTerminal("'exit' : shutdown the server.");
                 terminal.printTerminal("'help' / '?' : show all available commands.\n");
+                break;
+        }
+    }
+
+    private void sendJobs(int robotID, String job){
+
+        switch (robotID)
+        {
+            case 1:
+                jobController.sendJob("http://146.175.140.71:8080/job/",job);
+                break;
+            default:
+                System.out.println("Robot not found");
                 break;
         }
     }
