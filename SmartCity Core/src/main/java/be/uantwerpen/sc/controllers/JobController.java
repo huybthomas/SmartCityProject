@@ -17,12 +17,7 @@ public class JobController {
 
     public void sendJob(String robotUri, String job){
 
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-
-        HttpEntity<String> entity = new HttpEntity<String>(requestJson, headers);
         RestTemplate restTemplate = new RestTemplate();
-        restTemplate.put();
         String result = restTemplate.postForObject( robotUri, job, String.class);
         System.out.println(result);
 
