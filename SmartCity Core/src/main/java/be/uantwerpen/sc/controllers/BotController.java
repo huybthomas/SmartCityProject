@@ -72,4 +72,18 @@ public class BotController
 
         return "Something";
     }
+
+    @RequestMapping(value = "newRobot",method = RequestMethod.GET)
+    public Long newRobot(){
+        //Get new ID
+        Long lastID = botControlService.getAllBots().get(botControlService.getAllBots().size()).getRid();
+        Long newID = ++lastID;
+
+        //Save Robot
+        BotEntity bot = new BotEntity();
+        bot.setRid(newID);
+        botControlService.saveBot(bot);
+
+        return newID;
+    }
 }
