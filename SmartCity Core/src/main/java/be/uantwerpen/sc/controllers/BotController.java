@@ -75,9 +75,14 @@ public class BotController
 
     @RequestMapping(value = "newRobot",method = RequestMethod.GET)
     public Long newRobot(){
-        //Get new ID
-        Long lastID = botControlService.getAllBots().get(botControlService.getAllBots().size()).getRid();
-        Long newID = ++lastID;
+        Long newID;
+        if(botControlService.getAllBots() != null &&!botControlService.getAllBots().isEmpty()) {
+            //Get new ID
+            Long lastID = botControlService.getAllBots().get(botControlService.getAllBots().size()).getRid();
+            newID = ++lastID;
+        }else{
+            newID = (long)0;
+        }
 
         //Save Robot
         BotEntity bot = new BotEntity();

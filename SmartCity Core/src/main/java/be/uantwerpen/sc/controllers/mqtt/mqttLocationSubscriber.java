@@ -1,0 +1,47 @@
+package be.uantwerpen.sc.controllers.mqtt;
+
+import org.eclipse.paho.client.mqttv3.MqttClient;
+import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
+import org.eclipse.paho.client.mqttv3.MqttException;
+
+/**
+ * Created by Arthur on 9/05/2016.
+ */
+public class mqttLocationSubscriber {
+
+    public static final String BROKER_URL = "tcp://146.175.139.63:1883";
+    //public static final String BROKER_URL = "tcp://test.mosquitto.org:1883";
+
+    //We have to generate a unique Client id.
+    public MqttClient mqttSubscribeClient, mqttSendClient;
+
+    public mqttLocationSubscriber() {
+
+        try {
+            mqttSubscribeClient = new MqttClient(BROKER_URL, "Pc_Arthur_Receiver");
+            mqttSendClient = new MqttClient(BROKER_URL, "Pc_Arthur_Sender");
+
+        } catch (MqttException e) {
+            e.printStackTrace();
+            System.exit(1);
+        }
+    }
+
+    public void start() {
+        try {
+            mqttSubscribeClient.setCallback(new mqttLocationSubscriberCallback(this));
+            MqttConnectOptions connOpts = new MqttConnectOptions();
+            connOpts.setCleanSession(true);
+            connOpts.setUserName("arthur");
+            connOpts.setPassword("arthur".toCharArray());
+            mqttSubscribeClient.connect(connOpts);
+
+            //Subscribe to all subtopics of Sensor
+            mqttSubscribeClient.subscribe("SENSOR/#");
+
+        } catch (MqttException e) {
+            e.printStackTrace();
+            System.exit(1);
+        }
+    }
+}
