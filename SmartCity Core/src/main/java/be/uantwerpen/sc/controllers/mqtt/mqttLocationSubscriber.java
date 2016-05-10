@@ -3,10 +3,12 @@ package be.uantwerpen.sc.controllers.mqtt;
 import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttException;
+import org.springframework.stereotype.Service;
 
 /**
  * Created by Arthur on 9/05/2016.
  */
+@Service
 public class mqttLocationSubscriber {
 
     public static final String BROKER_URL = "tcp://146.175.139.63:1883";
@@ -18,8 +20,8 @@ public class mqttLocationSubscriber {
     public mqttLocationSubscriber() {
 
         try {
-            mqttSubscribeClient = new MqttClient(BROKER_URL, "Pc_Arthur_Receiver");
-            mqttSendClient = new MqttClient(BROKER_URL, "Pc_Arthur_Sender");
+            mqttSubscribeClient = new MqttClient(BROKER_URL, "SmartCity_Core_Receiver");
+            start();
 
         } catch (MqttException e) {
             e.printStackTrace();
@@ -37,7 +39,7 @@ public class mqttLocationSubscriber {
             mqttSubscribeClient.connect(connOpts);
 
             //Subscribe to all subtopics of Sensor
-            mqttSubscribeClient.subscribe("SENSOR/#");
+            mqttSubscribeClient.subscribe("BOT/#");
 
         } catch (MqttException e) {
             e.printStackTrace();

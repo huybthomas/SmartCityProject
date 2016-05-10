@@ -1,14 +1,21 @@
 package be.uantwerpen.sc.controllers.mqtt;
 
+import be.uantwerpen.sc.controllers.BotController;
+import be.uantwerpen.sc.models.BotEntity;
+import be.uantwerpen.sc.repositories.BotRepository;
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
 import org.eclipse.paho.client.mqttv3.MqttCallback;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * Created by Arthur on 9/05/2016.
  */
 public class mqttLocationSubscriberCallback implements MqttCallback {
+
+    @Autowired
+    private BotController botController;
 
     mqttLocationSubscriber subscriber;
     boolean on = false;
@@ -23,11 +30,15 @@ public class mqttLocationSubscriberCallback implements MqttCallback {
     }
 
     @Override
-    public void messageArrived(String s, MqttMessage mqttMessage) throws Exception {
+    public void messageArrived(String topic, MqttMessage mqttMessage) throws Exception {
 
-        System.out.println("Message arrived. String: " + s + "  Message: " + mqttMessage.toString());
+        System.out.println("Message arrived. String: " + topic + "  Message: " + mqttMessage.toString());
 
         //TODO Process message
+        String botIDString = topic.split("/")[1];
+        Long botID = Long.parseLong(botIDString);
+
+        botController.updateLocation(botID, Integer.parseInt(new String(mqttMessage.getPayload())));
 
         System.out.println("Message processing finished");
     }

@@ -91,4 +91,11 @@ public class BotController
 
         return newID;
     }
+
+    public void updateLocation(Long id, int mm){
+        BotEntity botEntity = this.getBot(id);
+        botEntity.setPercentageCompleted(mm);
+        botEntity.setState("Updated");
+        botControlService.updateBot(botEntity);
+    }
 }
