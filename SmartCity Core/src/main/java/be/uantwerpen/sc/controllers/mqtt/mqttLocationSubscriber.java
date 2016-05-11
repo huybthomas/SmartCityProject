@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
 public class mqttLocationSubscriber {
 
     @Autowired
-    private BotController botController;
+    public BotController botController;
 
     public static final String BROKER_URL = "tcp://146.175.139.66:1883";
     //public static final String BROKER_URL = "tcp://test.mosquitto.org:1883";
@@ -38,7 +38,7 @@ public class mqttLocationSubscriber {
 
     public void start() {
         try {
-            mqttSubscribeClient.setCallback(new mqttLocationSubscriberCallback(this,botController));
+            mqttSubscribeClient.setCallback(new mqttLocationSubscriberCallback(this));
             MqttConnectOptions connOpts = new MqttConnectOptions();
             connOpts.setCleanSession(true);
             connOpts.setUserName("arthur");
@@ -50,7 +50,7 @@ public class mqttLocationSubscriber {
 
         } catch (MqttException e) {
             e.printStackTrace();
-            System.exit(1);
+            //System.exit(1);
         }
     }
 }

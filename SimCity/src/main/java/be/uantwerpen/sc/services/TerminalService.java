@@ -12,10 +12,6 @@ import org.springframework.stereotype.Service;
 public class TerminalService
 {
     private Terminal terminal;
-    @Autowired
-    SimCCommandHandler simCCommandHandler;
-    @Autowired
-    SimCCommandSender cCommandSender;
 
     public TerminalService()
     {
@@ -87,6 +83,6 @@ public class TerminalService
     }
 
     private void sendCommand(String message){
-        cCommandSender.sendCommand(message);
+        ;
     }
 }

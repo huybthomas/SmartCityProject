@@ -96,7 +96,7 @@ public class TerminalService
         switch (robotID)
         {
             case 1:
-                jobController.sendJob("http://146.175.140.71:8080/job/", job);
+                jobController.sendJob("http://localhost:8080/job/", job);
                 break;
             default:
                 System.out.println("Robot not found");

@@ -20,9 +20,8 @@ public class mqttLocationSubscriberCallback implements MqttCallback {
     mqttLocationSubscriber subscriber;
     boolean on = false;
 
-    public mqttLocationSubscriberCallback(mqttLocationSubscriber subscriber, BotController botController){
+    public mqttLocationSubscriberCallback(mqttLocationSubscriber subscriber){
         this.subscriber = subscriber;
-        this.botController = botController;
     }
 
     @Override
@@ -41,7 +40,7 @@ public class mqttLocationSubscriberCallback implements MqttCallback {
 
         String payploadString =  new String(mqttMessage.getPayload());
         int tussenint = Integer.parseInt(payploadString);
-        botController.updateLocation(botID, tussenint);
+        subscriber.botController.updateLocation(botID, tussenint);
 
         System.out.println("Message processing finished");
     }

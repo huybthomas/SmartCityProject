@@ -1,5 +1,6 @@
 package be.uantwerpen.sc.configurations;
 
+import be.uantwerpen.sc.services.SimCCommandHandler;
 import be.uantwerpen.sc.services.TerminalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
@@ -14,10 +15,13 @@ public class SystemLoader implements ApplicationListener<ContextRefreshedEvent>
 {
     @Autowired
     TerminalService terminalService;
+    @Autowired
+    SimCCommandHandler simCCommandHandler;
 
     //Run after Spring context initialization
     public void onApplicationEvent(ContextRefreshedEvent event)
     {
+        new Thread(simCCommandHandler).start();
         terminalService.systemReady();
     }
 }

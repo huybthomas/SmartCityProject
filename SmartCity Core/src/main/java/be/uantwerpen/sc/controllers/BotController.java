@@ -2,9 +2,11 @@ package be.uantwerpen.sc.controllers;
 
 import be.uantwerpen.sc.models.BotEntity;
 import be.uantwerpen.sc.services.BotControlService;
+import be.uantwerpen.sc.services.LinkControlService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -16,6 +18,8 @@ public class BotController
 {
     @Autowired
     private BotControlService botControlService;
+    @Autowired
+    private LinkControlService linkControlService;
 
     @RequestMapping(method = RequestMethod.GET)
     public List<BotEntity> allBots(){
@@ -89,9 +93,17 @@ public class BotController
         BotEntity bot = new BotEntity();
         bot.setRid(newID);
         botControlService.saveBot(bot);
-        System.out.println("New robot created!!");
+        Date date = new Date();
+        System.out.println("New robot created!!" + date.toString());
 
         return newID;
+    }
+
+    @RequestMapping(value = "{id}/lid/{lid}",method = RequestMethod.GET)
+    public void locationLink(@PathVariable("id") Long id,@PathVariable("lid") int lid){
+        BotEntity botEntity = this.getBot(id);
+        botEntity.setLinkId(linkControlService.getLink(lid));
+        botControlService.updateBot(botEntity);
     }
 
     public void updateLocation(Long id, int mm){

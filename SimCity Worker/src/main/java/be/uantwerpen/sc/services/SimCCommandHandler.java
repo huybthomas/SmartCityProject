@@ -3,7 +3,10 @@ package be.uantwerpen.sc.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.io.DataInputStream;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -17,10 +20,13 @@ public class SimCCommandHandler implements Runnable {
     private Socket socket;
     @Autowired
     DataService dataService;
+    BufferedReader reader;
+    BufferedWriter writer;
 
     public SimCCommandHandler() {
         try {
-            serverSocket = new ServerSocket(1314);
+            serverSocket = new ServerSocket(5555);
+            System.out.println("Server Active");
         }catch(Exception e){
             e.printStackTrace();
         }
@@ -28,10 +34,23 @@ public class SimCCommandHandler implements Runnable {
 
     @Override
     public void run() {
+        try {
+            Socket socket = serverSocket.accept();
+
+            reader =
+                    new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            writer=
+                    new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
         while(!Thread.currentThread().isInterrupted()){
             try {
-
-                socket = serverSocket.accept();/*
+                String data1 = reader.readLine().trim();
+                System.out.println(data1);
+                //socket = serverSocket.accept();
+                 /*
                 DataInputStream dIn = new DataInputStream(socket.getInputStream());
                 byte[] bytes = new byte[1024];
                 dIn.readFully(bytes);
