@@ -78,7 +78,8 @@ public class BotController
         Long newID;
         if(botControlService.getAllBots() != null &&!botControlService.getAllBots().isEmpty()) {
             //Get new ID
-            Long lastID = botControlService.getAllBots().get(botControlService.getAllBots().size()).getRid();
+            List<BotEntity> botEntities = botControlService.getAllBots();
+            Long lastID = botEntities.get(botEntities.size()-1).getRid();
             newID = ++lastID;
         }else{
             newID = (long)0;
@@ -88,11 +89,13 @@ public class BotController
         BotEntity bot = new BotEntity();
         bot.setRid(newID);
         botControlService.saveBot(bot);
+        System.out.println("New robot created!!");
 
         return newID;
     }
 
     public void updateLocation(Long id, int mm){
+        System.out.println("yolo");
         BotEntity botEntity = this.getBot(id);
         botEntity.setPercentageCompleted(mm);
         botEntity.setState("Updated");

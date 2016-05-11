@@ -1,5 +1,6 @@
 package be.uantwerpen.sc.controllers;
 
+import be.uantwerpen.sc.models.Job;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -18,7 +19,7 @@ public class JobController {
     public void sendJob(String robotUri, String job){
 
         RestTemplate restTemplate = new RestTemplate();
-        String result = restTemplate.postForObject( robotUri, job, String.class);
+        String result = restTemplate.postForObject(robotUri, job, String.class);
         System.out.println(result);
 
     }

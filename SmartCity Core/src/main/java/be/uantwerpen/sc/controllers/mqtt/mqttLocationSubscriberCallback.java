@@ -14,14 +14,15 @@ import org.springframework.beans.factory.annotation.Autowired;
  */
 public class mqttLocationSubscriberCallback implements MqttCallback {
 
-    @Autowired
+
     private BotController botController;
 
     mqttLocationSubscriber subscriber;
     boolean on = false;
 
-    public mqttLocationSubscriberCallback(mqttLocationSubscriber subscriber){
+    public mqttLocationSubscriberCallback(mqttLocationSubscriber subscriber, BotController botController){
         this.subscriber = subscriber;
+        this.botController = botController;
     }
 
     @Override
@@ -38,7 +39,9 @@ public class mqttLocationSubscriberCallback implements MqttCallback {
         String botIDString = topic.split("/")[1];
         Long botID = Long.parseLong(botIDString);
 
-        botController.updateLocation(botID, Integer.parseInt(new String(mqttMessage.getPayload())));
+        String payploadString =  new String(mqttMessage.getPayload());
+        int tussenint = Integer.parseInt(payploadString);
+        botController.updateLocation(botID, tussenint);
 
         System.out.println("Message processing finished");
     }

@@ -3,6 +3,7 @@ package be.uantwerpen.sc.controllers;
 import be.uantwerpen.sc.models.map.Map;
 import be.uantwerpen.sc.models.map.MapJson;
 import be.uantwerpen.sc.models.map.Node;
+import be.uantwerpen.sc.models.map.Path;
 import be.uantwerpen.sc.services.*;
 import be.uantwerpen.sc.tools.Edge;
 import be.uantwerpen.sc.tools.Vertex;
@@ -36,8 +37,6 @@ public class MapController {
 
     @RequestMapping(method = RequestMethod.GET)
     public Map getMap(){
-        System.out.println("DoSomething");
-
         return mapControlService.buildMap();
     }
 
@@ -49,15 +48,19 @@ public class MapController {
     }
 
     @RequestMapping(value = "{start}/path/{stop}", method = RequestMethod.GET)
-    public List<Vertex> PathPlanning(@PathVariable("start") int start, @PathVariable("stop") int stop){
+    public Path PathPlanning(@PathVariable("start") int start, @PathVariable("stop") int stop){
         List<Vertex> path = pathPlanningService.Calculatepath(null,start,stop);
-        return path;
+        Path pathClass = new Path();
+        pathClass.setPath(path);
+        return pathClass;
     }
 
     @RequestMapping(value = "testpath/{start}/path/{stop}", method = RequestMethod.GET)
-    public List<Vertex> PathPlanning2(@PathVariable("start") int start, @PathVariable("stop") int stop){
+    public Path PathPlanning2(@PathVariable("start") int start, @PathVariable("stop") int stop){
         List<Vertex> path = pathPlanningService.CalculatepathNonInterface(start,stop);
-        return path;
+        Path pathClass = new Path();
+        pathClass.setPath(path);
+        return pathClass;
     }
 
     @RequestMapping(value = "stringmapjson", method = RequestMethod.GET)
