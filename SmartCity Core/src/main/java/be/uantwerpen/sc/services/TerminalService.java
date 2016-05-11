@@ -1,6 +1,7 @@
 package be.uantwerpen.sc.services;
 
 import be.uantwerpen.sc.controllers.JobController;
+import be.uantwerpen.sc.controllers.SimulationController;
 import be.uantwerpen.sc.models.Job;
 import be.uantwerpen.sc.tools.Terminal;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,8 @@ public class TerminalService
     private Terminal terminal;
     @Autowired
     private JobController jobController;
+    @Autowired
+    private SimulationController simulationController;
 
     public TerminalService()
     {
@@ -59,6 +62,17 @@ public class TerminalService
                     terminal.printTerminal(e.getMessage());
                 }
                 break;
+            case "simulate":
+                try {
+                    String command2 = commandString.split(" ", 2)[1].toLowerCase();
+                    if(command2.equals("true"))
+                        simulationController.setSimulation("http://localhost:8080/simulate/",true);
+                    else
+                        simulationController.setSimulation("http://localhost:8080/simulate/",false);
+                }catch(ArrayIndexOutOfBoundsException e){
+                    terminal.printTerminal("error");
+                }
+                break;
             case "exit":
                 exitSystem();
                 break;
@@ -85,6 +99,7 @@ public class TerminalService
                 terminal.printTerminal("Available commands:");
                 terminal.printTerminal("-------------------");
                 terminal.printTerminal("'job {robotId} {doSomething}': send a command to the robot");
+                terminal.printTerminal("'simulate {true/false}' : activte/deactivate robot simulator mode.");
                 terminal.printTerminal("'exit' : shutdown the server.");
                 terminal.printTerminal("'help' / '?' : show all available commands.\n");
                 break;
