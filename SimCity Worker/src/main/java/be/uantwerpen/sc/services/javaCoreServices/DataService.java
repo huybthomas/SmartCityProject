@@ -1,4 +1,4 @@
-package be.uantwerpen.sc.services;
+package be.uantwerpen.sc.services.javaCoreServices;
 
 import org.springframework.stereotype.Service;
 
