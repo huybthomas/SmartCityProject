@@ -1,5 +1,7 @@
 package be.uantwerpen.sc.models.sim;
 
+import be.uantwerpen.sc.models.BotEntity;
+
 /**
  * Created by Thomas on 27/02/2016.
  */
@@ -15,9 +17,27 @@ public class SimBot {
         percentageComplete = 0;
     }
 
+    public SimBot(BotEntity bot){
+        if(bot.getLinkId() == null){
+            this.linkID = -1;
+        }else {
+            this.linkID = bot.getLinkId().getLid();
+        }
+        if(bot.getPercentageCompleted() == null) {
+            this.percentageComplete = 0;
+        }else {
+            this.percentageComplete = bot.getPercentageCompleted();
+        }
+        loc = new int[]{0,0};
+    }
+
     public void update(SimPath currentPath){
         int size = currentPath.getLocs().size();
-        int selected = (int)(size*percentageComplete);
+        double perc = percentageComplete/size;
+        if(percentageComplete >= 1)
+            percentageComplete = 0.999;
+        size = (int)(size/290.0);
+        int selected = (int)(size*perc);
         loc = currentPath.getLocs().get(selected);
     }
 
@@ -30,6 +50,9 @@ public class SimBot {
 
     public void setLinkID(int linkID){
         this.linkID = linkID;
+    }
+    public int getLinkID(){
+        return this.linkID;
     }
 
     public double getPercentageComplete(){return percentageComplete;}

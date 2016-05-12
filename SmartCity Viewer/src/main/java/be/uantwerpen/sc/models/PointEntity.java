@@ -7,6 +7,7 @@ public class PointEntity {
     private int pid;
     private String rfid;
     private String type;
+    private int pointlock;
 
     public int getPid() {
         return pid;
@@ -27,6 +28,14 @@ public class PointEntity {
     }
     public void setType(String type) {
         this.type = type;
+    }
+
+    public int getPointlock() {
+        return pointlock;
+    }
+
+    public void setPointlock(int pointlock) {
+        this.pointlock = pointlock;
     }
 
     @Override

@@ -10,7 +10,6 @@ var ctx2;
 
 var car = [];
 var map = [];
-var paths = [];
 
 function start(){
     c = document.getElementById("mapCanvas");
@@ -23,7 +22,7 @@ function start(){
     drawLegend();
 
     drawMap();
-    setInterval(getCars, 2000);
+    setInterval(getCars, 200);
 }
 
 function drawMap(){

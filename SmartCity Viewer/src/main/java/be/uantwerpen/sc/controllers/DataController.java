@@ -43,6 +43,7 @@ public class DataController {
 
     @RequestMapping("/update")
     public ArrayList<SimBot> returnSimBot() {
+        carService.getBots();
         return carService.simBots;
     }
 

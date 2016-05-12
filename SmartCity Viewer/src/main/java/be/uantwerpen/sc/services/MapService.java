@@ -20,7 +20,7 @@ import java.util.List;
 public class MapService {
 
     //TODO set correct IP
-    String coreIP = "http://localhost:1994";
+    String coreIP = "http://146.175.140.118:1994";
 
     public MapBuilder mapBuilder;
 

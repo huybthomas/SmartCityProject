@@ -95,6 +95,11 @@ public class MapBuilder{
         ProcessingType processingType = ProcessingType.STRAIGHT;
 
         Iterator<LinkEntity> linkIterator = linkEntities.iterator();
+
+        for(LinkEntity link : linkEntities){
+            link.setLength((int)(link.getLength()/290.0));
+        }
+
         boolean firstFound = false;
         while(linkIterator.hasNext() && firstFound == false){
             LinkEntity link = linkIterator.next();
@@ -105,6 +110,7 @@ public class MapBuilder{
 
         //Process other links //TODO merge with above
         boolean nextMode = true;
+
         while(!linkEntities.isEmpty()){
             //Links need to be processed    //Reset LinkIterator
             linkIterator = linkEntities.iterator();
@@ -112,12 +118,6 @@ public class MapBuilder{
             while(linkIterator.hasNext()){
                 LinkEntity link = linkIterator.next();
                 //Check if we can process this link with the current processing type
-                if(link.getStartId().getPid()==2 || link.getStopId().getPid() == 2){
-                    System.out.println("");
-                }
-                if(processingType == ProcessingType.BEND && link.getLid() == 24){
-                    System.out.println("");
-                }
                 System.out.println(link.getLid());
                 if(canProcessWithCurrentProcessingType(link, processingType)){
                     //Removes link on success, thus, we need to start linkIterator again    //TODO Find alternative
