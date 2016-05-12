@@ -1,10 +1,10 @@
 package be.uantwerpen.sc.tools;
 
-import be.uantwerpen.sc.controllers.CCommandSender;
-import be.uantwerpen.sc.controllers.SimCCommandSender;
-import be.uantwerpen.sc.services.DataService;
-import be.uantwerpen.sc.services.QueueService;
-import be.uantwerpen.sc.services.SimulationService;
+
+
+import be.uantwerpen.sc.services.sockets.SimCCommandSender;
+import be.uantwerpen.sc.services.javaCoreServices.DataService;
+import be.uantwerpen.sc.services.javaCoreServices.QueueService;
 
 import java.util.concurrent.BlockingQueue;
 
@@ -13,21 +13,17 @@ import java.util.concurrent.BlockingQueue;
  */
 public class QueueConsumer implements Runnable
 {
-    private CCommandSender sender;
     private QueueService queueService;
     private DataService dataService;
-    private SimulationService simulationService;
     private SimCCommandSender simCCommandSender;
 
     private BlockingQueue<String> jobQueue;
 
-    public QueueConsumer(QueueService queueService, CCommandSender sender, DataService dataService, SimCCommandSender simCCommandSender, SimulationService simulationService)
+    public QueueConsumer(QueueService queueService, DataService dataService, SimCCommandSender simCCommandSender)
     {
         this.queueService = queueService;
-        this.sender = sender;
         this.dataService = dataService;
         this.simCCommandSender = simCCommandSender;
-        this.simulationService = simulationService;
     }
 
     @Override
@@ -43,19 +39,11 @@ public class QueueConsumer implements Runnable
                     //Wait until robot not busy
                     synchronized (this) {
                         if(!dataService.robotBusy) {
-                            if(simulationService.isActiveSimulator()){
                                 String s = queueService.getJob();
                                 simCCommandSender.sendCommand(s);
-                            }else{
-                                String s = queueService.getJob();
-                                sender.sendCommand(s);
-                                if(!s.contains("DRIVE DISTANCE")) {
-                                    dataService.robotBusy = true;
-                                }
                             }
                         }
                     }
-                }
                 //System.out.println("CrunchifyBlockingConsumer: Message - " + queueService.getJob() + " consumed.");
             } catch (Exception e) {
                 e.printStackTrace();

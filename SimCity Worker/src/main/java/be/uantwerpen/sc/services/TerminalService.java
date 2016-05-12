@@ -2,6 +2,7 @@ package be.uantwerpen.sc.services;
 
 
 import be.uantwerpen.sc.controllers.SimCommandController;
+import be.uantwerpen.sc.services.sockets.SimCCommandHandler;
 import be.uantwerpen.sc.tools.Terminal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -86,6 +87,7 @@ public class TerminalService
             default:
                 terminal.printTerminal("Available commands:");
                 terminal.printTerminal("-------------------");
+                terminal.printTerminal("'addrobot': add new simulation robot");
                 terminal.printTerminal("'sendcommand {robotID} {Something}': send a command to the robot c-core");
                 terminal.printTerminal("'exit' : shutdown the server.");
                 terminal.printTerminal("'help' / '?' : show all available commands.\n");
@@ -97,7 +99,7 @@ public class TerminalService
         switch (robotID)
         {
             case 1:
-                simCommandController.sendCommand("http://localhost:8080/command/", message);
+                simCommandController.sendCommand("http://146.175.140.119:8080/command/", message);
                 break;
             default:
                 System.out.println("Robot not found");

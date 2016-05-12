@@ -1,6 +1,8 @@
 package be.uantwerpen.sc.services.javaCoreServices;
 
 import be.uantwerpen.sc.models.LinkEntity;
+import be.uantwerpen.sc.models.map.Map;
+import be.uantwerpen.sc.models.map.Node;
 import be.uantwerpen.sc.tools.Dijkstra;
 import be.uantwerpen.sc.tools.Edge;
 import be.uantwerpen.sc.tools.IPathplanning;

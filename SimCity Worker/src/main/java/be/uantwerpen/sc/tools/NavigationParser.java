@@ -1,6 +1,8 @@
 package be.uantwerpen.sc.tools;
 
-import java.util.*;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Queue;
 
 /**
  * Created by Arthur on 28/04/2016.

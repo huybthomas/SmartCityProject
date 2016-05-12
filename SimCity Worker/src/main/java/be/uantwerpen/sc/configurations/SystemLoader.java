@@ -1,6 +1,6 @@
 package be.uantwerpen.sc.configurations;
 
-import be.uantwerpen.sc.services.SimCCommandHandler;
+import be.uantwerpen.sc.services.sockets.SimCCommandHandler;
 import be.uantwerpen.sc.services.TerminalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
