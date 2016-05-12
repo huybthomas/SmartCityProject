@@ -1,4 +1,7 @@
-package be.uantwerpen.sc.models;
+package be.uantwerpen.sc.models.map;
+
+import be.uantwerpen.sc.models.LinkEntity;
+import be.uantwerpen.sc.models.PointEntity;
 
 import java.util.List;
 
@@ -38,5 +41,14 @@ public class Node {
 
     public void setNeighbours(List<LinkEntity> neighbours) {
         this.neighbours = neighbours;
+    }
+
+    @Override
+    public String toString() {
+        return "Node{" +
+                "nodeId=" + nodeId +
+                ", pointEntity=" + pointEntity +
+                ", neighbours=" + neighbours +
+                '}';
     }
 }

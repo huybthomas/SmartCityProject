@@ -1,4 +1,7 @@
-package be.uantwerpen.sc.models;
+package be.uantwerpen.sc.models.map;
+
+import be.uantwerpen.sc.models.BotEntity;
+import be.uantwerpen.sc.models.TrafficLightEntity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,4 +47,14 @@ public class Map {
     public void setTrafficlightEntity(List<TrafficLightEntity> trafficlightEntity) {
         this.trafficlightEntity = trafficlightEntity;
     }
+
+    @Override
+    public String toString() {
+        return "Map{" +
+                "nodeList=" + nodeList +
+                ", botEntities=" + botEntities +
+                ", trafficlightEntity=" + trafficlightEntity +
+                '}';
+    }
 }
+

@@ -1,21 +1,20 @@
 package be.uantwerpen.sc.controllers;
 
-import be.uantwerpen.sc.models.LinkEntity;
-import be.uantwerpen.sc.models.Map;
-import be.uantwerpen.sc.models.Node;
-import be.uantwerpen.sc.models.PointEntity;
-import be.uantwerpen.sc.services.BotControlService;
-import be.uantwerpen.sc.services.LinkControlService;
-import be.uantwerpen.sc.services.PointControlService;
-import be.uantwerpen.sc.services.TrafficLightControlService;
+import be.uantwerpen.sc.models.map.Map;
+import be.uantwerpen.sc.models.map.MapJson;
+import be.uantwerpen.sc.models.map.Node;
+import be.uantwerpen.sc.models.map.Path;
+import be.uantwerpen.sc.services.*;
+import be.uantwerpen.sc.tools.Edge;
+import be.uantwerpen.sc.tools.Vertex;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
 
 /**
  * Created by Niels on 3/04/2016.
@@ -26,41 +25,51 @@ import java.util.stream.Collectors;
 public class MapController {
 
     @Autowired
-    private PointControlService pointControlService;
+    private MapControlService mapControlService;
+    @Autowired
+    private PathPlanningService pathPlanningService;
     @Autowired
     private LinkControlService linkControlService;
-    @Autowired
-    private BotControlService botControlService;
-    @Autowired
-    private TrafficLightControlService trafficLightControlService;
-
-    private List<LinkEntity> linkEntityList;
-    private List<LinkEntity> targetlinks;
-
 
 
     private Map myMap;
     private Node node;
 
     @RequestMapping(method = RequestMethod.GET)
-    public Map buildMap(){
-        System.out.println("DoSomething");
-        linkEntityList =linkControlService.getAllLinks();
-        myMap = new Map();
-
-        for(PointEntity point : pointControlService.getAllPoints()){
-            node = new Node(point);
-            targetlinks = linkEntityList.stream().filter(item -> Objects.equals(item.getStartId().getPid(), node.getNodeId())).collect(Collectors.toList());
-            node.setNeighbours(targetlinks);
-            myMap.addNode(node);
-        }
-
-        myMap.setBotEntities(botControlService.getAllBots());
-        myMap.setTrafficlightEntity(trafficLightControlService.getAlTrafficLights());
-
-        myMap.getNodeList();
-
-        return myMap;
+    public Map getMap(){
+        return mapControlService.buildMap();
     }
 
+    MapJson mapJson = null;
+    @RequestMapping(value = "json", method = RequestMethod.GET)
+    public MapJson getMapJson(){
+        mapJson = mapControlService.buildMapJson();
+        return mapJson;
+    }
+
+    @RequestMapping(value = "{start}/path/{stop}", method = RequestMethod.GET)
+    public Path PathPlanning(@PathVariable("start") int start, @PathVariable("stop") int stop){
+        List<Vertex> path = pathPlanningService.Calculatepath(null,start,stop);
+        Path pathClass = new Path();
+        pathClass.setPath(path);
+        return pathClass;
+    }
+
+    @RequestMapping(value = "testpath/{start}/path/{stop}", method = RequestMethod.GET)
+    public Path PathPlanning2(@PathVariable("start") int start, @PathVariable("stop") int stop){
+        List<Vertex> path = pathPlanningService.CalculatepathNonInterface(start,stop);
+        Path pathClass = new Path();
+        pathClass.setPath(path);
+        return pathClass;
+    }
+
+    @RequestMapping(value = "stringmapjson", method = RequestMethod.GET)
+    public String mapStringJson(){
+        return mapControlService.buildMapJson().toString();
+    }
+
+    @RequestMapping(value = "stringmap", method = RequestMethod.GET)
+    public String mapString(){
+        return mapControlService.buildMap().toString();
+    }
 }

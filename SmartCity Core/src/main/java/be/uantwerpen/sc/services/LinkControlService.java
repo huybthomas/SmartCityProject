@@ -18,4 +18,8 @@ public class LinkControlService {
     private LinkRepository linkRepository;
 
     public List<LinkEntity> getAllLinks(){return linkRepository.findAll();}
+
+    public LinkEntity getLink(int id){
+        return linkRepository.findOne(id);
+    }
 }

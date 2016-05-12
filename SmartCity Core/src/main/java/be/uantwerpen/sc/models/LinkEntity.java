@@ -14,9 +14,11 @@ public class LinkEntity {
     private String stopDirection;
     private PointEntity startId;
     private PointEntity stopId;
+    private int weight;
 
     @Id
     @Column(name = "lid")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     public int getLid() {
         return lid;
     }
@@ -99,5 +101,28 @@ public class LinkEntity {
 
     public void setStopId(PointEntity stopId) {
         this.stopId = stopId;
+    }
+
+    @Basic
+    @Column(name = "gewicht")
+    public int getWeight() {
+        return weight;
+    }
+
+    public void setWeight(int weight) {
+        this.weight = weight;
+    }
+
+    @Override
+    public String toString() {
+        return "LinkEntity{" +
+                "lid=" + lid +
+                ", length=" + length +
+                ", startDirection='" + startDirection + '\'' +
+                ", stopDirection='" + stopDirection + '\'' +
+                ", startId=" + startId +
+                ", stopId=" + stopId +
+                ", weight=" + weight +
+                '}';
     }
 }

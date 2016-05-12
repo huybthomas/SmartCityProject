@@ -1,15 +1,13 @@
 package be.uantwerpen.sc.controllers;
 
 import be.uantwerpen.sc.models.BotEntity;
-import be.uantwerpen.sc.models.RobotThread;
 import be.uantwerpen.sc.services.BotControlService;
+import be.uantwerpen.sc.services.LinkControlService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.lang.reflect.Field;
-import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * Created by Thomas on 25/02/2016.
@@ -20,6 +18,8 @@ public class BotController
 {
     @Autowired
     private BotControlService botControlService;
+    @Autowired
+    private LinkControlService linkControlService;
 
     @RequestMapping(method = RequestMethod.GET)
     public List<BotEntity> allBots(){
@@ -40,6 +40,14 @@ public class BotController
         botControlService.updateBot(bot);
     }
 
+    @RequestMapping(value = "updateBotTest/{id}",method = RequestMethod.GET)
+    public void updateBotTest(@PathVariable("id") Long id){
+        BotEntity botEntity = new BotEntity();
+        botEntity.setRid(id);
+        botEntity.setState("Updated");
+        botControlService.updateBot(botEntity);
+    }
+
     @RequestMapping(value = "test",method = RequestMethod.GET)
     public BotEntity testRestBot(){
         return new BotEntity();
@@ -48,7 +56,7 @@ public class BotController
     @RequestMapping(value = "savetest",method = RequestMethod.GET)
     public void saveBotTest(){
         BotEntity bot = new BotEntity();
-        bot.setRobotState("test");
+        bot.setState("test");
         botControlService.saveBot(bot);
     }
 
@@ -56,23 +64,53 @@ public class BotController
     public String goTo(@PathVariable("id") Long id, @PathVariable("rid") Long rid){
 
         BotEntity botEntity = botControlService.getBot(rid);
-        if (botEntity != null){
-           // RobotThread robotThread = new RobotThread(botEntity);
-            //robotThread.start();
-            try {
-                //Release location
-                // Acquire Lock for next point
-                if(botEntity.getPercentageCompleted() >= 50){
-                    botEntity.getLinkId().getStopId().getPointLock().acquire();
-                    botEntity.getLinkId().getStartId().getPointLock().release();
-                }
-            } catch (InterruptedException e) {
-                System.out.println("received InterruptedException");
+        /*if (!pointEntities.contains(botEntity.getLinkId().getStopId())){
+            pointEntities.add(botEntity.getLinkId().getStopId());
+        }*/
+        if (botEntity != null) {
+            if (botEntity.getPercentageCompleted() >= 50) {
+               // stack.push(botEntity.getLinkId().getStopId());
             }
         }
         else{System.out.println("Robot doesnt exist");}
 
-
         return "Something";
+    }
+
+    @RequestMapping(value = "newRobot",method = RequestMethod.GET)
+    public Long newRobot(){
+        Long newID;
+        if(botControlService.getAllBots() != null &&!botControlService.getAllBots().isEmpty()) {
+            //Get new ID
+            List<BotEntity> botEntities = botControlService.getAllBots();
+            Long lastID = botEntities.get(botEntities.size()-1).getRid();
+            newID = ++lastID;
+        }else{
+            newID = (long)0;
+        }
+
+        //Save Robot
+        BotEntity bot = new BotEntity();
+        bot.setRid(newID);
+        botControlService.saveBot(bot);
+        Date date = new Date();
+        System.out.println("New robot created!!" + date.toString());
+
+        return newID;
+    }
+
+    @RequestMapping(value = "{id}/lid/{lid}",method = RequestMethod.GET)
+    public void locationLink(@PathVariable("id") Long id,@PathVariable("lid") int lid){
+        BotEntity botEntity = this.getBot(id);
+        botEntity.setLinkId(linkControlService.getLink(lid));
+        botControlService.updateBot(botEntity);
+    }
+
+    public void updateLocation(Long id, int mm){
+        System.out.println("yolo");
+        BotEntity botEntity = this.getBot(id);
+        botEntity.setPercentageCompleted(mm);
+        botEntity.setState("Updated");
+        botControlService.updateBot(botEntity);
     }
 }

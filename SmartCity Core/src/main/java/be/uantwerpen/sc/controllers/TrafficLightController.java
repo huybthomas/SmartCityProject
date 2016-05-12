@@ -27,4 +27,11 @@ public class TrafficLightController {
 
     @RequestMapping(value = "{id}",method = RequestMethod.GET)
     public TrafficLightEntity getBot(@PathVariable("id") int id){return  trafficLightControlService.getTrafficLight(id);}
+
+    @RequestMapping(value = "savetest",method = RequestMethod.GET)
+    public void saveTlTest(){
+        TrafficLightEntity tl = new TrafficLightEntity();
+        tl.setState("Test");
+        trafficLightControlService.saveTl(tl);
+    }
 }
