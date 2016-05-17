@@ -107,10 +107,21 @@ public class BotController
     }
 
     public void updateLocation(Long id, int mm){
-        System.out.println("yolo");
         BotEntity botEntity = this.getBot(id);
         botEntity.setPercentageCompleted(mm);
         botEntity.setState("Updated");
         botControlService.updateBot(botEntity);
+    }
+
+    @RequestMapping(value = "/delete/{rid}",method = RequestMethod.GET)
+    public void deleteBot(@PathVariable("rid") Long rid){
+        botControlService.deleteBot(rid);
+        System.out.println("Robot with id: " + rid + " deleted from DB");
+    }
+
+    @RequestMapping(value = "/resetbots}",method = RequestMethod.GET)
+    public void resetBots(){
+        botControlService.resetBots();
+        System.out.println("Robot table emptied");
     }
 }

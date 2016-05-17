@@ -1,5 +1,6 @@
 package be.uantwerpen.sc.services;
 
+import be.uantwerpen.sc.controllers.BotController;
 import be.uantwerpen.sc.controllers.JobController;
 import be.uantwerpen.sc.controllers.SimulationController;
 import be.uantwerpen.sc.models.Job;
@@ -18,6 +19,8 @@ public class TerminalService
     private JobController jobController;
     @Autowired
     private SimulationController simulationController;
+    @Autowired
+    private BotController botController;
 
     public TerminalService()
     {
@@ -73,6 +76,21 @@ public class TerminalService
                     terminal.printTerminal("error");
                 }
                 break;
+            case "resetbots":
+                try {
+                    botController.resetBots();
+                }catch(ArrayIndexOutOfBoundsException e){
+                    terminal.printTerminal("error");
+                }
+                break;
+            case "delete":
+                try {
+                    String command2 = commandString.split(" ", 2)[1].toLowerCase();
+                    botController.deleteBot((long)Integer.parseInt(command2));
+                }catch(ArrayIndexOutOfBoundsException e){
+                    terminal.printTerminal("error");
+                }
+                break;
             case "exit":
                 exitSystem();
                 break;
@@ -99,6 +117,8 @@ public class TerminalService
                 terminal.printTerminal("Available commands:");
                 terminal.printTerminal("-------------------");
                 terminal.printTerminal("'job {robotId} {doSomething}': send a command to the robot");
+                terminal.printTerminal("'resetBots': empty robots in DB");
+                terminal.printTerminal("'delete {robotId}':delete robot with id from DB");
                 terminal.printTerminal("'simulate {true/false}' : activte/deactivate robot simulator mode.");
                 terminal.printTerminal("'exit' : shutdown the server.");
                 terminal.printTerminal("'help' / '?' : show all available commands.\n");
