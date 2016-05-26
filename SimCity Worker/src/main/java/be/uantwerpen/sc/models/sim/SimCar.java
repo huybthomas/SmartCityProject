@@ -7,6 +7,13 @@ import be.uantwerpen.sc.models.core.Point;
  */
 public class SimCar extends SimVehicle
 {
+    public SimCar()
+    {
+        super("bot", null, 0);
+
+        this.type = "car";
+    }
+
     public SimCar(String name, Point startPoint, long simSpeed)
     {
         super(name, startPoint, simSpeed);
@@ -17,6 +24,18 @@ public class SimCar extends SimVehicle
     @Override
     protected void simulationProcess()
     {
+        while(this.isRunning())
+        {
+            System.out.println("Simulation running...");
 
+            try
+            {
+                Thread.sleep(2500);
+            }
+            catch(Exception e)
+            {
+
+            }
+        }
     }
 }

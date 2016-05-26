@@ -1,5 +1,7 @@
 package be.uantwerpen.sc.models.sim;
 
+import be.uantwerpen.sc.models.sim.messages.SimBotStatus;
+
 /**
  * Created by Thomas on 25/02/2016.
  */
@@ -7,6 +9,7 @@ public abstract class SimBot implements Runnable
 {
     private Thread simulationThread;
     private boolean running;
+    protected int id;
     protected String type;
     protected String name;
 
@@ -25,12 +28,11 @@ public abstract class SimBot implements Runnable
             return false;
         }
 
-        if(simulationThread == null)
-        {
-            this.simulationThread = new Thread(this);
-        }
+        this.simulationThread = new Thread(this);
 
         this.simulationThread.start();
+
+        this.running = true;
 
         return true;
     }
@@ -94,6 +96,16 @@ public abstract class SimBot implements Runnable
         return this.running;
     }
 
+    public int getId()
+    {
+        return this.id;
+    }
+
+    public void setId(int id)
+    {
+        this.id = id;
+    }
+
     public String getType()
     {
         return this.type;
@@ -107,6 +119,13 @@ public abstract class SimBot implements Runnable
     public String getName()
     {
         return this.name;
+    }
+
+    public SimBotStatus getBotStatus()
+    {
+        SimBotStatus simBotStatus = new SimBotStatus(this.id, this.type, this.name, this.running);
+
+        return simBotStatus;
     }
 
     @Override
