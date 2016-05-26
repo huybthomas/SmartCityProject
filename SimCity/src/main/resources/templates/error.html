@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head th:replace="layout :: head (pageTitle=#{error.title})"></head>
+<body>
+<!-- Import navigation bar -->
+<div th:replace="layout :: navbar"></div>
+
+<div class="container-fluid">
+    <div class="front-content">
+        <h2 th:text="#{error.title}">Error</h2>
+
+        <div class="front-content">
+            <div class="alert alert-danger" role="alert">
+                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                <span class="sr-only" th:text="#{error.title} + ': '">Error:</span>
+                <span th:text="#{error.apology}">Apology</span>
+            </div>
+            <div th:text="${message}">Placeholder error message</div>
+            <div th:text="#{error.contactOperator}">Contact operator</div>
+            <a type="button" th:href="@{/}" class="btn btn-primary btn-lg" style="margin-top: 25px"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span><span> </span><span th:text="#{error.backToHome}">Back to home</span></a>
+        </div>
+    </div>
+</div>
+
+<!-- Import footer -->
+<div th:replace="layout :: footer"></div>
+</body>
+</html>

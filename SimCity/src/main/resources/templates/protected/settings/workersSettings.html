@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head th:replace="layout :: head (pageTitle=#{settings.title})"></head>
+<body>
+<!-- Import navigation bar -->
+<div th:replace="layout :: navbar"></div>
+
+<div class="container-fluid">
+    <div th:replace="protected/modals/newWorkerModal :: newWorkerModal"></div>
+    <div class="row">
+        <div class="col-sm-3 col-md-3 sidebar non-mobile-element">
+            <ul class="nav nav-pills nav-stacked">
+                <li role="presentation"><a th:href="@{/settings/server}" th:text="#{settings.server}">Server</a></li>
+                <li role="presentation"><a th:href="@{/settings/users}" th:text="#{settings.users}">Users</a></li>
+                <li role="presentation" class="active"><a href="#" th:text="#{settings.workers}">Workers</a></li>
+            </ul>
+        </div>
+
+        <div class="col-sm-9 col-sm-offset-3 col-md-9 col-md-offset-3 front-content">
+            <h2 th:text="#{settings.title}">Settings</h2>
+
+            <ul class="nav nav-tabs mobile-element">
+                <li role="presentation"><a th:href="@{/settings/server}" th:text="#{settings.server}">Server</a></li>
+                <li role="presentation"><a th:href="@{/settings/users}" th:text="#{settings.users}">Users</a></li>
+                <li role="presentation"><a href="#" th:text="#{settings.workers}">Workers</a></li>
+            </ul>
+
+            <div class="buttons" style="margin-top: 10px; margin-bottom: 10px">
+                <button onclick="history.go(0)" value="refresh" type="button" class="btn btn-default btn-lg" th:title="#{refresh}"><span class="glyphicon glyphicon-refresh"></span></button>
+                <a type="button" class="btn btn-success btn-lg" th:title="#{addNew}" data-toggle="modal" data-target="#newWorkerModal"><span class="glyphicon glyphicon-plus"></span></a>
+            </div>
+
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title" th:text="#{workers}">Workers</h3>
+                </div>
+                <div class="panel-body" style="padding: 0">
+                    <div style="height: 40vh; overflow-y: auto">
+                        <table class="table table-striped">
+                            <col width="10%"/>
+                            <col width="40%"/>
+                            <col width="40%"/>
+                            <col width="5%"/>
+                            <col width="5%"/>
+                            <tr style="font-size:120%">
+                                <th th:text="#{worker.id}">ID</th>
+                                <th th:text="#{worker}">Worker</th>
+                                <th th:text="#{worker.status}">Status</th>
+                                <th th:text="''">Place holder - Edit Button</th>
+                                <th th:text="''">Place holder - Delete Button</th>
+                            </tr>
+                            <tr th:each="worker : ${allWorkers}">
+                                <td th:text="${worker.id}">ID</td>
+                                <td th:text="${worker.workerName}">Worker name</td>
+                                <td>Unknown</td>
+                                <td><a th:href="@{'/workers/' + ${worker.workerName} + '/'}" type="button" class="btn btn-default btn-sm" th:title="#{settings.edit}"><span class="glyphicon glyphicon-pencil"></span></a></td>
+                                <td><a th:href="@{'/workers/' + ${worker.workerName} + '/delete'}" type="button" class="btn btn-danger btn-sm" th:title="#{settings.delete}"><span class="glyphicon glyphicon-trash"></span></a></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Import footer -->
+<div th:replace="layout :: footer"></div>
+</body>
+</html>

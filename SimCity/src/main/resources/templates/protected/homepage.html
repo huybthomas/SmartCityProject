@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head th:replace="layout :: head (pageTitle=#{homepage.title})"></head>
+<body>
+<!-- Import navigation bar -->
+<div th:replace="layout :: navbar"></div>
+
+<div class="container-fluid">
+    <div class="front-content">
+        <h2 th:text="#{application.title}">SimCity</h2>
+
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title" th:text="#{workers}">Workers</h3>
+            </div>
+            <div class="panel-body" style="padding: 0">
+                <div style="height: 40vh; overflow-y: auto">
+                    <table class="table table-striped">
+                        <col width="10%"/>
+                        <col width="45%"/>
+                        <col width="45%"/>
+                        <tr style="font-size:120%">
+                            <th th:text="#{worker.id}">ID</th>
+                            <th th:text="#{worker}">Worker</th>
+                            <th th:text="#{worker.status}">Status</th>
+                        </tr>
+                        <tr th:each="worker : ${allWorkers}">
+                            <td th:text="${worker.id}">ID</td>
+                            <td th:text="${worker.workerName}">Worker name</td>
+                            <td>Unknown</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Import footer -->
+<div th:replace="layout :: footer"></div>
+</body>
+</html>

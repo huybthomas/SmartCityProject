@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head th:replace="layout :: head (pageTitle=#{settings.title})"></head>
+<body>
+<!-- Import navigation bar -->
+<div th:replace="layout :: navbar"></div>
+
+<div class="container-fluid">
+    <div class="messagesContent">
+        <div th:if="${param.userAdded}" class="alert alertbox alert-success" role="alert">
+            <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
+            <span class="sr-only">Info: </span>
+            <span id="userAddedAlert" th:text="#{settings.alerts.userAdded}">New user has been created</span>
+        </div>
+        <div th:if="${param.userEdited}" class="alert alertbox alert-success" role="alert">
+            <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
+            <span class="sr-only">Info: </span>
+            <span id="userEditedAlert" th:text="#{settings.alerts.userEdited}">User has been edited</span>
+        </div>
+        <div th:if="${param.userRemoved}" class="alert alertbox alert-warning" role="alert">
+            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+            <span class="sr-only">Info: </span>
+            <span id="userRemovedAlert" th:text="#{settings.alerts.userRemoved}">User has been removed</span>
+        </div>
+    </div>
+
+    <div class="front-content">
+        <h2 th:text="#{settings.title}">Settings</h2>
+
+        <ul class="nav nav-tabs">
+            <li role="presentation"><a th:href="@{/settings/server}" th:text="#{settings.server}">Server</a></li>
+            <li role="presentation" class="active"><a href="#" th:text="#{settings.users}">Users</a></li>
+            <li role="presentation"><a th:href="@{/settings/workers}" th:text="#{settings.workers}">Workers</a></li>
+        </ul>
+
+        <div class="buttons" style="margin-top: 10px; margin-bottom: 10px">
+            <button type="button" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-refresh"></span></button>
+            <button type="button" class="btn btn-success btn-lg"><span class="glyphicon glyphicon-plus"></span></button>
+        </div>
+
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title" th:text="#{users}">Users</h3>
+            </div>
+            <div class="panel-body" style="padding: 0">
+                <div style="height: 40vh; overflow-y: auto">
+                    <table class="table table-striped">
+                        <col width="10%"/>
+                        <col width="40%"/>
+                        <col width="40%"/>
+                        <col width="5%"/>
+                        <col width="5%"/>
+                        <tr style="font-size:120%">
+                            <th th:text="#{user.id}">ID</th>
+                            <th th:text="#{user}">User</th>
+                            <th th:text="#{user.username}">Username</th>
+                            <th th:text="''">Place holder - Edit Button</th>
+                            <th th:text="''">Place holder - Delete Button</th>
+                        </tr>
+                        <tr th:each="user : ${allUsers}">
+                            <td th:text="${user.id}">ID</td>
+                            <td th:text="${user.firstName} + ' ' + ${user.lastName}">Name</td>
+                            <td th:text="${user.username}">Username</td>
+                            <td><button th:href="@{'/users/' + ${u.username} + '/'}" type="button" class="btn btn-default btn-sm" th:title="#{settings.edit}"><span class="glyphicon glyphicon-pencil"></span></button></td>
+                            <td><button type="button" class="btn btn-danger btn-sm" th:title="#{settings.delete}"><span class="glyphicon glyphicon-trash"></span></button></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Import footer -->
+<div th:replace="layout :: footer"></div>
+</body>
+</html>

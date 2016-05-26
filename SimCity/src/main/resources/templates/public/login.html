@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head th:replace="layout :: head (pageTitle=#{login.title})"></head>
+<body onload="document.loginForm.username.focus();">
+<!-- Import navigation bar -->
+<div th:replace="layout :: navbar"></div>
+
+<div class="container-fluid">
+    <div class="messagesContent">
+        <div th:if="${param.logout}" class="alert alertbox alert-success alert-dismissible fade in" role="alert">
+            <button class="close" data-dismiss="alert" aria-label="Close" aria-hidden="true">&times;</button>
+            <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
+            <span class="sr-only">Info: </span>
+            <span th:text="#{login.alerts.logout}">Logout message</span>
+        </div>
+        <div th:if="${param.error}" class="alert alertbox alert-danger alert-dismissible fade in" role="alert">
+            <button class="close" data-dismiss="alert" aria-label="Close" aria-hidden="true">&times;</button>
+            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+            <span class="sr-only">Error: </span>
+            <span th:text="#{login.alerts.error}">Error message</span>
+        </div>
+    </div>
+
+    <div class="front-content" style="max-width: 500px; margin: 0 auto">
+        <div class="front-content">
+            <h2 th:text="#{login.title}" style="padding-bottom: 10px">Login</h2>
+            <div class="loginFormBorder" style="max-width: 330px; margin: 0 auto">
+                <form name="loginForm" th:action="@{/login}" action="/login" method="POST">
+                    <div class="input-group">
+                        <span class="input-group-addon" id="usernameAddon" style="margin-bottom: -1px; border-bottom-left-radius: 0"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></span>
+                        <input type="text" class="form-control" id="username" name="username" value="" th:placeholder="#{login.username}" style="font-size: 16px; padding: 10px; height: auto; margin-bottom: -1px; border-bottom-right-radius: 0" aria-describedby="usernameAddon"/>
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon" id="passwordAddon" style="border-top-left-radius: 0"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span></span>
+                        <input type="password" class="form-control" id="password" name="password" th:placeholder="#{login.password}" style="font-size: 16px; padding: 10px; height: auto; border-top-right-radius: 0" aria-describedby="passwordAddon"/>
+                    </div>
+                    <input type="submit" id="login" th:value="#{login.login}" class="btn btn-primary btn-lg btn-block" style="margin-top:10px"/>
+                </form>
+            </div>
+            <div class="languageselect" style="margin-top:20px">
+                <span th:text="#{languageselect.languages}">Languages</span>:
+                <a href="?lang=en" th:text="#{languageselect.english}">English</a> -
+                <a href="?lang=nl" th:text="#{languageselect.dutch}">Dutch</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Import footer -->
+<div th:replace="layout :: footer"></div>
+</body>
+</html>
