@@ -6,7 +6,7 @@ import javax.persistence.*;
  * Created by Niels on 24/03/2016.
  */
 @Entity
-@Table(name = "link", schema = "", catalog = "smartcity")
+@Table(name = "link", schema = "", catalog = "smartcitydb")
 public class LinkEntity {
     private int lid;
     private Integer length;
@@ -14,9 +14,11 @@ public class LinkEntity {
     private String stopDirection;
     private PointEntity startId;
     private PointEntity stopId;
+    private int weight;
 
     @Id
     @Column(name = "lid")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     public int getLid() {
         return lid;
     }
@@ -26,7 +28,7 @@ public class LinkEntity {
     }
 
     @Basic
-    @Column(name = "length")
+    @Column(name = "lengte")
     public Integer getLength() {
         return length;
     }
@@ -99,5 +101,28 @@ public class LinkEntity {
 
     public void setStopId(PointEntity stopId) {
         this.stopId = stopId;
+    }
+
+    @Basic
+    @Column(name = "gewicht")
+    public int getWeight() {
+        return weight;
+    }
+
+    public void setWeight(int weight) {
+        this.weight = weight;
+    }
+
+    @Override
+    public String toString() {
+        return "LinkEntity{" +
+                "lid=" + lid +
+                ", length=" + length +
+                ", startDirection='" + startDirection + '\'' +
+                ", stopDirection='" + stopDirection + '\'' +
+                ", startId=" + startId +
+                ", stopId=" + stopId +
+                ", weight=" + weight +
+                '}';
     }
 }

@@ -6,14 +6,16 @@ import javax.persistence.*;
  * Created by Niels on 24/03/2016.
  */
 @Entity
-@Table(name = "point", schema = "", catalog = "smartcity")
+@Table(name = "punt", schema = "", catalog = "smartcitydb")
 public class PointEntity {
     private int pid;
     private String rfid;
     private String type;
+    private int pointlock;
 
     @Id
     @Column(name = "pid")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     public int getPid() {
         return pid;
     }
@@ -62,5 +64,25 @@ public class PointEntity {
         result = 31 * result + (rfid != null ? rfid.hashCode() : 0);
         result = 31 * result + (type != null ? type.hashCode() : 0);
         return result;
+    }
+
+    @Basic
+    @Column(name = "pointlock")
+    public int getPointlock() {
+        return pointlock;
+    }
+
+    public void setPointlock(int pointlock) {
+        this.pointlock = pointlock;
+    }
+
+    @Override
+    public String toString() {
+        return "PointEntity{" +
+                "pid=" + pid +
+                ", rfid='" + rfid + '\'' +
+                ", type='" + type + '\'' +
+                ", pointlock=" + pointlock +
+                '}';
     }
 }

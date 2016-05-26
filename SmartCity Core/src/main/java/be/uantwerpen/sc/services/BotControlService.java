@@ -30,10 +30,16 @@ public class BotControlService
 
     public  void updateBot(BotEntity bot){
         BotEntity dbBot = botRepository.findOne(bot.getRid());
-        dbBot.setState(bot.getState());
-        dbBot.setPercentageCompleted(bot.getPercentageCompleted());
+        dbBot = bot;
         //dbBot.setLinkId(bot.getLinkId());
         botRepository.save(dbBot);
     }
 
+    public void deleteBot(Long rid){
+        botRepository.delete(rid);
+    }
+
+    public void resetBots(){
+        botRepository.deleteAll();
+    }
 }

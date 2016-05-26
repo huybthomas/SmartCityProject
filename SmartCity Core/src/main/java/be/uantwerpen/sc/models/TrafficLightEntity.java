@@ -6,15 +6,16 @@ import javax.persistence.*;
  * Created by Niels on 24/03/2016.
  */
 @Entity
-@Table(name = "trafficlight", schema = "", catalog = "smartcity")
+@Table(name = "trafficlight", schema = "", catalog = "smartcitydb")
 public class TrafficLightEntity {
     private int tlid;
     private String direction;
     private String state;
-    private PointEntity puntid;
+    private PointEntity pointid;
 
     @Id
     @Column(name = "tlid")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     public int getTlid() {
         return tlid;
     }
@@ -67,11 +68,11 @@ public class TrafficLightEntity {
 
     @OneToOne
     @JoinColumn(name = "punt_id", referencedColumnName = "pid")
-    public PointEntity getPuntid() {
-        return puntid;
+    public PointEntity getPointid() {
+        return pointid;
     }
 
-    public void setPuntid(PointEntity puntid) {
-        this.puntid = puntid;
+    public void setPointid(PointEntity pointid) {
+        this.pointid = pointid;
     }
 }

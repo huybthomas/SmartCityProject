@@ -3,6 +3,8 @@ package be.uantwerpen.sc.services;
 import be.uantwerpen.sc.models.sim.SimBot;
 import be.uantwerpen.sc.models.sim.SimCar;
 import be.uantwerpen.sc.models.sim.messages.SimBotStatus;
+import be.uantwerpen.sc.controllers.SimCommandController;
+import be.uantwerpen.sc.services.sockets.SimCCommandHandler;
 import be.uantwerpen.sc.tools.Terminal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,6 +23,12 @@ public class TerminalService
     @Autowired
     SimSupervisorService supervisorService;
 
+    @Autowired
+    SimCCommandHandler simCCommandHandler;
+    
+    @Autowired
+    SimCommandController simCommandController;
+    
     private Terminal terminal;
 
     public TerminalService()
@@ -49,6 +57,26 @@ public class TerminalService
 
         switch(command)
         {
+            case "sendcommand":
+                try
+                {
+                    terminal.printTerminalInfo("DEPRECATED COMMAND");
+                    String command2 = commandString.split(" ", 2)[1].toLowerCase();
+                    String robot = command2.split(" ", 2)[0].toLowerCase();
+                    String job = command2.split(" ", 2)[1].toLowerCase();
+                    System.out.println(robot + " do " + job);
+                    try {
+                        int robotId = Integer.parseInt(robot);
+                        sendCommand(robotId, job);
+                    } catch (NumberFormatException e) {
+                        terminal.printTerminalError(e.getMessage());
+                        terminal.printTerminal("Usage: command id message");
+                    }
+                }
+                catch(Exception e){
+                    terminal.printTerminal(e.getMessage());
+                }
+                break;
             case "exit":
                 exitSystem();
                 break;
@@ -458,5 +486,20 @@ public class TerminalService
         }
 
         return parsedInt;
+    }
+
+    @Depricated
+    private void sendCommand(int robotID, String message)
+    {
+        switch (robotID)
+        {
+            case 1:
+                simCommandController.sendCommand("http://146.175.140.119:8080/command/", message);
+                break;
+            default:
+                System.out.println("Robot not found");
+                break;
+        }
+        //cCommandSender.sendCommand(message);
     }
 }

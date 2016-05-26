@@ -6,7 +6,7 @@ import javax.persistence.*;
  * Created by Niels on 24/03/2016.
  */
 @Entity
-@Table(name = "bot", schema = "", catalog = "smartcity")
+@Table(name = "bot", schema = "", catalog = "smartcitydb")
 public class BotEntity {
     private Long rid;
     private Integer jobId;
