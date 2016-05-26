@@ -1,5 +1,7 @@
 package be.uantwerpen.sc.models.sim;
 
+import be.uantwerpen.sc.tools.Tile;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,20 +11,21 @@ import java.util.List;
 public class SimMap
 {
     private int sizeX, sizeY;
-    private List<SimLink> links;
+    public ArrayList<ArrayList<Tile> > mapTiles;
 
     public SimMap()
     {
         this.sizeX = 0;
         this.sizeY = 0;
-        this.links = new ArrayList<SimLink>();
+        mapTiles = new ArrayList<>();
+        mapTiles.add(new ArrayList<Tile>());
+        mapTiles.get(0).add(null);
     }
 
     public int getSizeX()
     {
         return this.sizeX;
     }
-
     public void setSizeX(int size)
     {
         this.sizeX = size;
@@ -32,24 +35,8 @@ public class SimMap
     {
         return this.sizeY;
     }
-
     public void setSizeY(int size)
     {
         this.sizeY = size;
-    }
-
-    public void addLinks(List<SimLink> links)
-    {
-        this.links.addAll(links);
-    }
-
-    public void setLinks(List<SimLink> links)
-    {
-        this.links = links;
-    }
-
-    public List<SimLink> getLinks()
-    {
-        return this.links;
     }
 }

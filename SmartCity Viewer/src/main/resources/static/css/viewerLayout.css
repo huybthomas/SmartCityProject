@@ -1,0 +1,94 @@
+
+#myDiv {
+    width:1200px;
+    height:1000px;
+    position:relative;
+}
+#myMapCanvas {
+    position:absolute;
+    top:0;
+    left:0;
+}
+#myCarCanvas {
+    position:absolute;
+    top:0;
+    left:0;
+    z-index: 10;
+}
+#myLegend {
+    position:absolute;
+    top:0;
+    right:0;
+}
+
+#POINT {
+    width: 100px;
+    height: 100px;
+    background: url(/static/images/tiles.png) 0 0;
+}
+
+#VERTICAL {
+    width: 100px;
+    height: 100px;
+    background: url(/static/images/tiles.png) -100px 0;
+}
+
+#HORIZONTAL {
+    width: 100px;
+    height: 100px;
+    background: url(/static/images/tiles.png) -200px 0;
+}
+
+#NORTH_EAST {
+    width: 100px;
+    height: 100px;
+    background: url(/static/images/tiles.png) -300px 0;
+}
+
+#NORTH_WEST {
+    width: 100px;
+    height: 100px;
+    background: url(/static/images/tiles.png) -400px 0;
+}
+
+#SOUTH_EAST{
+    width: 100px;
+    height: 100px;
+    background: url(/static/images/tiles.png) -500px 0;
+}
+
+#SOUTH_WEST{
+    width: 100px;
+    height: 100px;
+    background: url(/static/images/tiles.png) 0 -100px;
+}
+
+#NORTH_EAST_WEST{
+    width: 100px;
+    height: 100px;
+    background: url(/static/images/tiles.png) -100px -100px;
+}
+
+#EAST_SOUTH_NORTH{
+    width: 100px;
+    height: 100px;
+    background: url(/static/images/tiles.png) -200px -100px;
+}
+
+#SOUTH_WEST_EAST{
+    width: 100px;
+    height: 100px;
+    background: url(/static/images/tiles.png) -300px -100px;
+}
+
+#WEST_NORTH_SOUTH{
+    width: 100px;
+    height: 100px;
+    background: url(/static/images/tiles.png) -400px -100px;
+}
+
+#INTERSECT{
+    width: 100px;
+    height: 100px;
+    background: url(/static/images/tiles.png) -500px -100px;
+}
