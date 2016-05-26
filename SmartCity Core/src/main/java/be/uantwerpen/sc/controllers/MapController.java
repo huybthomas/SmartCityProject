@@ -50,17 +50,13 @@ public class MapController {
     @RequestMapping(value = "{start}/path/{stop}", method = RequestMethod.GET)
     public Path PathPlanning(@PathVariable("start") int start, @PathVariable("stop") int stop){
         List<Vertex> path = pathPlanningService.Calculatepath(null,start,stop);
-        Path pathClass = new Path();
-        pathClass.setPath(path);
-        return pathClass;
+        return new Path(path);
     }
 
     @RequestMapping(value = "testpath/{start}/path/{stop}", method = RequestMethod.GET)
     public Path PathPlanning2(@PathVariable("start") int start, @PathVariable("stop") int stop){
         List<Vertex> path = pathPlanningService.CalculatepathNonInterface(start,stop);
-        Path pathClass = new Path();
-        pathClass.setPath(path);
-        return pathClass;
+        return new Path(path);
     }
 
     @RequestMapping(value = "stringmapjson", method = RequestMethod.GET)
@@ -71,5 +67,12 @@ public class MapController {
     @RequestMapping(value = "stringmap", method = RequestMethod.GET)
     public String mapString(){
         return mapControlService.buildMap().toString();
+    }
+
+    @RequestMapping(value = "random/{start}", method = RequestMethod.GET)
+    public Path randomPath(@PathVariable("start") int start){
+        List<Vertex> vertexes = pathPlanningService.nextRandomPath(null,start);
+        Path pathClass = new Path(vertexes);
+        return pathClass;
     }
 }
