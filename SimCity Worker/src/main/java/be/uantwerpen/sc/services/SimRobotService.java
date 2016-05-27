@@ -1,6 +1,5 @@
 package be.uantwerpen.sc.services;
 
-import be.uantwerpen.sc.models.SimJavaCore;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -11,7 +10,7 @@ import java.util.List;
  */
 @Service
 public class SimRobotService {
-
+/*
     List<SimJavaCore> simJavaCoreList;
 
     public SimRobotService() {
@@ -24,5 +23,5 @@ public class SimRobotService {
 
     public List<SimJavaCore> getSimJavaCoreList(){
         return this.simJavaCoreList;
-    }
+    }*/
 }

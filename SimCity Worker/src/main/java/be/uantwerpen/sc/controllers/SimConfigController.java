@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class SimConfigController
 {
     @Autowired
-    SimSupervisorService simSupervisor;
+    private SimSupervisorService simSupervisor;
 
     @RequestMapping(value = {"/bots/{botid}/"}, method = RequestMethod.GET)
     public ResponseEntity<SimBotStatus> getBotStatus(@PathVariable String botid)

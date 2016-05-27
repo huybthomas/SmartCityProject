@@ -1,8 +1,6 @@
 package be.uantwerpen.sc.services.sockets;
 
 import be.uantwerpen.sc.services.javaCoreServices.DataService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -15,8 +13,8 @@ import java.net.Socket;
  * Created by Niels on 11/05/2016.
  */
 
-public class SimCCommandHandler implements Runnable {
-
+public class SimCCommandHandler implements Runnable
+{
     private ServerSocket serverSocket;
     private Socket socket;
 

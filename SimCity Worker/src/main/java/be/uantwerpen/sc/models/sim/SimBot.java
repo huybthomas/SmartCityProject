@@ -1,6 +1,9 @@
 package be.uantwerpen.sc.models.sim;
 
 import be.uantwerpen.sc.models.sim.messages.SimBotStatus;
+import be.uantwerpen.sc.services.sockets.SimSocketService;
+
+import javax.annotation.PostConstruct;
 
 /**
  * Created by Thomas on 25/02/2016.
@@ -9,12 +12,14 @@ public abstract class SimBot implements Runnable
 {
     private Thread simulationThread;
     private boolean running;
+    protected SimSocketService simSocketService;
     protected int id;
     protected String type;
     protected String name;
 
     public SimBot(String name)
     {
+        this.simSocketService = new SimSocketService();
         this.running = false;
         this.type = "bot";
 
@@ -131,10 +136,18 @@ public abstract class SimBot implements Runnable
     @Override
     public void run()
     {
+        Thread socketServiceThread = new Thread(this.simSocketService);
+        socketServiceThread.start();
+
         while(this.running)
         {
             this.simulationProcess();
         }
+
+        socketServiceThread.interrupt();
+
+        //Wait for socket service to terminate
+        while(socketServiceThread.isAlive());
     }
 
     abstract protected void simulationProcess();

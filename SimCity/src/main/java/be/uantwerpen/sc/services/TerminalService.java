@@ -27,7 +27,7 @@ public class TerminalService
 
     public void systemReady()
     {
-        terminal.printTerminal(" :: SmartCity Core - 2016 ::  -  Developed by: Huybrechts T., Janssens A., Joosens D., Vervliet N.");
+        terminal.printTerminal(" :: SmartCity Core - 2016 ::  -  Developed by: Huybrechts T., Janssens A., Vervliet N.");
         terminal.printTerminal("Type 'help' to display the possible commands.");
 
         terminal.activateTerminal();
@@ -39,17 +39,6 @@ public class TerminalService
 
         switch(command)
         {
-            case "sendcommand":
-                try {
-                    String command2 = commandString.split(" ", 2)[1].toLowerCase();
-                    String message = command2.split(" ", 2)[0].toLowerCase();
-                    System.out.println("Robot do " + message);
-                    sendCommand(message);
-
-                }catch (Exception e){
-                    terminal.printTerminal(e.getMessage());
-                }
-                break;
             case "exit":
                 exitSystem();
                 break;
@@ -80,9 +69,5 @@ public class TerminalService
                 terminal.printTerminal("'help' / '?' : show all available commands.\n");
                 break;
         }
-    }
-
-    private void sendCommand(String message){
-        ;
     }
 }

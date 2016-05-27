@@ -9,7 +9,6 @@ import org.jgrapht.graph.DefaultEdge;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.concurrent.Semaphore;
 
 /**
  * Created by Niels on 26/03/2016.

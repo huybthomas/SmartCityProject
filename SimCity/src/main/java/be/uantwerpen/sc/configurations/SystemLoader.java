@@ -18,7 +18,6 @@ public class SystemLoader implements ApplicationListener<ContextRefreshedEvent>
     //Run after Spring context initialization
     public void onApplicationEvent(ContextRefreshedEvent event)
     {
-     //   new Thread(simCCommandHandler).start();
-     //   terminalService.systemReady();
+        terminalService.systemReady();
     }
 }
