@@ -118,10 +118,10 @@ public class TerminalService
             default:
                 terminal.printTerminal("Available commands:");
                 terminal.printTerminal("-------------------");
-                terminal.printTerminal("'job {robotId} {doSomething}': send a command to the robot");
-                terminal.printTerminal("'resetBots': empty robots in DB");
-                terminal.printTerminal("'delete {robotId}':delete robot with id from DB");
-                terminal.printTerminal("'simulate {true/false}' : activte/deactivate robot simulator mode.");
+                terminal.printTerminal("'job {robotId} {command}' : send a command to the robot.");
+                terminal.printTerminal("'resetBots' : empty robots in DB.");
+                terminal.printTerminal("'delete {robotId}' : delete robot with id from DB.");
+                terminal.printTerminal("'simulate {true/false}' : activate/deactivate robot simulator mode.");
                 terminal.printTerminal("'exit' : shutdown the server.");
                 terminal.printTerminal("'help' / '?' : show all available commands.\n");
                 break;
