@@ -101,11 +101,13 @@ public class SimCore
         public void run()
         {
             //Create process
-            ProcessBuilder processBuilder = new ProcessBuilder("java", "-jar", coreLocation);
+            ProcessBuilder processBuilder = new ProcessBuilder("java");
 
             //Add core boot arguments
             List<String> processCommands = processBuilder.command();
             processCommands.addAll(runArguments);
+            processCommands.add("-jar");
+            processCommands.add(coreLocation);
             processBuilder.command(processCommands);
 
             status = SimStatus.BOOT;
@@ -128,7 +130,9 @@ public class SimCore
             }
 
             BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+            BufferedReader errorReader = new BufferedReader(new InputStreamReader(process.getErrorStream()));
             String logLine = "";
+            String errorLine = "";
             DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 
             //Start new log section
@@ -150,6 +154,17 @@ public class SimCore
 
                         //Add line to log
                         log = log.concat(logLine + "\n");
+                    }
+
+                    while(errorReader.ready() && !Thread.currentThread().isInterrupted() && errorLine != null)
+                    {
+                        errorLine = errorReader.readLine();
+
+                        if(errorLine != null)
+                        {
+                            //Add line to log
+                            log = log.concat("ERROR: " + errorLine + "\n");
+                        }
                     }
                 }
                 catch(IOException e)
@@ -191,6 +206,17 @@ public class SimCore
                             log = log.concat(logLine + "\n");
                         }
                     }
+
+                    while(errorReader.ready() && !Thread.currentThread().isInterrupted() && errorLine != null)
+                    {
+                        errorLine = errorReader.readLine();
+
+                        if(errorLine != null)
+                        {
+                            //Add line to log
+                            log = log.concat("ERROR: " + errorLine + "\n");
+                        }
+                    }
                 }
             }
             catch(IOException e)
@@ -222,7 +248,7 @@ public class SimCore
             //Wait for core process to shutdown
             try
             {
-                while(!Thread.currentThread().isInterrupted() && logLine != null)
+                while(logLine != null)
                 {
                     if(reader.ready())
                     {
@@ -232,6 +258,17 @@ public class SimCore
                         if(logLine != null)
                         {
                             log = log.concat(logLine + "\n");
+                        }
+                    }
+
+                    while(errorReader.ready() && errorLine != null)
+                    {
+                        errorLine = errorReader.readLine();
+
+                        if(errorLine != null)
+                        {
+                            //Add line to log
+                            log = log.concat("ERROR: " + errorLine + "\n");
                         }
                     }
                 }

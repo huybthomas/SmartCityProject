@@ -1,7 +1,5 @@
 package be.uantwerpen.sc.services.sockets;
 
-import be.uantwerpen.sc.services.javaCoreServices.DataService;
-
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.InputStreamReader;
@@ -18,7 +16,6 @@ public class SimCCommandHandler implements Runnable
     private ServerSocket serverSocket;
     private Socket socket;
 
-    DataService dataService;
     BufferedReader reader;
     BufferedWriter writer;
 

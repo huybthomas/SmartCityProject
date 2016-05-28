@@ -3,7 +3,6 @@ package be.uantwerpen.sc.tools;
 
 
 import be.uantwerpen.sc.services.sockets.SimCCommandSender;
-import be.uantwerpen.sc.services.javaCoreServices.DataService;
 import be.uantwerpen.sc.services.javaCoreServices.QueueService;
 
 import java.util.concurrent.BlockingQueue;
@@ -14,15 +13,13 @@ import java.util.concurrent.BlockingQueue;
 public class QueueConsumer implements Runnable
 {
     private QueueService queueService;
-    private DataService dataService;
     private SimCCommandSender simCCommandSender;
 
     private BlockingQueue<String> jobQueue;
 
-    public QueueConsumer(QueueService queueService, DataService dataService, SimCCommandSender simCCommandSender)
+    public QueueConsumer(QueueService queueService, SimCCommandSender simCCommandSender)
     {
         this.queueService = queueService;
-        this.dataService = dataService;
         this.simCCommandSender = simCCommandSender;
     }
 
@@ -38,11 +35,11 @@ public class QueueConsumer implements Runnable
                     //System.out.println(queueService.getContentQueue().toString());
                     //Wait until robot not busy
                     synchronized (this) {
-                        if(!dataService.robotBusy) {
+                        //if(!dataService.robotBusy) {
                                 String s = queueService.getJob();
                                 simCCommandSender.sendCommand(s);
                             }
-                        }
+                        //}
                     }
                 //System.out.println("CrunchifyBlockingConsumer: Message - " + queueService.getJob() + " consumed.");
             } catch (Exception e) {

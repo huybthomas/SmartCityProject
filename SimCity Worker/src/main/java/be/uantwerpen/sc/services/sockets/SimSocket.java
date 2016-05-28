@@ -9,6 +9,8 @@ import java.net.Socket;
 public class SimSocket
 {
     private Socket socket;
+    private BufferedReader reader;
+    private BufferedWriter writer;
 
     private SimSocket()
     {
@@ -22,6 +24,9 @@ public class SimSocket
 
     public void close() throws IOException
     {
+        this.reader.close();
+        this.writer.close();
+
         this.socket.close();
     }
 
@@ -42,7 +47,6 @@ public class SimSocket
 
     public String getMessage()
     {
-        BufferedReader reader = null;
         String message = null;
 
         if(this.socket.isClosed())
@@ -53,7 +57,7 @@ public class SimSocket
 
         try
         {
-            reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            openReader();
         }
         catch(IOException e)
         {
@@ -65,7 +69,10 @@ public class SimSocket
 
         try
         {
-            message = reader.readLine();
+            if(this.reader.ready())
+            {
+                message = this.reader.readLine();
+            }
         }
         catch(IOException e)
         {
@@ -73,22 +80,11 @@ public class SimSocket
             System.err.println("Could not read input stream!");
         }
 
-        try
-        {
-            reader.close();
-        }
-        catch(IOException e)
-        {
-            //Could not close input stream
-            System.err.println("Could not close input stream!");
-        }
-
         return message;
     }
 
     public boolean sendMessage(String message)
     {
-        BufferedWriter writer = null;
         boolean success = true;
 
         if(this.socket.isClosed())
@@ -99,7 +95,7 @@ public class SimSocket
 
         try
         {
-            writer = new BufferedWriter(new OutputStreamWriter(this.socket.getOutputStream()));
+            openWriter();
         }
         catch(IOException e)
         {
@@ -111,7 +107,7 @@ public class SimSocket
 
         try
         {
-            writer.write(message);
+            this.writer.write(message);
         }
         catch(IOException e)
         {
@@ -121,16 +117,22 @@ public class SimSocket
             success = false;
         }
 
-        try
-        {
-            writer.close();
-        }
-        catch(IOException e)
-        {
-            //Could not close output stream
-            System.err.println("Could not close output stream!");
-        }
-
         return success;
+    }
+
+    private void openReader() throws IOException
+    {
+        if(this.reader == null && this.socket != null)
+        {
+            reader = new BufferedReader(new InputStreamReader(this.socket.getInputStream()));
+        }
+    }
+
+    private void openWriter() throws IOException
+    {
+        if(this.writer == null && this.socket != null)
+        {
+            writer = new BufferedWriter(new OutputStreamWriter(this.socket.getOutputStream()));
+        }
     }
 }

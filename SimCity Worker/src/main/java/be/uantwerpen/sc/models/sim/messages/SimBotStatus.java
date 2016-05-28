@@ -8,14 +8,14 @@ public class SimBotStatus
     private final int id;
     private final String type;
     private final String name;
-    private final boolean running;
+    private final String status;
 
-    public SimBotStatus(int id, String type, String name, boolean running)
+    public SimBotStatus(int id, String type, String name, String status)
     {
         this.id = id;
         this.type = type;
         this.name = name;
-        this.running = running;
+        this.status = status;
     }
 
     public int getId()
@@ -33,8 +33,8 @@ public class SimBotStatus
         return this.name;
     }
 
-    public boolean getRunningState()
+    public String getRunningState()
     {
-        return this.running;
+        return this.status;
     }
 }

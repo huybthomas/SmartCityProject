@@ -12,14 +12,12 @@ public abstract class SimBot implements Runnable
 {
     private Thread simulationThread;
     private boolean running;
-    protected SimSocketService simSocketService;
     protected int id;
     protected String type;
     protected String name;
 
     public SimBot(String name)
     {
-        this.simSocketService = new SimSocketService();
         this.running = false;
         this.type = "bot";
 
@@ -128,26 +126,34 @@ public abstract class SimBot implements Runnable
 
     public SimBotStatus getBotStatus()
     {
-        SimBotStatus simBotStatus = new SimBotStatus(this.id, this.type, this.name, this.running);
+        String status;
+
+        if(this.running)
+        {
+            status = "Running";
+        }
+        else
+        {
+            status = "Off";
+        }
+
+        SimBotStatus simBotStatus = new SimBotStatus(this.id, this.type, this.name, status);
 
         return simBotStatus;
+    }
+
+    public String getLog()
+    {
+        return "No logging available for this bot!";
     }
 
     @Override
     public void run()
     {
-        Thread socketServiceThread = new Thread(this.simSocketService);
-        socketServiceThread.start();
-
         while(this.running)
         {
             this.simulationProcess();
         }
-
-        socketServiceThread.interrupt();
-
-        //Wait for socket service to terminate
-        while(socketServiceThread.isAlive());
     }
 
     abstract protected void simulationProcess();

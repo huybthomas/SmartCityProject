@@ -85,8 +85,6 @@ public class SimSocketService implements Runnable
         {
             this.serverSocket = new ServerSocket(socketPort);
             this.serverSocket.setSoTimeout(500);
-
-            System.out.println("Simulator listening on port: " + this.serverSocket.getLocalPort());
         }
         catch(Exception e)
         {
