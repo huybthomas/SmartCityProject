@@ -11,7 +11,8 @@ import java.util.List;
  * Created by Niels on 3/04/2016.
  */
 @Service
-public class PointControlService {
+public class PointControlService
+{
     @Autowired
     private PointRepository pointRepository;
 

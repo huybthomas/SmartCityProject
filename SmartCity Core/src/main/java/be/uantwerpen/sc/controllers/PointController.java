@@ -15,8 +15,8 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/point/")
-public class PointController {
-
+public class PointController
+{
     @Autowired
     private PointRepository pointRepository;
 

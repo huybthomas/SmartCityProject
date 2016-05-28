@@ -3,7 +3,6 @@ package be.uantwerpen.sc.services;
 import be.uantwerpen.sc.controllers.BotController;
 import be.uantwerpen.sc.controllers.JobController;
 import be.uantwerpen.sc.controllers.SimulationController;
-import be.uantwerpen.sc.models.Job;
 import be.uantwerpen.sc.tools.Terminal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

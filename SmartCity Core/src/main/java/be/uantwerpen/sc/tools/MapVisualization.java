@@ -1,26 +1,19 @@
 package be.uantwerpen.sc.tools;
 
-
 import be.uantwerpen.sc.models.LinkEntity;
 import com.mxgraph.layout.mxCircleLayout;
 import com.mxgraph.layout.mxIGraphLayout;
 import com.mxgraph.swing.mxGraphComponent;
-import org.jgrapht.ListenableGraph;
 import org.jgrapht.ext.JGraphXAdapter;
-import org.jgrapht.graph.DefaultWeightedEdge;
-import org.jgrapht.graph.ListenableDirectedGraph;
 import org.jgrapht.graph.ListenableDirectedWeightedGraph;
-
 
 import javax.swing.*;
 
 /**
  * Created by Niels on 30/03/2016.
  */
-
-
-public class MapVisualization {
-
+public class MapVisualization
+{
     private ListenableDirectedWeightedGraph<String, MyEdge > g;
     private JGraphXAdapter<String, MyEdge > graphAdapter;
     private JFrame frame;

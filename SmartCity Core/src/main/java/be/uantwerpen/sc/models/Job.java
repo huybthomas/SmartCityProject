@@ -3,8 +3,8 @@ package be.uantwerpen.sc.models;
 /**
  * Created by Niels on 4/05/2016.
  */
-public class Job {
-
+public class Job
+{
     private int jobId;
     private String jobDesciption;
 

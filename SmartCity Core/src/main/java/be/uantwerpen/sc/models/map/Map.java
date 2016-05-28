@@ -9,8 +9,8 @@ import java.util.List;
 /**
  * Created by Niels on 3/04/2016.
  */
-public class Map {
-
+public class Map
+{
     private List<Node> nodeList;
     private List<BotEntity> botEntities;
     private List<TrafficLightEntity> trafficlightEntity;

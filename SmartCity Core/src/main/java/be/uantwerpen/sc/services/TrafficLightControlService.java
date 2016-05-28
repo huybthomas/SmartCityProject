@@ -11,7 +11,8 @@ import java.util.List;
  * Created by Niels on 2/04/2016.
  */
 @Service
-public class TrafficLightControlService {
+public class TrafficLightControlService
+{
 
     @Autowired
     private TrafficLightRepository trafficLightRepository;

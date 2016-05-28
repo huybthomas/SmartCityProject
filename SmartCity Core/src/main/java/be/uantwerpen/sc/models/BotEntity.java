@@ -7,7 +7,8 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "bot", schema = "", catalog = "smartcitydb")
-public class BotEntity {
+public class BotEntity
+{
     private Long rid;
     private Integer jobId;
     private Integer percentageCompleted;

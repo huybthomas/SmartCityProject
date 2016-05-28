@@ -16,8 +16,8 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/graph/")
-public class GraphController {
-
+public class GraphController
+{
     @Autowired
     private LinkControlService linkControlService;
     @Autowired

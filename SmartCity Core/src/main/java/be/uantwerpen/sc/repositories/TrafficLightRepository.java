@@ -10,6 +10,7 @@ import java.util.List;
  * Created by Niels on 26/03/2016.
  */
 @Repository
-public interface TrafficLightRepository extends CrudRepository<TrafficLightEntity,Integer> {
+public interface TrafficLightRepository extends CrudRepository<TrafficLightEntity, Integer>
+{
     List<TrafficLightEntity> findAll();
 }

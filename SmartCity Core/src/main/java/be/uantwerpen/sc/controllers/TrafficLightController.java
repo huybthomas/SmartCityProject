@@ -15,8 +15,8 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/trafficlight/")
-public class TrafficLightController {
-
+public class TrafficLightController
+{
     @Autowired
     private TrafficLightControlService trafficLightControlService;
 

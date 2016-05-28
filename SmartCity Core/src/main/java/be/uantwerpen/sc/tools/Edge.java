@@ -5,7 +5,8 @@ import be.uantwerpen.sc.models.LinkEntity;
 /**
  * Created by Niels on 17/04/2016.
  */
-public class Edge {
+public class Edge
+{
     private int target;
     private int weight;
     private LinkEntity linkEntity;

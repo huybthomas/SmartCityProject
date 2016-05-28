@@ -28,7 +28,8 @@ public class BotControlService
         return botRepository.findAll();
     }
 
-    public  void updateBot(BotEntity bot){
+    public  void updateBot(BotEntity bot)
+    {
         BotEntity dbBot = botRepository.findOne(bot.getRid());
         dbBot = bot;
         //dbBot.setLinkId(bot.getLinkId());

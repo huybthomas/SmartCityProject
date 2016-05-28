@@ -1,7 +1,6 @@
 package be.uantwerpen.sc.repositories;
 
 import be.uantwerpen.sc.models.BotEntity;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

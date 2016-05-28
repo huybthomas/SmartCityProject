@@ -14,8 +14,8 @@ import java.util.stream.Collectors;
  * Created by Niels on 14/04/2016.
  */
 @Service
-public class MapControlService {
-
+public class MapControlService
+{
     @Autowired
     private PointControlService pointControlService;
     @Autowired

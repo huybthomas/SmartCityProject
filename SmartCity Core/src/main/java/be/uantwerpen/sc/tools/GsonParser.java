@@ -13,8 +13,8 @@ import java.io.IOException;
  * Created by Niels on 20/04/2016.
  */
 @Component
-public class GsonParser {
-
+public class GsonParser
+{
     public MapJson fromJson()  throws IOException {
         JsonReader jsonReader = new JsonReader(new FileReader("omapjson.json"));
         Gson gson = new GsonBuilder().create();

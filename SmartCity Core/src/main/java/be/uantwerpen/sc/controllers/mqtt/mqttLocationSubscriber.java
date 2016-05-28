@@ -10,11 +10,9 @@ import org.springframework.stereotype.Service;
 /**
  * Created by Arthur on 9/05/2016.
  */
-
-
 @Service
-public class mqttLocationSubscriber {
-
+public class mqttLocationSubscriber
+{
     @Autowired
     public BotController botController;
 

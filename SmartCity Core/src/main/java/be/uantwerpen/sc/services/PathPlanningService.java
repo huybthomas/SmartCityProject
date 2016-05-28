@@ -19,7 +19,6 @@ import java.util.Random;
 @Service
 public class PathPlanningService implements IPathplanning
 {
-
     @Autowired
     private LinkControlService linkControlService;
     @Autowired

@@ -4,14 +4,13 @@ import be.uantwerpen.sc.models.map.Node;
 import be.uantwerpen.sc.models.map.NodeJson;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
  * Created by Niels on 17/04/2016.
  */
-public class Vertex implements Comparable<Vertex> {
-
+public class Vertex implements Comparable<Vertex>
+{
     private int id;
     private List<Edge> adjacencies = new ArrayList<>();
     private double minDistance = Double.POSITIVE_INFINITY;

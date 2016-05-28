@@ -7,7 +7,8 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "punt", schema = "", catalog = "smartcitydb")
-public class PointEntity {
+public class PointEntity
+{
     private int pid;
     private String rfid;
     private String type;

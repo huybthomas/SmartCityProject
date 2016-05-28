@@ -14,14 +14,15 @@ import java.util.List;
  * Created by Niels on 26/03/2016.
  */
 @Service
-public class GraphService {
-
+public class GraphService
+{
     private DirectedGraph<String, DefaultEdge> directedGraph = new DefaultDirectedGraph<>(DefaultEdge.class);
     private StrongConnectivityInspector sci;
     private List stronglyConnectedSubgraphs;
     private boolean flag = false;
 
-    public GraphService() {
+    public GraphService()
+    {
     }
 
     public DirectedGraph<String, DefaultEdge> getDirectedGraph() {

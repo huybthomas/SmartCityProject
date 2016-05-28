@@ -5,7 +5,6 @@ import be.uantwerpen.sc.models.map.MapJson;
 import be.uantwerpen.sc.models.map.Node;
 import be.uantwerpen.sc.models.map.Path;
 import be.uantwerpen.sc.services.*;
-import be.uantwerpen.sc.tools.Edge;
 import be.uantwerpen.sc.tools.Vertex;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -22,8 +20,8 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "/map/")
-public class MapController {
-
+public class MapController
+{
     @Autowired
     private MapControlService mapControlService;
     @Autowired

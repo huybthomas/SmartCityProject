@@ -7,7 +7,8 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "trafficlight", schema = "", catalog = "smartcitydb")
-public class TrafficLightEntity {
+public class TrafficLightEntity
+{
     private int tlid;
     private String direction;
     private String state;

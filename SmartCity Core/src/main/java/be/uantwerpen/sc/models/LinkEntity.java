@@ -7,7 +7,8 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "link", schema = "", catalog = "smartcitydb")
-public class LinkEntity {
+public class LinkEntity
+{
     private int lid;
     private Integer length;
     private String startDirection;

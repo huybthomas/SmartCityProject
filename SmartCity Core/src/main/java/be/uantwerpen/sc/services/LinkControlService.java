@@ -12,8 +12,8 @@ import java.util.List;
  * Created by Niels on 30/03/2016.
  */
 @Service
-public class LinkControlService {
-
+public class LinkControlService
+{
     @Autowired
     private LinkRepository linkRepository;
 
