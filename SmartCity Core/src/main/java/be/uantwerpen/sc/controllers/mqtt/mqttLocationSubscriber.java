@@ -5,7 +5,10 @@ import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+
+import javax.annotation.PostConstruct;
 
 /**
  * Created by Arthur on 9/05/2016.
@@ -13,40 +16,69 @@ import org.springframework.stereotype.Service;
 @Service
 public class mqttLocationSubscriber
 {
+    //TODO: fix bad code - Public field!
     @Autowired
     public BotController botController;
 
-    public static final String BROKER_URL = "tcp://146.175.139.66:1883";
-    //public static final String BROKER_URL = "tcp://test.mosquitto.org:1883";
+    @Value("${mqtt.ip:localhost}")
+    private String mqttIP;
+
+    @Value("#{new Integer(${mqtt.port}) ?: 1883}")
+    private int mqttPort;
+
+    @Value("${mqtt.username:default}")
+    private String mqttUsername;
+
+    @Value("${mqtt.password:default}")
+    private String mqttPassword;
+
+    private String brokerURL;
 
     //We have to generate a unique Client id.
-    public MqttClient mqttSubscribeClient, mqttSendClient;
+    private MqttClient mqttSubscribeClient;
 
-    public mqttLocationSubscriber() {
+    public mqttLocationSubscriber()
+    {
 
-        try {
-            mqttSubscribeClient = new MqttClient(BROKER_URL, "SmartCity_Core_Receiver");
+    }
+
+    @PostConstruct
+    private void postConstruct()
+    {
+        //IP / port-values are initialised at the end of the constructor
+        brokerURL = "tcp://" + mqttIP + ":" + mqttPort;
+
+        try
+        {
+            mqttSubscribeClient = new MqttClient(brokerURL, "SmartCity_Core_Receiver");
             start();
-
-        } catch (MqttException e) {
+        }
+        catch(MqttException e)
+        {
+            System.err.println("Could not connect to MQTT Broker!");
             e.printStackTrace();
+            System.err.println("System will exit!");
             System.exit(1);
         }
     }
 
-    public void start() {
-        try {
+    public void start()
+    {
+        try
+        {
             mqttSubscribeClient.setCallback(new mqttLocationSubscriberCallback(this));
             MqttConnectOptions connOpts = new MqttConnectOptions();
             connOpts.setCleanSession(true);
-            connOpts.setUserName("arthur");
-            connOpts.setPassword("arthur".toCharArray());
+            connOpts.setUserName(mqttUsername);
+            connOpts.setPassword(mqttPassword.toCharArray());
             mqttSubscribeClient.connect(connOpts);
 
             //Subscribe to all subtopics of Sensor
             mqttSubscribeClient.subscribe("BOT/#");
 
-        } catch (MqttException e) {
+        }
+        catch(MqttException e)
+        {
             e.printStackTrace();
             //System.exit(1);
         }

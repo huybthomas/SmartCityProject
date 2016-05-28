@@ -1,6 +1,5 @@
 package be.uantwerpen.sc.controllers.mqtt;
 
-import be.uantwerpen.sc.controllers.BotController;
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
 import org.eclipse.paho.client.mqttv3.MqttCallback;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
@@ -10,8 +9,6 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
  */
 public class mqttLocationSubscriberCallback implements MqttCallback
 {
-    private BotController botController;
-
     mqttLocationSubscriber subscriber;
     boolean on = false;
 
@@ -35,7 +32,7 @@ public class mqttLocationSubscriberCallback implements MqttCallback
         String botIDString = topic.split("/")[1];
         Long botID = Long.parseLong(botIDString);
 
-        String payploadString =  new String(mqttMessage.getPayload());
+        String payploadString = new String(mqttMessage.getPayload());
         int tussenint = Integer.parseInt(payploadString);
         subscriber.botController.updateLocation(botID, tussenint);
 
