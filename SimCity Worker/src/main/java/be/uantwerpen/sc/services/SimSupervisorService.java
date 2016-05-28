@@ -48,6 +48,20 @@ public class SimSupervisorService
         return stats;
     }
 
+    public String getBotLog(int botId)
+    {
+        SimBot bot = this.getBot(botId);
+
+        if(bot != null)
+        {
+            return bot.getLog();
+        }
+        else
+        {
+            return null;
+        }
+    }
+
     public boolean addNewBot(SimBot bot)
     {
         boolean status;

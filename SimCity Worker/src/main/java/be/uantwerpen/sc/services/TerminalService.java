@@ -249,11 +249,33 @@ public class TerminalService
             case "show":
                 if(commandString.split(" ", 2).length <= 1)
                 {
-                    terminal.printTerminalInfo("Missing arguments! 'show {botId | all}'");
+                    terminal.printTerminalInfo("Missing arguments! 'show {botId | all | log}'");
                 }
                 else
                 {
-                    if(commandString.split(" ", 2)[1].equals("all"))
+                    if(commandString.split(" ", 3)[1].equals("log"))
+                    {
+                        if(commandString.split(" ", 3).length <= 2)
+                        {
+                            terminal.printTerminalInfo("Missing arguments! 'show log {botId}'");
+                        }
+                        else
+                        {
+                            int botId;
+
+                            try
+                            {
+                                botId = this.parseInteger(commandString.split(" ", 3)[2]);
+
+                                this.printLog(botId);
+                            }
+                            catch(Exception e)
+                            {
+                                terminal.printTerminalError(e.getMessage());
+                            }
+                        }
+                    }
+                    else if(commandString.split(" ", 2)[1].equals("all"))
                     {
                         this.printAllBots();
                     }
@@ -370,7 +392,7 @@ public class TerminalService
             terminal.printTerminal("Bot-id:\t\t" + status.getId());
             terminal.printTerminal("Name:\t\t" + status.getName());
             terminal.printTerminal("Type:\t\t" + status.getType());
-            terminal.printTerminal("Running:\t" + status.getRunningState());
+            terminal.printTerminal("Status:\t" + status.getRunningState());
         }
     }
 
@@ -384,13 +406,27 @@ public class TerminalService
         }
         else
         {
-            terminal.printTerminal("Bot-id\t\tType\t\tName\t\tRunning");
+            terminal.printTerminal("Bot-id\t\tType\t\tName\t\tStatus");
             terminal.printTerminal("-----------------------------------------------");
 
-            for (SimBotStatus status : stats)
+            for(SimBotStatus status : stats)
             {
                 terminal.printTerminal("\t" + status.getId() + "\t\t" + status.getType() + "\t\t\t" + status.getName() + "\t\t" + status.getRunningState());
             }
+        }
+    }
+
+    private void printLog(int botId)
+    {
+        String log = supervisorService.getBotLog(botId);
+
+        if(log == null)
+        {
+            terminal.printTerminalInfo("Could not find bot with id: " + botId + "!");
+        }
+        else
+        {
+            terminal.printTerminal(log);
         }
     }
 
@@ -435,6 +471,7 @@ public class TerminalService
                 terminal.printTerminal("'get {botId} {property}' : get the value of the property for the bot with the given id.");
                 terminal.printTerminal("'setconfig {property} {value}' : set the system property of the worker node.");
                 terminal.printTerminal("'getconfig {property}' : get the value of the property for the bot with the given id.");
+                terminal.printTerminal("'show log {botId}' : display the log of the bot with the given id.");
                 terminal.printTerminal("'show all' : give a list of all created bots.");
                 terminal.printTerminal("'show {botId}' : display the details of the bot with the given id.");
                 terminal.printTerminal("'exit' : shutdown the server.");

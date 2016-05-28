@@ -18,8 +18,8 @@ import java.io.File;
 @Service
 public class SimCoresService
 {
-    private static String coreResourceFolder = "botCores/";
-    private static String coreConfigFile = "BotCoreConfig.xml";
+    private final static String coreResourceFolder = "botCores/";
+    private final static String coreConfigFile = "BotCoreConfig.xml";
 
     static public SimCore getSimulationCore(SimBot bot)
     {
