@@ -7,12 +7,12 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
 /**
  * Created by Arthur on 9/05/2016.
  */
-public class mqttLocationSubscriberCallback implements MqttCallback
+public class MqttLocationSubscriberCallback implements MqttCallback
 {
-    mqttLocationSubscriber subscriber;
+    MqttLocationSubscriber subscriber;
     boolean on = false;
 
-    public mqttLocationSubscriberCallback(mqttLocationSubscriber subscriber)
+    public MqttLocationSubscriberCallback(MqttLocationSubscriber subscriber)
     {
         this.subscriber = subscriber;
     }

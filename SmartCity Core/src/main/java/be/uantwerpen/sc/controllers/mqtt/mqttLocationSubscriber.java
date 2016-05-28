@@ -14,7 +14,7 @@ import javax.annotation.PostConstruct;
  * Created by Arthur on 9/05/2016.
  */
 @Service
-public class mqttLocationSubscriber
+public class MqttLocationSubscriber
 {
     //TODO: fix bad code - Public field!
     @Autowired
@@ -37,7 +37,7 @@ public class mqttLocationSubscriber
     //We have to generate a unique Client id.
     private MqttClient mqttSubscribeClient;
 
-    public mqttLocationSubscriber()
+    public MqttLocationSubscriber()
     {
 
     }
@@ -66,7 +66,7 @@ public class mqttLocationSubscriber
     {
         try
         {
-            mqttSubscribeClient.setCallback(new mqttLocationSubscriberCallback(this));
+            mqttSubscribeClient.setCallback(new MqttLocationSubscriberCallback(this));
             MqttConnectOptions connOpts = new MqttConnectOptions();
             connOpts.setCleanSession(true);
             connOpts.setUserName(mqttUsername);
