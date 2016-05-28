@@ -98,6 +98,7 @@ public class TaskHandler
             if(command.split(" ", 3).length == 2)
             {
                 //Follow line until end of line
+
             }
             else
             {
@@ -163,11 +164,76 @@ public class TaskHandler
         }
         else if(command.startsWith("DRIVE TURN"))
         {
+            if(command.split(" ").length == 3)
+            {
+                if(command.split(" ")[2].equals("L") || command.split(" ")[2].equals("R"))
+                {
+                    driveHandler.newTurnAngleCommand(90);
 
+                    response = "ACK";
+                }
+                else
+                {
+                    response = "MALFORMED COMMAND";
+                }
+            }
+            else if(command.split(" ").length == 4)
+            {
+                if(command.split(" ")[2].equals("L") || command.split(" ")[2].equals("R"))
+                {
+                    try
+                    {
+                        int angle = parseInteger(command.split(" ")[3]);
+
+                        driveHandler.newTurnAngleCommand(angle);
+
+                        response = "ACK";
+                    }
+                    catch(Exception e)
+                    {
+                        //Could not parse distance from command
+                        response = "MALFORMED COMMAND";
+                    }
+                }
+                else
+                {
+                    response = "MALFORMED COMMAND";
+                }
+            }
+            else
+            {
+                response = "MALFORMED COMMAND";
+            }
         }
         else if(command.startsWith("DRIVE ROTATE"))
         {
+            if(command.split(" ").length == 4)
+            {
+                if(command.split(" ")[2].equals("L") || command.split(" ")[2].equals("R"))
+                {
+                    try
+                    {
+                        int angle = parseInteger(command.split(" ")[3]);
 
+                        driveHandler.newTurnAngleCommand(angle);
+
+                        response = "ACK";
+                    }
+                    catch(Exception e)
+                    {
+                        //Could not parse distance from command
+                        response = "MALFORMED COMMAND";
+                    }
+                }
+                else
+                {
+                    response = "MALFORMED COMMAND";
+                }
+            }
+            else
+            {
+                response = "MALFORMED COMMAND";
+            }
         }
         else if(command.startsWith("DRIVE DISTANCE"))
         {
