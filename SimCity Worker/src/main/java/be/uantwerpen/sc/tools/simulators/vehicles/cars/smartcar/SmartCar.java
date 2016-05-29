@@ -2,6 +2,9 @@ package be.uantwerpen.sc.tools.simulators.vehicles.cars.smartcar;
 
 import be.uantwerpen.sc.services.sockets.SimSocket;
 import be.uantwerpen.sc.services.sockets.SimSocketService;
+import be.uantwerpen.sc.tools.simulators.vehicles.cars.smartcar.handlers.DriveHandler;
+import be.uantwerpen.sc.tools.simulators.vehicles.cars.smartcar.handlers.EventHandler;
+import be.uantwerpen.sc.tools.simulators.vehicles.cars.smartcar.handlers.TaskHandler;
 
 /**
  * Created by Thomas on 28/05/2016.

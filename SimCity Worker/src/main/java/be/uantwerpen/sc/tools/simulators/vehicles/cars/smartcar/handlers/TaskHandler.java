@@ -1,6 +1,8 @@
-package be.uantwerpen.sc.tools.simulators.vehicles.cars.smartcar;
+package be.uantwerpen.sc.tools.simulators.vehicles.cars.smartcar.handlers;
 
 import be.uantwerpen.sc.services.sockets.SimSocket;
+import be.uantwerpen.sc.tools.simulators.vehicles.cars.smartcar.handlers.DriveHandler;
+import be.uantwerpen.sc.tools.simulators.vehicles.cars.smartcar.handlers.EventHandler;
 
 import javax.validation.constraints.NotNull;
 

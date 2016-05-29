@@ -1,5 +1,7 @@
 package be.uantwerpen.sc.tools;
 
+import be.uantwerpen.sc.tools.simulators.vehicles.cars.smartcar.models.Vertex;
+
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;

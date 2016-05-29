@@ -1,4 +1,4 @@
-package be.uantwerpen.sc.tools.simulators.vehicles.cars.smartcar;
+package be.uantwerpen.sc.tools.simulators.vehicles.cars.smartcar.handlers;
 
 import be.uantwerpen.sc.services.sockets.SimSocket;
 

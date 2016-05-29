@@ -1,4 +1,4 @@
-package be.uantwerpen.sc.models.map;
+package be.uantwerpen.sc.tools.simulators.vehicles.cars.smartcar.models.map;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,32 +6,38 @@ import java.util.List;
 /**
  * Created by Niels on 14/04/2016.
  */
-public class MapJson {
-
+public class MapJson
+{
     private List<NodeJson> nodeJsons;
     private int size;
 
-    public MapJson() {
+    public MapJson()
+    {
         this.nodeJsons = new ArrayList<>();
     }
 
-    public void addNodeJson(NodeJson nodeJson){
+    public void addNodeJson(NodeJson nodeJson)
+    {
         nodeJsons.add(nodeJson);
     }
 
-    public List<NodeJson> getNodeJsons() {
+    public List<NodeJson> getNodeJsons()
+    {
         return nodeJsons;
     }
 
-    public void setNodeJsons(List<NodeJson> nodeJsons) {
+    public void setNodeJsons(List<NodeJson> nodeJsons)
+    {
         this.nodeJsons = nodeJsons;
     }
 
-    public int getSize() {
+    public int getSize()
+    {
         return size;
     }
 
-    public void setSize(int size) {
+    public void setSize(int size)
+    {
         this.size = size;
     }
 }
