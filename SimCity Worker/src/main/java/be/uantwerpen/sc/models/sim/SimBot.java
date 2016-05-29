@@ -16,10 +16,17 @@ public abstract class SimBot implements Runnable
     protected String type;
     protected String name;
 
-    public SimBot(String name)
+    protected SimBot()
     {
         this.running = false;
         this.type = "bot";
+
+        this.name = "SimBot";
+    }
+
+    public SimBot(String name)
+    {
+        this();
 
         this.name = name;
     }

@@ -26,15 +26,15 @@ public class SimCore
         this.status = SimStatus.OFF;
         this.running = false;
         this.log = "";
+        this.coreThread = null;
     }
 
     public SimCore(String coreLocation, String version)
     {
+        this();
+
         this.coreLocation = coreLocation;
         this.version = version;
-        this.status = SimStatus.OFF;
-        this.running = false;
-        this.log = "";
     }
 
     public String getCoreLocation()
@@ -142,23 +142,20 @@ public class SimCore
             {
                 try
                 {
-                    if(reader.ready())
+                    logLine = readLine(reader);
+
+                    if(logLine == null)
                     {
-                        logLine = reader.readLine();
-
-                        if(logLine == null)
-                        {
-                            //Input stream closed, exit boot status
-                            break;
-                        }
-
-                        //Add line to log
-                        log = log.concat(logLine + "\n");
+                        //Input stream closed, exit boot status
+                        break;
                     }
+
+                    //Add line to log
+                    log = log.concat(logLine + "\n");
 
                     while(errorReader.ready() && !Thread.currentThread().isInterrupted() && errorLine != null)
                     {
-                        errorLine = errorReader.readLine();
+                        errorLine = readLine(errorReader);
 
                         if(errorLine != null)
                         {
@@ -196,20 +193,17 @@ public class SimCore
             {
                 while(!Thread.currentThread().isInterrupted() && logLine != null)
                 {
-                    if(reader.ready())
-                    {
-                        logLine = reader.readLine();
+                    logLine = readLine(reader);
 
-                        //Add line to log
-                        if(logLine != null)
-                        {
-                            log = log.concat(logLine + "\n");
-                        }
+                    //Add line to log
+                    if(logLine != null)
+                    {
+                        log = log.concat(logLine + "\n");
                     }
 
                     while(errorReader.ready() && !Thread.currentThread().isInterrupted() && errorLine != null)
                     {
-                        errorLine = errorReader.readLine();
+                        errorLine = readLine(errorReader);
 
                         if(errorLine != null)
                         {
@@ -245,25 +239,26 @@ public class SimCore
 
             process.destroy();
 
+            //Reset cached lines
+            logLine = "";
+            errorLine = "";
+
             //Wait for core process to shutdown
             try
             {
                 while(logLine != null)
                 {
-                    if(reader.ready())
-                    {
-                        logLine = reader.readLine();
+                    logLine = readLine(reader);
 
-                        //Add line to log
-                        if(logLine != null)
-                        {
-                            log = log.concat(logLine + "\n");
-                        }
+                    //Add line to log
+                    if(logLine != null)
+                    {
+                        log = log.concat(logLine + "\n");
                     }
 
                     while(errorReader.ready() && errorLine != null)
                     {
-                        errorLine = errorReader.readLine();
+                        errorLine = readLine(errorReader);
 
                         if(errorLine != null)
                         {
@@ -303,9 +298,69 @@ public class SimCore
                 System.err.println("Could not close input stream!");
             }
 
+            try
+            {
+                errorReader.close();
+            }
+            catch(IOException e)
+            {
+                System.err.println("Could not close error stream!");
+            }
+
             status = SimStatus.OFF;
 
             running = false;
         }
+    }
+
+    private String readLine(BufferedReader reader) throws IOException
+    {
+        final String[] line = {null};
+        final boolean[] exFlag = {false};
+        final String[] exMessage = {null};
+        Thread readThread;
+
+        if(reader != null)
+        {
+            readThread = new Thread(new Runnable()
+            {
+                @Override
+                public void run()
+                {
+                    try
+                    {
+                        line[0] = reader.readLine();
+                    }
+                    catch(IOException e)
+                    {
+                        //Could not open stream
+                        exFlag[0] = true;
+                        exMessage[0] = e.getMessage();
+                    }
+                }
+            });
+
+            //Start thread
+            readThread.start();
+
+            //Wait for thread to finish or until thread is interrupted
+            while(readThread.isAlive() && !Thread.currentThread().isInterrupted());
+
+            if(Thread.currentThread().isInterrupted())
+            {
+                //Interrupt read thread
+                readThread.interrupt();
+            }
+            else
+            {
+                if(exFlag[0])
+                {
+                    //IOException occurred during reading
+                    throw new IOException(exMessage[0]);
+                }
+            }
+        }
+
+        return line[0];
     }
 }

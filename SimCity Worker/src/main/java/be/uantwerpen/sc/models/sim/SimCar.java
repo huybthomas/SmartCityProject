@@ -33,6 +33,8 @@ public class SimCar extends SimVehicle
     {
         super(name, startPoint, simSpeed);
 
+        this.taskSocketService = new SimSocketService();
+        this.eventSocketService = new SimSocketService();
         this.type = "car";
         this.carCore = null;
     }
