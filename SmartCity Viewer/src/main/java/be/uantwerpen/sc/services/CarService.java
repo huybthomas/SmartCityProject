@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 
 /**
@@ -38,10 +39,13 @@ public class CarService
 
         //For testing
         //addTestBots();
+    }
 
+    @PostConstruct
+    private void postConstruct()
+    {
+        //IP / port-values are initialised at the end of the constructor
         getBots();
-
-
     }
 
     //TODO Test this method
