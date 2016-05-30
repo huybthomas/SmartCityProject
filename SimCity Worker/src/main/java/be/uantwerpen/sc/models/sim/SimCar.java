@@ -1,6 +1,5 @@
 package be.uantwerpen.sc.models.sim;
 
-import be.uantwerpen.sc.models.core.Point;
 import be.uantwerpen.sc.models.sim.messages.SimBotStatus;
 import be.uantwerpen.sc.services.SimCoresService;
 import be.uantwerpen.sc.services.sockets.SimSocketService;
@@ -21,7 +20,7 @@ public class SimCar extends SimVehicle
 
     public SimCar()
     {
-        super("bot", null, 0);
+        super("bot", 0, 70);
 
         this.taskSocketService = new SimSocketService();
         this.eventSocketService = new SimSocketService();
@@ -29,7 +28,7 @@ public class SimCar extends SimVehicle
         this.carCore = null;
     }
 
-    public SimCar(String name, Point startPoint, long simSpeed)
+    public SimCar(String name, int startPoint, long simSpeed)
     {
         super(name, startPoint, simSpeed);
 
@@ -73,6 +72,21 @@ public class SimCar extends SimVehicle
         }
 
         return log;
+    }
+
+    @Override
+    public boolean parseProperty(String property, String value) throws Exception
+    {
+        if(super.parseProperty(property, value))
+        {
+            return true;
+        }
+
+        switch(property.toLowerCase().trim())
+        {
+            default:
+                return false;
+        }
     }
 
     @Override
@@ -129,18 +143,27 @@ public class SimCar extends SimVehicle
 
     private void simulateCar()
     {
-        SmartCar carSimulation = new SmartCar(this.name, this.simSpeed);
+        SmartCar carSimulation = new SmartCar(this.name, this.simSpeed, this.serverCoreIP, this.serverCorePort);
 
         boolean commandSocketReset = true;
         boolean eventSocketReset = true;
 
         long lastSimulationTime = System.currentTimeMillis();
 
+        //Initialise simulation
+        if(!carSimulation.initSimulation(this.startPoint))
+        {
+            System.err.println("Could not initialise SmartCar simulation!");
+            System.err.println("Simulation will abort...");
+
+            this.running = false;
+        }
+
         while(this.isRunning())
         {
             //Calculated simulation time
             long currentTime = System.currentTimeMillis();
-            long elapsedTime = lastSimulationTime - currentTime;
+            long elapsedTime = currentTime - lastSimulationTime;
             lastSimulationTime = currentTime;
 
             //Verify sockets
@@ -148,9 +171,6 @@ public class SimCar extends SimVehicle
 
             //Update simulation
             carSimulation.updateSimulation(elapsedTime);
-
-            //Process received messages
-
 
             try
             {
@@ -161,6 +181,11 @@ public class SimCar extends SimVehicle
             {
                 //Thread is interrupted
             }
+        }
+
+        if(!carSimulation.stopSimulation())
+        {
+            System.err.println("Simulation layer is not stopped properly!");
         }
     }
 }

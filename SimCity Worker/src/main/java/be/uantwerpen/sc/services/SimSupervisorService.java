@@ -2,9 +2,10 @@ package be.uantwerpen.sc.services;
 
 import be.uantwerpen.sc.models.sim.SimBot;
 import be.uantwerpen.sc.models.sim.messages.SimBotStatus;
+import be.uantwerpen.sc.tools.Terminal;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -15,6 +16,12 @@ import java.util.List;
 @Service
 public class SimSupervisorService
 {
+    @Value("${sc.core.ip:localhost}")
+    private String serverCoreIP;
+
+    @Value("#{new Integer(${sc.core.port}) ?: 1994}")
+    private int serverCorePort;
+
     private List<SimBot> bots;
 
     public SimSupervisorService()
@@ -93,6 +100,8 @@ public class SimSupervisorService
 
         if(bot != null)
         {
+            bot.setServerCoreAddress(this.serverCoreIP, this.serverCorePort);
+
             return bot.start();
         }
         else
@@ -122,6 +131,29 @@ public class SimSupervisorService
         if(bot != null)
         {
             return bot.restart();
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public boolean setBotProperty(int botId, String property, String value)
+    {
+        SimBot bot = this.getBot(botId);
+
+        if(bot != null)
+        {
+            try
+            {
+                return bot.parseProperty(property, value);
+            }
+            catch(Exception e)
+            {
+                Terminal.printTerminalError(e.getMessage());
+
+                return false;
+            }
         }
         else
         {

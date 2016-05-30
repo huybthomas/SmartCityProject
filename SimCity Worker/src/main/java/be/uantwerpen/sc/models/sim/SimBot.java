@@ -11,15 +11,19 @@ import javax.annotation.PostConstruct;
 public abstract class SimBot implements Runnable
 {
     private Thread simulationThread;
-    private boolean running;
+    protected boolean running;
     protected int id;
     protected String type;
     protected String name;
+    protected String serverCoreIP;
+    protected int serverCorePort;
 
     protected SimBot()
     {
         this.running = false;
         this.type = "bot";
+        this.serverCoreIP = "localhost";
+        this.serverCorePort = 1994;
 
         this.name = "SimBot";
     }
@@ -29,6 +33,12 @@ public abstract class SimBot implements Runnable
         this();
 
         this.name = name;
+    }
+
+    public void setServerCoreAddress(String serverIP, int serverPort)
+    {
+        this.serverCoreIP = serverIP;
+        this.serverCorePort = serverPort;
     }
 
     public boolean start()
@@ -75,11 +85,6 @@ public abstract class SimBot implements Runnable
         if(this.running)
         {
             this.running = false;
-        }
-
-        while(simulationThread.isAlive())
-        {
-            //Wait for thread to stop
         }
 
         return true;
@@ -160,6 +165,18 @@ public abstract class SimBot implements Runnable
         while(this.running)
         {
             this.simulationProcess();
+        }
+    }
+
+    public boolean parseProperty(String property, String value) throws Exception
+    {
+        switch(property.toLowerCase().trim())
+        {
+            case "name":
+                setName(value);
+                return true;
+            default:
+                return false;
         }
     }
 

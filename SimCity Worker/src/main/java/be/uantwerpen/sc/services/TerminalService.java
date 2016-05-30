@@ -166,14 +166,14 @@ public class TerminalService
 
                     try
                     {
-                        this.parseInteger(commandString.split(" ", 4)[1]);
+                        botId = this.parseInteger(commandString.split(" ", 4)[1]);
+
+                        this.setBotProperty(botId, property, value);
                     }
                     catch(Exception e)
                     {
                         terminal.printTerminalError(e.getMessage());
                     }
-
-                    terminal.printTerminalInfo("METHOD NOT IMPLEMENTED YET!");
                 }
                 break;
             case "get":
@@ -379,6 +379,18 @@ public class TerminalService
         }
     }
 
+    private void setBotProperty(int botId, String property, String value)
+    {
+        if(supervisorService.setBotProperty(botId, property, value))
+        {
+            terminal.printTerminalInfo("Property set for bot with id: " + botId + ".");
+        }
+        else
+        {
+            terminal.printTerminalError("Could not set property for bot with id: " + botId + "!");
+        }
+    }
+
     private void printBotStatus(int botId)
     {
         SimBotStatus status = supervisorService.getBotStatus(botId);
@@ -442,6 +454,9 @@ public class TerminalService
             case "set":
                 terminal.printTerminal("SET {botId} {property} {value}");
                 terminal.printTerminal("------------------------------");
+                terminal.printTerminal("'name' : set name of the bot.");
+                terminal.printTerminal("'speed' : set the speed of the vehicle bot.");
+                terminal.printTerminal("'startpoint' : set the start point of the simulated vehicle bot.");
                 terminal.printTerminal("'help' / '?' : show all configurable properties.\n");
                 break;
             case "get":
