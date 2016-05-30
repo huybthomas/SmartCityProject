@@ -4,6 +4,7 @@ import be.uantwerpen.sc.models.BotEntity;
 import be.uantwerpen.sc.models.LinkEntity;
 import be.uantwerpen.sc.models.PointEntity;
 import be.uantwerpen.sc.tools.MapBuilder;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,8 +20,11 @@ import java.util.List;
 @Service
 public class MapService {
 
-    //TODO set correct IP
-    String coreIP = "http://146.175.140.118:1994";
+    @Value("${sc.core.ip:localhost}")
+    private String serverCoreIP;
+
+    @Value("#{new Integer(${sc.core.port}) ?: 1994}")
+    private int serverCorePort;
 
     public MapBuilder mapBuilder;
 
@@ -87,12 +91,12 @@ public class MapService {
     private void getMap(){
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<PointEntity[]> responseList;
-        responseList = restTemplate.getForEntity(coreIP.toString()+"/point/", PointEntity[].class);
+        responseList = restTemplate.getForEntity("http://" + serverCoreIP + ":" + serverCorePort + "/point/", PointEntity[].class);
         pointList = responseList.getBody();
 
         restTemplate = new RestTemplate();
         ResponseEntity<LinkEntity[]> responseList2;
-        responseList2 = restTemplate.getForEntity(coreIP.toString()+"/link/", LinkEntity[].class);
+        responseList2 = restTemplate.getForEntity("http://" + serverCoreIP + ":" + serverCorePort + "/link/", LinkEntity[].class);
         linkList = responseList2.getBody();
     }
 }

@@ -1,6 +1,5 @@
 package be.uantwerpen.sc.services;
 
-import be.uantwerpen.sc.models.sim.SimBot;
 import org.springframework.stereotype.Service;
 
 /**

@@ -6,6 +6,7 @@ import be.uantwerpen.sc.models.PointEntity;
 import be.uantwerpen.sc.models.sim.SimBot;
 import be.uantwerpen.sc.models.sim.SimPath;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -16,12 +17,16 @@ import java.util.ArrayList;
  * Created by Arthur on 24/03/2016.
  */
 @Service
-public class CarService {
-
+public class CarService
+{
     @Autowired
     MapService mapService;
 
-    private String coreIP = "146.175.140.118:1994";
+    @Value("${sc.core.ip:localhost}")
+    private String serverCoreIP;
+
+    @Value("#{new Integer(${sc.core.port}) ?: 1994}")
+    private int serverCorePort;
 
     BotEntity[] botList;
     public ArrayList<SimBot> simBots;
@@ -44,7 +49,7 @@ public class CarService {
         simBots.clear();
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<BotEntity[]> responseList;
-        responseList = restTemplate.getForEntity("http://" + coreIP+"/bot/", BotEntity[].class);
+        responseList = restTemplate.getForEntity("http://" + serverCoreIP + ":" + serverCorePort +"/bot/", BotEntity[].class);
         botList = responseList.getBody();
         for(BotEntity bot : botList){
             SimBot simBot = new SimBot(bot);
