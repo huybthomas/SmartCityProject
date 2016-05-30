@@ -1,7 +1,6 @@
 package be.uantwerpen.sc.controllers;
 
 import be.uantwerpen.sc.models.Point;
-import be.uantwerpen.sc.repositories.PointRepository;
 import be.uantwerpen.sc.services.PointControlService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
