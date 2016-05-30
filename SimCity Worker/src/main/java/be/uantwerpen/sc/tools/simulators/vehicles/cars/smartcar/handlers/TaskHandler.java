@@ -107,7 +107,7 @@ public class TaskHandler
                 int distance = locationHandler.getDistanceTargetLocation();
 
                 driveHandler.newDriveDistanceCommand(distance);
-System.out.println("FOLLOW LINE");
+
                 return "ACK";
             }
             else
@@ -147,7 +147,7 @@ System.out.println("FOLLOW LINE");
                 int distance = parseInteger(command.split(" ", 3)[2]);
 
                 driveHandler.newDriveDistanceCommand(distance);
-System.out.println("FORWARD");
+
                 response = "ACK";
             }
             catch(Exception e)
@@ -179,7 +179,7 @@ System.out.println("FORWARD");
                 if(command.split(" ")[2].equals("L") || command.split(" ")[2].equals("R"))
                 {
                     driveHandler.newTurnAngleCommand(90);
-System.out.println("TURN");
+
                     response = "ACK";
                 }
                 else

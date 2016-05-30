@@ -152,7 +152,7 @@ public class SmartCar
         {
             //Target position reached, generate event
             eventHandler.addEvent("DRIVE EVENT: FINISHED");
-System.out.println("DRIVE FINISHED");
+
             locationHandler.endFollowLine();
         }
 

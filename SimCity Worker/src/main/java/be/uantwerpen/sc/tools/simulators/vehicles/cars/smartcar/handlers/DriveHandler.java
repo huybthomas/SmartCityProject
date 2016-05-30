@@ -120,7 +120,7 @@ public class DriveHandler
             else
             {
                 this.currentPosition += rotation;
-System.out.println("CURRENT POSITION: " + this.currentPosition);
+
                 //Target position is not reached yet
                 return false;
             }
