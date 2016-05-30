@@ -7,14 +7,14 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "link", schema = "", catalog = "smartcitydb")
-public class LinkEntity
+public class Link
 {
     private int lid;
     private Integer length;
     private String startDirection;
     private String stopDirection;
-    private PointEntity startId;
-    private PointEntity stopId;
+    private Point startId;
+    private Point stopId;
     private int weight;
 
     @Id
@@ -63,7 +63,7 @@ public class LinkEntity
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        LinkEntity that = (LinkEntity) o;
+        Link that = (Link) o;
 
         if (lid != that.lid) return false;
         if (length != null ? !length.equals(that.length) : that.length != null) return false;
@@ -86,21 +86,21 @@ public class LinkEntity
 
     @OneToOne
     @JoinColumn(name = "start_id", referencedColumnName = "pid")
-    public PointEntity getStartId() {
+    public Point getStartId() {
         return startId;
     }
 
-    public void setStartId(PointEntity startId) {
+    public void setStartId(Point startId) {
         this.startId = startId;
     }
 
     @OneToOne
     @JoinColumn(name = "stop_id", referencedColumnName = "pid")
-    public PointEntity getStopId() {
+    public Point getStopId() {
         return stopId;
     }
 
-    public void setStopId(PointEntity stopId) {
+    public void setStopId(Point stopId) {
         this.stopId = stopId;
     }
 

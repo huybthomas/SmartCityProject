@@ -1,7 +1,8 @@
 package be.uantwerpen.sc.controllers;
 
-import be.uantwerpen.sc.models.PointEntity;
+import be.uantwerpen.sc.models.Point;
 import be.uantwerpen.sc.repositories.PointRepository;
+import be.uantwerpen.sc.services.PointControlService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,32 +19,47 @@ import java.util.List;
 public class PointController
 {
     @Autowired
-    private PointRepository pointRepository;
+    private PointControlService pointService;
 
     @RequestMapping(method = RequestMethod.GET)
-    public List<PointEntity> allPoints(){
-        List<PointEntity> points = pointRepository.findAll();
+    public List<Point> allPoints()
+    {
+        List<Point> points = pointService.getAllPoints();
         return points;
     }
 
     @RequestMapping(value = "requestlock/{id}", method = RequestMethod.GET)
-    public boolean requestPointLock(@PathVariable("id") int id){
-        switch(pointRepository.findOne(id).getPointlock()){
-            case 1: //Point already locked
+    public boolean requestPointLock(@PathVariable("id") int id)
+    {
+        synchronized(this)
+        {
+            Point point = pointService.getPoint(id);
+
+            if(point == null)
+            {
+                //Point not found
                 return false;
-            case 0: //Point not locked -> attempt lock
-                synchronized (this){
-                    pointRepository.findOne(id).setPointlock(1);
-                }
-                return true;
-            default:
+            }
+
+            switch(point.getPointlock())
+            {
+                case 1: //Point already locked
+                    return false;
+                case 0: //Point not locked -> attempt lock
+                    point.setPointlock(1);
+                    pointService.save(point);
+                    return true;
+                default:
+                    break;
+            }
         }
+
         return false;
     }
 
     @RequestMapping(value = "getlock/{id}", method = RequestMethod.GET)
     public boolean getPointStatus(@PathVariable("id") int id){
-        switch(pointRepository.findOne(id).getPointlock()){
+        switch(pointService.getPoint(id).getPointlock()){
             case 1:
                 return true;
             case 0:
@@ -53,10 +69,23 @@ public class PointController
         return true;
     }
 
-    @RequestMapping(value = "setlock/{id}/{value}", method = RequestMethod.PUT)
-    public void setPointStatus(@PathVariable("id") int id, @PathVariable("value") int value){
-        synchronized (this){
-            pointRepository.findOne(id).setPointlock(value);
+    @RequestMapping(value = "setlock/{id}/{value}", method = RequestMethod.GET)
+    public boolean setPointStatus(@PathVariable("id") int id, @PathVariable("value") int value)
+    {
+        synchronized (this)
+        {
+            Point point = pointService.getPoint(id);
+
+            if(point == null)
+            {
+                //Point not found
+                return false;
+            }
+
+            point.setPointlock(value);
+            pointService.save(point);
+
+            return true;
         }
     }
 }

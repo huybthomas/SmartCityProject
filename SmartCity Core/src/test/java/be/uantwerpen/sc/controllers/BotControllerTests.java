@@ -2,9 +2,9 @@ package be.uantwerpen.sc.controllers;
 
 import be.uantwerpen.sc.SmartCityCoreApplication;
 import be.uantwerpen.sc.configurations.SystemPropertyActiveProfileResolver;
-import be.uantwerpen.sc.models.LinkEntity;
-import be.uantwerpen.sc.models.PointEntity;
-import be.uantwerpen.sc.models.BotEntity;
+import be.uantwerpen.sc.models.Link;
+import be.uantwerpen.sc.models.Point;
+import be.uantwerpen.sc.models.Bot;
 import be.uantwerpen.sc.services.BotControlService;
 import org.junit.Before;
 import org.junit.Test;
@@ -16,7 +16,6 @@ import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
@@ -46,7 +45,7 @@ public class BotControllerTests {
             MediaType.APPLICATION_JSON.getType(),
             MediaType.APPLICATION_JSON.getSubtype(), Charset.forName("utf8"));
 
-    private BotEntity bot;
+    private Bot bot;
     private Gson gson = new Gson();
     String json;
 
@@ -67,10 +66,10 @@ public class BotControllerTests {
     @Test
     public void testSaveBot() throws Exception
     {
-        PointEntity p1 = new PointEntity();
-        PointEntity p2 = new PointEntity();
-        LinkEntity l1 = new LinkEntity();
-        bot = new BotEntity();
+        Point p1 = new Point();
+        Point p2 = new Point();
+        Link l1 = new Link();
+        bot = new Bot();
 
         json = gson.toJson(bot);
         System.out.println(json);

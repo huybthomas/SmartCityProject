@@ -1,6 +1,6 @@
 package be.uantwerpen.sc.services;
 
-import be.uantwerpen.sc.models.BotEntity;
+import be.uantwerpen.sc.models.Bot;
 import be.uantwerpen.sc.repositories.BotRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,21 +16,21 @@ public class BotControlService
     @Autowired
     private BotRepository botRepository;
 
-    public void saveBot(BotEntity bot){
+    public void saveBot(Bot bot){
         botRepository.save(bot);
     }
 
-    public BotEntity getBot(Long id){
+    public Bot getBot(Long id){
         return botRepository.findOne(id);
     }
 
-    public List<BotEntity> getAllBots(){
+    public List<Bot> getAllBots(){
         return botRepository.findAll();
     }
 
-    public  void updateBot(BotEntity bot)
+    public  void updateBot(Bot bot)
     {
-        BotEntity dbBot = botRepository.findOne(bot.getRid());
+        Bot dbBot = botRepository.findOne(bot.getRid());
         dbBot = bot;
         //dbBot.setLinkId(bot.getLinkId());
         botRepository.save(dbBot);

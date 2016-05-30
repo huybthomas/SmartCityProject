@@ -1,6 +1,6 @@
 package be.uantwerpen.sc.services;
 
-import be.uantwerpen.sc.models.LinkEntity;
+import be.uantwerpen.sc.models.Link;
 import be.uantwerpen.sc.models.map.*;
 import be.uantwerpen.sc.tools.pathplanning.Dijkstra;
 import be.uantwerpen.sc.tools.Edge;
@@ -33,25 +33,25 @@ public class PathPlanningService implements IPathplanning
 
     public List<Vertex> CalculatepathNonInterface(int start,int stop){
         Map map = mapControlService.buildMap();
-        List<LinkEntity> linkEntityList = new ArrayList<>();
+        List<Link> linkEntityList = new ArrayList<>();
         List<Vertex> vertexes = new ArrayList<>();
         for (Node nj : map.getNodeList()){
             vertexes.add(new Vertex(nj));
-            for(LinkEntity linkEntity : nj.getNeighbours()){
+            for(Link linkEntity : nj.getNeighbours()){
                 linkEntityList.add(linkEntity);
             }
         }
 
         ArrayList<Edge> edges;
         List<ArrayList<Edge>> edgeslistinlist = new ArrayList<>();
-        LinkEntity realLink = new LinkEntity();
+        Link realLink = new Link();
         int i = 0;
         for (Node nj : map.getNodeList()){
             edges = new ArrayList<>();
-            for (LinkEntity neighbour : nj.getNeighbours()){
+            for (Link neighbour : nj.getNeighbours()){
                 for (Vertex v : vertexes){
                     if(v.getId() == neighbour.getStopId().getPid()){
-                        for(LinkEntity linkEntity: linkEntityList){
+                        for(Link linkEntity: linkEntityList){
                             if(linkEntity.getStopId().getPid() == v.getId() && linkEntity.getStartId().getPid() == nj.getPointEntity().getPid()){
                                 System.out.println(linkEntity.toString() +" " + linkEntity);
                                 realLink = linkEntity;
@@ -79,7 +79,7 @@ public class PathPlanningService implements IPathplanning
         //return ("Distance to " + vertexes.get(stop-1) + ": " + vertexes.get(stop-1).minDistance) + ( "Path: " + path);
         return path;
     }
-    private List<LinkEntity> linkEntityList;
+    private List<Link> linkEntityList;
 
     @Override
     public List<Vertex> Calculatepath(MapJson mapJson, int start, int stop) {
@@ -126,14 +126,14 @@ public class PathPlanningService implements IPathplanning
 
         ArrayList<Edge> edges;
         List<ArrayList<Edge>> edgeslistinlist = new ArrayList<>();
-        LinkEntity realLink = new LinkEntity();
+        Link realLink = new Link();
         int i = 0;
         for (NodeJson nj : mapJsonServer.getNodeJsons()){
             edges = new ArrayList<>();
             for (Neighbour neighbour : nj.getNeighbours()){
                 for (Vertex v : vertexes){
                     if(v.getId() == neighbour.getPointEntity().getPid()){
-                        for(LinkEntity linkEntity: linkControlService.getAllLinks()){
+                        for(Link linkEntity: linkControlService.getAllLinks()){
                             if(linkEntity.getStopId().getPid() == v.getId() && linkEntity.getStartId().getPid() == nj.getPointEntity().getPid()){
                                 System.out.println(linkEntity.toString() +" " + linkEntity);
                                 realLink = linkEntity;

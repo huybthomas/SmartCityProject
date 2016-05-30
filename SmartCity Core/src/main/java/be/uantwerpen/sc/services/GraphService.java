@@ -1,6 +1,6 @@
 package be.uantwerpen.sc.services;
 
-import be.uantwerpen.sc.models.LinkEntity;
+import be.uantwerpen.sc.models.Link;
 import org.jgrapht.DirectedGraph;
 import org.jgrapht.alg.DijkstraShortestPath;
 import org.jgrapht.alg.StrongConnectivityInspector;
@@ -31,7 +31,7 @@ public class GraphService
 
     public void addPointToGraph(String pointIdString) {directedGraph.addVertex(pointIdString);}
 
-    public void addEdgeToGraph(LinkEntity link){directedGraph.addEdge(String.valueOf(link.getStartId().getPid()),String.valueOf(link.getStopId().getPid()));}
+    public void addEdgeToGraph(Link link){directedGraph.addEdge(String.valueOf(link.getStartId().getPid()),String.valueOf(link.getStopId().getPid()));}
 
     public StrongConnectivityInspector strongConnectivity(){
         sci = new StrongConnectivityInspector(directedGraph);

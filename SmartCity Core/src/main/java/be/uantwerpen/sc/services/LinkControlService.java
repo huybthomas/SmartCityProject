@@ -1,7 +1,6 @@
 package be.uantwerpen.sc.services;
 
-import be.uantwerpen.sc.models.BotEntity;
-import be.uantwerpen.sc.models.LinkEntity;
+import be.uantwerpen.sc.models.Link;
 import be.uantwerpen.sc.repositories.LinkRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,9 +16,9 @@ public class LinkControlService
     @Autowired
     private LinkRepository linkRepository;
 
-    public List<LinkEntity> getAllLinks(){return linkRepository.findAll();}
+    public List<Link> getAllLinks(){return linkRepository.findAll();}
 
-    public LinkEntity getLink(int id){
+    public Link getLink(int id){
         return linkRepository.findOne(id);
     }
 }

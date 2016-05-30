@@ -7,7 +7,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "punt", schema = "", catalog = "smartcitydb")
-public class PointEntity
+public class Point
 {
     private int pid;
     private String rfid;
@@ -50,7 +50,7 @@ public class PointEntity
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        PointEntity that = (PointEntity) o;
+        Point that = (Point) o;
 
         if (pid != that.pid) return false;
         if (rfid != null ? !rfid.equals(that.rfid) : that.rfid != null) return false;

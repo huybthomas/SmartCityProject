@@ -2,19 +2,13 @@ package be.uantwerpen.sc.repositories;
 
 import be.uantwerpen.sc.SmartCityCoreApplication;
 import be.uantwerpen.sc.configurations.SystemPropertyActiveProfileResolver;
-import be.uantwerpen.sc.models.LinkEntity;
-import be.uantwerpen.sc.models.PointEntity;
-import be.uantwerpen.sc.models.BotEntity;
-import org.junit.Before;
+import be.uantwerpen.sc.models.Bot;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
-
-import javax.transaction.Transactional;
 
 import static org.junit.Assert.*;
 
@@ -36,7 +30,7 @@ public class BotRepositoryTests
         int origBotRepositorySize = (int)botRepository.count();
 
         //Setup bot
-        BotEntity bot = new BotEntity();
+        Bot bot = new Bot();
         bot.setState("Test");
 
         //Save bot, verify has ID value after save
@@ -45,7 +39,7 @@ public class BotRepositoryTests
         assertNotNull(bot.getRid());    //Not null after save
 
         //Fetch from database
-        BotEntity fetchedBot = botRepository.findOne(bot.getRid());
+        Bot fetchedBot = botRepository.findOne(bot.getRid());
 
         //Should not be null
         assertNotNull(fetchedBot);
@@ -59,7 +53,7 @@ public class BotRepositoryTests
         botRepository.save(fetchedBot);
 
         //Get from database, should be updated
-        BotEntity fetchedUpdatedBot = botRepository.findOne(fetchedBot.getRid());
+        Bot fetchedUpdatedBot = botRepository.findOne(fetchedBot.getRid());
         assertEquals(fetchedBot.getState(), fetchedUpdatedBot.getState());
 
         //Verify count of bots in database
@@ -67,11 +61,11 @@ public class BotRepositoryTests
         assertEquals(botCount, origBotRepositorySize + 1);      //One bot has been added to the database
 
         //Get all bots, list should only have one more then initial value
-        Iterable<BotEntity> bots = botRepository.findAll();
+        Iterable<Bot> bots = botRepository.findAll();
 
         int count = 0;
 
-        for(BotEntity p : bots)
+        for(Bot p : bots)
         {
             count++;
         }
@@ -87,7 +81,7 @@ public class BotRepositoryTests
         int origBotRepositorySize = (int)botRepository.count();
 
         //Setup bot
-        BotEntity bot = new BotEntity();
+        Bot bot = new Bot();
 
         //Save bot, verify if it has ID value after save
         assertNull(bot.getRid());           //Null before save
@@ -99,7 +93,7 @@ public class BotRepositoryTests
         assertEquals(botCount, origBotRepositorySize + 1);      //One bot has been added to the database
 
         //Fetch from database
-        BotEntity fetchedBot = botRepository.findOne(bot.getRid());
+        Bot fetchedBot = botRepository.findOne(bot.getRid());
 
         //Should not be null
         assertNotNull(fetchedBot);
@@ -118,11 +112,11 @@ public class BotRepositoryTests
         assertEquals(botCount, origBotRepositorySize);          //One bot has been deleted from the database
 
         //Get all bots, list should have the same amount than the initial value
-        Iterable<BotEntity> bots = botRepository.findAll();
+        Iterable<Bot> bots = botRepository.findAll();
 
         int count = 0;
 
-        for(BotEntity p : bots)
+        for(Bot p : bots)
         {
             count++;
         }

@@ -2,9 +2,9 @@ package be.uantwerpen.sc.services;
 
 import be.uantwerpen.sc.SmartCityCoreApplication;
 import be.uantwerpen.sc.configurations.SystemPropertyActiveProfileResolver;
-import be.uantwerpen.sc.models.LinkEntity;
-import be.uantwerpen.sc.models.PointEntity;
-import be.uantwerpen.sc.models.BotEntity;
+import be.uantwerpen.sc.models.Link;
+import be.uantwerpen.sc.models.Point;
+import be.uantwerpen.sc.models.Bot;
 import be.uantwerpen.sc.repositories.BotRepository;
 import org.junit.Before;
 import org.junit.Test;
@@ -15,7 +15,6 @@ import org.mockito.MockitoAnnotations;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.web.WebAppConfiguration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,16 +38,16 @@ public class BotControlServiceTests {
     @InjectMocks
     private BotControlService botControlService;
 
-    private List<BotEntity> botList;
-    private BotEntity bot1;
+    private List<Bot> botList;
+    private Bot bot1;
 
     @Before
     public void init() {
 
-        PointEntity p1 = new PointEntity();
-        PointEntity p2 = new PointEntity();
-        LinkEntity l1 = new LinkEntity();
-        bot1 = new BotEntity();
+        Point p1 = new Point();
+        Point p2 = new Point();
+        Link l1 = new Link();
+        bot1 = new Bot();
         botList = new ArrayList<>();
         botList.add(bot1);
 
@@ -70,7 +69,7 @@ public class BotControlServiceTests {
     {
         when(botRepository.findAll()).thenReturn(botList);
 
-        BotEntity testBot = botList.get(0);
+        Bot testBot = botList.get(0);
 
         assertEquals(bot1,testBot);
 

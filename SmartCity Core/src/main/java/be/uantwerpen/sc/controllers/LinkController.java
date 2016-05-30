@@ -1,6 +1,6 @@
 package be.uantwerpen.sc.controllers;
 
-import be.uantwerpen.sc.models.LinkEntity;
+import be.uantwerpen.sc.models.Link;
 import be.uantwerpen.sc.services.LinkControlService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,8 +20,8 @@ public class LinkController
     private LinkControlService linkControlService;
 
     @RequestMapping(method = RequestMethod.GET)
-    public List<LinkEntity> allBots(){
-        List<LinkEntity> linkEntityList = linkControlService.getAllLinks();
+    public List<Link> allBots(){
+        List<Link> linkEntityList = linkControlService.getAllLinks();
         return linkEntityList;
     }
 }

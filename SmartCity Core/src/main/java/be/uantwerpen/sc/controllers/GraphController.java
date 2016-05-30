@@ -1,6 +1,6 @@
 package be.uantwerpen.sc.controllers;
 
-import be.uantwerpen.sc.models.LinkEntity;
+import be.uantwerpen.sc.models.Link;
 import be.uantwerpen.sc.services.LinkControlService;
 import be.uantwerpen.sc.services.GraphService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +23,7 @@ public class GraphController
     @Autowired
     private GraphService graphService;
 
-    private List<LinkEntity> linkEntityList;
+    private List<Link> linkEntityList;
 
     @RequestMapping(method = RequestMethod.GET)
     public void getMap(){
@@ -59,7 +59,7 @@ public class GraphController
         }
 
         //de linken toevoegen
-        for(LinkEntity link : linkEntityList){
+        for(Link link : linkEntityList){
             //System.out.println("Start: " + link.getStartId().getPid());
             //System.out.println("Stop: " + link.getStopId().getPid());
             graphService.addEdgeToGraph(link);

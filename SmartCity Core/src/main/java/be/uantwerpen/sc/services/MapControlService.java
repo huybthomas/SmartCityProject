@@ -25,8 +25,8 @@ public class MapControlService
     @Autowired
     private TrafficLightControlService trafficLightControlService;
 
-    private List<LinkEntity> linkEntityList;
-    private List<LinkEntity> targetlinks;
+    private List<Link> linkEntityList;
+    private List<Link> targetlinks;
     private List<Neighbour> neighbourList;
 
     private Node node;
@@ -38,7 +38,7 @@ public class MapControlService
 
         linkEntityList =linkControlService.getAllLinks();
 
-        for(PointEntity point : pointControlService.getAllPoints()){
+        for(Point point : pointControlService.getAllPoints()){
             node = new Node(point);
             targetlinks = linkEntityList.stream().filter(item -> Objects.equals(item.getStartId().getPid(), node.getNodeId())).collect(Collectors.toList());
             node.setNeighbours(targetlinks);
@@ -58,10 +58,10 @@ public class MapControlService
         MapJson mapJson = new MapJson();
         linkEntityList =linkControlService.getAllLinks();
 
-        for(PointEntity point : pointControlService.getAllPoints()){
+        for(Point point : pointControlService.getAllPoints()){
             nodeJson = new NodeJson(point);
             neighbourList = new ArrayList<>();
-            for(LinkEntity link: linkEntityList){
+            for(Link link: linkEntityList){
                 if((link.getStartId().getPid()) == (nodeJson.getPointEntity().getPid())){
                     neighbourList.add(new Neighbour(link));
                 }

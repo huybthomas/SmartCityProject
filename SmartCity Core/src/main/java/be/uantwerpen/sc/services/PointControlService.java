@@ -1,6 +1,6 @@
 package be.uantwerpen.sc.services;
 
-import be.uantwerpen.sc.models.PointEntity;
+import be.uantwerpen.sc.models.Point;
 import be.uantwerpen.sc.repositories.PointRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,7 +16,12 @@ public class PointControlService
     @Autowired
     private PointRepository pointRepository;
 
-    public List<PointEntity> getAllPoints(){return pointRepository.findAll();}
+    public List<Point> getAllPoints(){return pointRepository.findAll();}
 
-    public PointEntity getPoint(int id){return  pointRepository.findOne(id);}
+    public Point getPoint(int id){return pointRepository.findOne(id);}
+
+    public Point save(Point point)
+    {
+        return pointRepository.save(point);
+    }
 }

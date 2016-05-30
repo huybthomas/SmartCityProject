@@ -1,6 +1,6 @@
 package be.uantwerpen.sc.tools;
 
-import be.uantwerpen.sc.models.LinkEntity;
+import be.uantwerpen.sc.models.Link;
 import com.mxgraph.layout.mxCircleLayout;
 import com.mxgraph.layout.mxIGraphLayout;
 import com.mxgraph.swing.mxGraphComponent;
@@ -29,7 +29,7 @@ public class MapVisualization
         g.addVertex(pointIdString);
     }
 
-    public void addEdge(LinkEntity link){
+    public void addEdge(Link link){
         e = g.addEdge(String.valueOf(link.getStartId().getPid()),String.valueOf(link.getStopId().getPid()));
         g.setEdgeWeight(e,link.getLength());
     }
