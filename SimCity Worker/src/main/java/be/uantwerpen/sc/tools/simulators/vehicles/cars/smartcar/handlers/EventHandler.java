@@ -16,7 +16,7 @@ public class EventHandler
 
     public void addEvent(String event)
     {
-        this.events.addElement(event + "\r\n");
+        this.events.addElement(event);
     }
 
     public void flushEvents()
@@ -30,7 +30,10 @@ public class EventHandler
         {
             String event = (String)this.events.getNextElement();
 
-            socket.sendMessage(event);
+            socket.sendMessage(event + "\r\n");
         }
+
+        //Read socket to verify if its still alive
+        socket.getMessage();
     }
 }

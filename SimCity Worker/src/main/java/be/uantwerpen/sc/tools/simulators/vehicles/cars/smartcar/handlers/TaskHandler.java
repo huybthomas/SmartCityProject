@@ -1,10 +1,6 @@
 package be.uantwerpen.sc.tools.simulators.vehicles.cars.smartcar.handlers;
 
 import be.uantwerpen.sc.services.sockets.SimSocket;
-import be.uantwerpen.sc.tools.simulators.vehicles.cars.smartcar.handlers.DriveHandler;
-import be.uantwerpen.sc.tools.simulators.vehicles.cars.smartcar.handlers.EventHandler;
-
-import javax.validation.constraints.NotNull;
 
 /**
  * Created by Thomas on 28/05/2016.
@@ -13,17 +9,23 @@ public class TaskHandler
 {
     private DriveHandler driveHandler;
     private EventHandler eventHandler;
+    private LocationHandler locationHandler;
+    private TagReaderHandler tagReaderHandler;
 
     private TaskHandler()
     {
         this.driveHandler = null;
         this.eventHandler = null;
+        this.locationHandler = null;
+        this.tagReaderHandler = null;
     }
 
-    public TaskHandler(@NotNull DriveHandler driveHandler, @NotNull EventHandler eventHandler)
+    public TaskHandler(DriveHandler driveHandler, EventHandler eventHandler, LocationHandler locationHandler, TagReaderHandler tagReaderHandler)
     {
         this.driveHandler = driveHandler;
         this.eventHandler = eventHandler;
+        this.locationHandler = locationHandler;
+        this.tagReaderHandler = tagReaderHandler;
     }
 
     public void processMessage(SimSocket socket)
@@ -79,7 +81,7 @@ public class TaskHandler
         }
 
         //Send response
-        socket.sendMessage(response + "\r\n");
+        socket.sendMessage(response + "\r\n# ");
     }
 
     private String processDriveCommand(String command)
@@ -100,7 +102,13 @@ public class TaskHandler
             if(command.split(" ", 3).length == 2)
             {
                 //Follow line until end of line
+                locationHandler.startFollowLine();
 
+                int distance = locationHandler.getDistanceTargetLocation();
+
+                driveHandler.newDriveDistanceCommand(distance);
+System.out.println("FOLLOW LINE");
+                return "ACK";
             }
             else
             {
@@ -139,7 +147,7 @@ public class TaskHandler
                 int distance = parseInteger(command.split(" ", 3)[2]);
 
                 driveHandler.newDriveDistanceCommand(distance);
-
+System.out.println("FORWARD");
                 response = "ACK";
             }
             catch(Exception e)
@@ -171,7 +179,7 @@ public class TaskHandler
                 if(command.split(" ")[2].equals("L") || command.split(" ")[2].equals("R"))
                 {
                     driveHandler.newTurnAngleCommand(90);
-
+System.out.println("TURN");
                     response = "ACK";
                 }
                 else
@@ -251,11 +259,18 @@ public class TaskHandler
         return response;
     }
 
-
-
     private String processTagCommand(String command)
     {
-        return "NACK";
+        if(command.equals("TAG READ UID"))
+        {
+            this.eventHandler.addEvent(this.tagReaderHandler.readTag());
+
+            return "ACK";
+        }
+        else
+        {
+            return "UNKNOWN COMMAND";
+        }
     }
 
     private String processHelpCommand()

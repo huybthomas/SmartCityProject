@@ -92,7 +92,7 @@ public class DriveHandler
     public boolean updatePosition(double elapsedTime)
     {
         //Speed --> distance/s
-        double rotation = (Math.abs(speed)/elapsedTime)/MMPD;
+        double rotation = ((Math.abs(speed)/1000) * elapsedTime)/MMPD;
 
         if(this.targetPosition < 0)
         {
@@ -120,7 +120,7 @@ public class DriveHandler
             else
             {
                 this.currentPosition += rotation;
-
+System.out.println("CURRENT POSITION: " + this.currentPosition);
                 //Target position is not reached yet
                 return false;
             }

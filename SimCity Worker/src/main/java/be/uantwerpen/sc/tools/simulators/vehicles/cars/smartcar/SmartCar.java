@@ -2,9 +2,7 @@ package be.uantwerpen.sc.tools.simulators.vehicles.cars.smartcar;
 
 import be.uantwerpen.sc.services.sockets.SimSocket;
 import be.uantwerpen.sc.services.sockets.SimSocketService;
-import be.uantwerpen.sc.tools.simulators.vehicles.cars.smartcar.handlers.DriveHandler;
-import be.uantwerpen.sc.tools.simulators.vehicles.cars.smartcar.handlers.EventHandler;
-import be.uantwerpen.sc.tools.simulators.vehicles.cars.smartcar.handlers.TaskHandler;
+import be.uantwerpen.sc.tools.simulators.vehicles.cars.smartcar.handlers.*;
 
 /**
  * Created by Thomas on 28/05/2016.
@@ -18,6 +16,8 @@ public class SmartCar
     private DriveHandler driveHandler;
     private TaskHandler taskHandler;
     private EventHandler eventHandler;
+    private LocationHandler locationHandler;
+    private TagReaderHandler tagReaderHandler;
 
     public SmartCar()
     {
@@ -27,7 +27,9 @@ public class SmartCar
 
         this.driveHandler = new DriveHandler();
         this.eventHandler = new EventHandler();
-        this.taskHandler = new TaskHandler(driveHandler, eventHandler);
+        this.locationHandler = new LocationHandler();
+        this.tagReaderHandler = new TagReaderHandler(locationHandler);
+        this.taskHandler = new TaskHandler(driveHandler, eventHandler, locationHandler, tagReaderHandler);
     }
 
     public SmartCar(String name, float speed)
@@ -38,9 +40,52 @@ public class SmartCar
         this.driveHandler.setSpeed(speed);
     }
 
+    public SmartCar(String name, float speed, String serverIP, int serverPort)
+    {
+        this(name, speed);
+
+        this.locationHandler = new LocationHandler(serverIP, serverPort);
+        this.tagReaderHandler = new TagReaderHandler(locationHandler);
+        this.taskHandler = new TaskHandler(driveHandler, eventHandler, locationHandler, tagReaderHandler);
+    }
+
     public String getVersion()
     {
         return this.version;
+    }
+
+    public boolean initSimulation(int startPosition)
+    {
+        return locationHandler.initLocationHandler(startPosition);
+    }
+
+    public boolean stopSimulation()
+    {
+        if(this.taskSocket != null)
+        {
+            try
+            {
+                this.taskSocket.close();
+            }
+            catch(Exception e)
+            {
+                System.err.println("Could not close task socket of terminated simulation!");
+            }
+        }
+
+        if(this.eventSocket != null)
+        {
+            try
+            {
+                this.eventSocket.close();
+            }
+            catch(Exception e)
+            {
+                System.err.println("Could not close event socket of terminated simulation!");
+            }
+        }
+
+        return true;
     }
 
     public void checkConnections(SimSocketService taskSocketService, SimSocketService eventSocketService)
@@ -68,7 +113,7 @@ public class SmartCar
             if(taskSocket != null)
             {
                 //Send init message
-                taskSocket.sendMessage("SmartCity Car: " + this.name + " - Version: " + this.version + "\r\n#");
+                taskSocket.sendMessage("SmartCity Car: " + this.name + " - Version: " + this.version + "\r\n# ");
             }
         }
 
@@ -106,10 +151,9 @@ public class SmartCar
         if(driveHandler.updatePosition(elapsedTime))
         {
             //Target position reached, generate event
-            if(eventSocket != null)
-            {
-                eventSocket.sendMessage("DRIVE EVENT: FINISHED\r\n");
-            }
+            eventHandler.addEvent("DRIVE EVENT: FINISHED");
+System.out.println("DRIVE FINISHED");
+            locationHandler.endFollowLine();
         }
 
         //Process available tasks
