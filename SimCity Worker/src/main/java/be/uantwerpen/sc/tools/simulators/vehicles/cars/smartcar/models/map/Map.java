@@ -1,7 +1,7 @@
 package be.uantwerpen.sc.tools.simulators.vehicles.cars.smartcar.models.map;
 
-import be.uantwerpen.sc.tools.simulators.vehicles.cars.smartcar.models.BotEntity;
-import be.uantwerpen.sc.tools.simulators.vehicles.cars.smartcar.models.TrafficLightEntity;
+import be.uantwerpen.sc.tools.simulators.vehicles.cars.smartcar.models.Bot;
+import be.uantwerpen.sc.tools.simulators.vehicles.cars.smartcar.models.TrafficLight;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,8 +12,8 @@ import java.util.List;
 public class Map
 {
     private List<Node> nodeList;
-    private List<BotEntity> botEntities;
-    private List<TrafficLightEntity> trafficLightEntities;
+    private List<Bot> botEntities;
+    private List<TrafficLight> trafficLightEntities;
 
     public Map()
     {
@@ -37,22 +37,22 @@ public class Map
         return nodeList;
     }
 
-    public List<BotEntity> getBotEntities()
+    public List<Bot> getBotEntities()
     {
         return botEntities;
     }
 
-    public void setBotEntities(List<BotEntity> botEntities)
+    public void setBotEntities(List<Bot> botEntities)
     {
         this.botEntities = botEntities;
     }
 
-    public List<TrafficLightEntity> getTrafficLightEntity()
+    public List<TrafficLight> getTrafficLightEntity()
     {
         return trafficLightEntities;
     }
 
-    public void setTrafficLightEntity(List<TrafficLightEntity> trafficLightEntities)
+    public void setTrafficLightEntity(List<TrafficLight> trafficLightEntities)
     {
         this.trafficLightEntities = trafficLightEntities;
     }

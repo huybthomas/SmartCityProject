@@ -1,10 +1,10 @@
-package be.uantwerpen.sc.tools.simulators.vehicles.cars.smartcar.models;
+package be.uantwerpen.sc.tools.simulators.vehicles.cars.smartcar.models.map;
 
 /**
  * Created by Niels on 24/03/2016.
  */
 
-public class PointEntity
+public class Point
 {
     private int pid;
     private String rfid;
@@ -46,7 +46,7 @@ public class PointEntity
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        PointEntity that = (PointEntity) o;
+        Point that = (Point) o;
 
         if (pid != that.pid)
             return false;

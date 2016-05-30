@@ -1,8 +1,5 @@
 package be.uantwerpen.sc.tools.simulators.vehicles.cars.smartcar.models.map;
 
-import be.uantwerpen.sc.tools.simulators.vehicles.cars.smartcar.models.LinkEntity;
-import be.uantwerpen.sc.tools.simulators.vehicles.cars.smartcar.models.PointEntity;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,21 +9,21 @@ import java.util.List;
 public class Node
 {
     private int nodeId;
-    private PointEntity pointEntity;
-    private List<LinkEntity> neighbours;
+    private Point pointEntity;
+    private List<Link> neighbours;
 
     public Node()
     {
         this.nodeId = 0;
         this.pointEntity = null;
-        this.neighbours = new ArrayList<LinkEntity>();
+        this.neighbours = new ArrayList<Link>();
     }
 
-    public Node(PointEntity pointEntity)
+    public Node(Point pointEntity)
     {
         this.pointEntity = pointEntity;
         this.nodeId = pointEntity.getPid();
-        this.neighbours = new ArrayList<LinkEntity>();
+        this.neighbours = new ArrayList<Link>();
     }
 
     public int getNodeId()
@@ -39,22 +36,22 @@ public class Node
         this.nodeId = nodeId;
     }
 
-    public PointEntity getPointEntity()
+    public Point getPointEntity()
     {
         return pointEntity;
     }
 
-    public void setPointEntity(PointEntity pointEntity)
+    public void setPointEntity(Point pointEntity)
     {
         this.pointEntity = pointEntity;
     }
 
-    public List<LinkEntity> getNeighbours()
+    public List<Link> getNeighbours()
     {
         return neighbours;
     }
 
-    public void setNeighbours(List<LinkEntity> neighbours)
+    public void setNeighbours(List<Link> neighbours)
     {
         this.neighbours = neighbours;
     }

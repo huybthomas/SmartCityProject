@@ -1,16 +1,16 @@
-package be.uantwerpen.sc.tools.simulators.vehicles.cars.smartcar.models;
+package be.uantwerpen.sc.tools.simulators.vehicles.cars.smartcar.models.map;
 
 /**
  * Created by Niels on 24/03/2016.
  */
-public class LinkEntity
+public class Link
 {
     private int lid;
     private Integer length;
     private String startDirection;
     private String stopDirection;
-    private PointEntity startId;
-    private PointEntity stopId;
+    private Point startId;
+    private Point stopId;
     private int weight;
     private int pointLock;
 
@@ -54,22 +54,22 @@ public class LinkEntity
         this.stopDirection = stopDirection;
     }
 
-    public PointEntity getStartId()
+    public Point getStartId()
     {
         return startId;
     }
 
-    public void setStartId(PointEntity startId)
+    public void setStartId(Point startId)
     {
         this.startId = startId;
     }
 
-    public PointEntity getStopId()
+    public Point getStopId()
     {
         return stopId;
     }
 
-    public void setStopId(PointEntity stopId)
+    public void setStopId(Point stopId)
     {
         this.stopId = stopId;
     }
@@ -99,7 +99,7 @@ public class LinkEntity
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        LinkEntity that = (LinkEntity) o;
+        Link that = (Link) o;
 
         if (lid != that.lid)
             return false;

@@ -1,15 +1,17 @@
 package be.uantwerpen.sc.tools.simulators.vehicles.cars.smartcar.models;
 
+import be.uantwerpen.sc.tools.simulators.vehicles.cars.smartcar.models.map.Link;
+
 /**
  * Created by Niels on 24/03/2016.
  */
-public class BotEntity
+public class Bot
 {
     private Long rid;
     private Integer jobId;
     private Integer percentageCompleted;
     private String state;
-    private LinkEntity linkId;
+    private Link linkId;
 
     public Long getRid()
     {
@@ -51,12 +53,12 @@ public class BotEntity
         this.state = state;
     }
 
-    public LinkEntity getLinkId()
+    public Link getLinkId()
     {
         return linkId;
     }
 
-    public void setLinkId(LinkEntity linkId)
+    public void setLinkId(Link linkId)
     {
         this.linkId = linkId;
     }
@@ -67,7 +69,7 @@ public class BotEntity
         if(this == o) return true;
         if(o == null || getClass() != o.getClass()) return false;
 
-        BotEntity that = (BotEntity) o;
+        Bot that = (Bot) o;
 
         if(rid != that.rid)
             return false;

@@ -1,15 +1,17 @@
 package be.uantwerpen.sc.tools.simulators.vehicles.cars.smartcar.models;
 
+import be.uantwerpen.sc.tools.simulators.vehicles.cars.smartcar.models.map.Point;
+
 /**
  * Created by Niels on 24/03/2016.
  */
 
-public class TrafficLightEntity
+public class TrafficLight
 {
     private int tlid;
     private String direction;
     private String state;
-    private PointEntity pointid;
+    private Point pointid;
 
     public int getTlid()
     {
@@ -41,12 +43,12 @@ public class TrafficLightEntity
         this.state = state;
     }
 
-    public PointEntity getPointid()
+    public Point getPointid()
     {
         return pointid;
     }
 
-    public void setPointid(PointEntity pointid)
+    public void setPointid(Point pointid)
     {
         this.pointid = pointid;
     }
@@ -57,7 +59,7 @@ public class TrafficLightEntity
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        TrafficLightEntity that = (TrafficLightEntity) o;
+        TrafficLight that = (TrafficLight) o;
 
         if (tlid != that.tlid)
             return false;
