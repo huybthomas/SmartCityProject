@@ -8,7 +8,6 @@ import java.net.Socket;
 import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeoutException;
 
 /**
  * Created by Thomas on 27/05/2016.
@@ -98,6 +97,7 @@ public class SimSocketService implements Runnable
             try
             {
                 socket = this.serverSocket.accept();
+                socket.setSoTimeout(1);
             }
             catch(SocketTimeoutException timeEx)
             {

@@ -2,6 +2,7 @@ package be.uantwerpen.sc.services.sockets;
 
 import java.io.*;
 import java.net.Socket;
+import java.net.SocketTimeoutException;
 
 /**
  * Created by Thomas on 27/05/2016.
@@ -69,9 +70,19 @@ public class SimSocket
 
         try
         {
-            if(this.reader.ready())
+            try
             {
                 message = this.reader.readLine();
+
+                if(message == null)
+                {
+                    //Socket is closed by the client
+                    this.close();
+                }
+            }
+            catch(SocketTimeoutException e)
+            {
+                //Socket timed-out
             }
         }
         catch(IOException e)
@@ -108,6 +119,7 @@ public class SimSocket
         try
         {
             this.writer.write(message);
+            this.writer.flush();
         }
         catch(IOException e)
         {
