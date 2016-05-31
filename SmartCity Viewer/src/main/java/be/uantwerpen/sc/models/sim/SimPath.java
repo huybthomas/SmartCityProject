@@ -10,6 +10,7 @@ import java.util.ArrayList;
 public class SimPath {
 
     private int linkID;
+    private int length;
     private ArrayList<int[]> locs;
 
     public SimPath(int linkID){
@@ -25,6 +26,14 @@ public class SimPath {
     public int getLinkID(){return linkID;}
     public ArrayList<int[]> getLocs(){
         return locs;
+    }
+
+    public int getLength() {
+        return length;
+    }
+
+    public void setLength(int length) {
+        this.length = length;
     }
 
     public void up(){
