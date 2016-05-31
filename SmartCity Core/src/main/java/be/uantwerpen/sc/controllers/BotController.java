@@ -1,6 +1,7 @@
 package be.uantwerpen.sc.controllers;
 
 import be.uantwerpen.sc.models.Bot;
+import be.uantwerpen.sc.models.Link;
 import be.uantwerpen.sc.services.BotControlService;
 import be.uantwerpen.sc.services.LinkControlService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -111,11 +112,21 @@ public class BotController
     public void locationLink(@PathVariable("id") Long id, @PathVariable("lid") int lid)
     {
         Bot bot = this.getBot(id);
+        Link link;
 
         if(bot != null)
         {
-            bot.setLinkId(linkControlService.getLink(lid));
-            botControlService.updateBot(bot);
+            link = linkControlService.getLink(lid);
+
+            if(link != null)
+            {
+                bot.setLinkId(link);
+                botControlService.updateBot(bot);
+            }
+            else
+            {
+                System.out.println("Link with id: " + lid + " not found!");
+            }
         }
         else
         {
