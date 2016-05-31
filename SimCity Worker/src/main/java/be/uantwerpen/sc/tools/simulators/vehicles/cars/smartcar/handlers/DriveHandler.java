@@ -82,7 +82,7 @@ public class DriveHandler
      */
     public double getTravelledDistance()
     {
-        return this.currentPosition * MMPD/2;   //Calculate position in mm
+        return this.currentPosition * MMPD;   //Calculate position in mm
     }
 
     /**
