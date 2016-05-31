@@ -136,10 +136,14 @@ public class BotController
 
     public void updateLocation(Long id, int mm)
     {
-        Bot botEntity = this.getBot(id);
-        botEntity.setPercentageCompleted(mm);
-        botEntity.setState("Updated");
-        botControlService.updateBot(botEntity);
+        Bot bot = this.getBot(id);
+
+        if(bot != null)
+        {
+            bot.setPercentageCompleted(mm);
+            bot.setState("Updated");
+            botControlService.saveBot(bot);
+        }
     }
 
     @RequestMapping(value = "/delete/{rid}",method = RequestMethod.GET)

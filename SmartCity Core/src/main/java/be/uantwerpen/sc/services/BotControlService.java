@@ -5,7 +5,6 @@ import be.uantwerpen.sc.repositories.BotRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
@@ -32,7 +31,7 @@ public class BotControlService
         return botRepository.findAll();
     }
 
-    public  void updateBot(Bot bot)
+    public void updateBot(Bot bot)
     {
         Bot dbBot = botRepository.findOne(bot.getRid());
         dbBot = bot;
