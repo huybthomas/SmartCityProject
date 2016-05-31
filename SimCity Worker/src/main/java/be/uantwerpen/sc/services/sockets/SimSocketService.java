@@ -109,7 +109,10 @@ public class SimSocketService implements Runnable
                 System.err.println("Error, could not accept new connection!");
                 e.printStackTrace();
 
-                continue;
+                System.err.println("Socket service for port: " + this.socketPort + " will terminate!");
+                System.err.println("Please restart the simulation.");
+
+                break;
             }
 
             if(socket != null)
