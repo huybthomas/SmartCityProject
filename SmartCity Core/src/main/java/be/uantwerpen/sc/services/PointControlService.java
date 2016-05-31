@@ -16,9 +16,15 @@ public class PointControlService
     @Autowired
     private PointRepository pointRepository;
 
-    public List<Point> getAllPoints(){return pointRepository.findAll();}
+    public List<Point> getAllPoints()
+    {
+        return pointRepository.findAll();
+    }
 
-    public Point getPoint(int id){return pointRepository.findOne(id);}
+    public Point getPoint(int id)
+    {
+        return pointRepository.findOne(id);
+    }
 
     public Point save(Point point)
     {

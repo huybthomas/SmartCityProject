@@ -28,7 +28,8 @@ public class Map
         this.nodeList = nodeList;
     }
 
-    public List<Node> getNodeList() {
+    public List<Node> getNodeList()
+    {
         return nodeList;
     }
 

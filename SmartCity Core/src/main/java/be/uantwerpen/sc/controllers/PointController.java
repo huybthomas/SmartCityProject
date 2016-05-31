@@ -24,6 +24,7 @@ public class PointController
     public List<Point> allPoints()
     {
         List<Point> points = pointService.getAllPoints();
+
         return points;
     }
 
@@ -57,8 +58,18 @@ public class PointController
     }
 
     @RequestMapping(value = "getlock/{id}", method = RequestMethod.GET)
-    public boolean getPointStatus(@PathVariable("id") int id){
-        switch(pointService.getPoint(id).getPointlock()){
+    public boolean getPointStatus(@PathVariable("id") int id)
+    {
+        Point point = pointService.getPoint(id);
+
+        if(point == null)
+        {
+            //Point not found
+            return false;
+        }
+
+        switch(point.getPointlock())
+        {
             case 1:
                 return true;
             case 0:

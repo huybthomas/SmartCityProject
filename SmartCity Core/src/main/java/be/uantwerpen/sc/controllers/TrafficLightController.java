@@ -21,15 +21,20 @@ public class TrafficLightController
     private TrafficLightControlService trafficLightControlService;
 
     @RequestMapping(method = RequestMethod.GET)
-    public List<TrafficLight> allBots(){
-        return trafficLightControlService.getAlTrafficLights();
+    public List<TrafficLight> allTrafficLights()
+    {
+        return trafficLightControlService.getAllTrafficLights();
     }
 
     @RequestMapping(value = "{id}",method = RequestMethod.GET)
-    public TrafficLight getBot(@PathVariable("id") int id){return  trafficLightControlService.getTrafficLight(id);}
+    public TrafficLight getBot(@PathVariable("id") int id)
+    {
+        return trafficLightControlService.getTrafficLight(id);
+    }
 
     @RequestMapping(value = "savetest",method = RequestMethod.GET)
-    public void saveTlTest(){
+    public void saveTlTest()
+    {
         TrafficLight tl = new TrafficLight();
         tl.setState("Test");
         trafficLightControlService.saveTl(tl);

@@ -10,7 +10,6 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
 public class MqttLocationSubscriberCallback implements MqttCallback
 {
     MqttLocationSubscriber subscriber;
-    boolean on = false;
 
     public MqttLocationSubscriberCallback(MqttLocationSubscriber subscriber)
     {
@@ -32,9 +31,17 @@ public class MqttLocationSubscriberCallback implements MqttCallback
         String botIDString = topic.split("/")[1];
         Long botID = Long.parseLong(botIDString);
 
-        String payploadString = new String(mqttMessage.getPayload());
-        int tussenint = Integer.parseInt(payploadString);
-        subscriber.botController.updateLocation(botID, tussenint);
+        String payloadString = new String(mqttMessage.getPayload());
+
+        try
+        {
+            int parsedInt = Integer.parseInt(payloadString);
+            subscriber.botController.updateLocation(botID, parsedInt);
+        }
+        catch(Exception e)
+        {
+            System.err.println("Could not parse integer from payloadString: " + payloadString);
+        }
 
         //System.out.println("Message processing finished");
     }

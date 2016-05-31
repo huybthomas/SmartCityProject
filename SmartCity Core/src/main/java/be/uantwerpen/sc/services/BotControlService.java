@@ -17,15 +17,18 @@ public class BotControlService
     @Autowired
     private BotRepository botRepository;
 
-    public void saveBot(Bot bot){
-        botRepository.save(bot);
+    public Bot saveBot(Bot bot)
+    {
+        return botRepository.save(bot);
     }
 
-    public Bot getBot(Long id){
+    public Bot getBot(Long id)
+    {
         return botRepository.findOne(id);
     }
 
-    public List<Bot> getAllBots(){
+    public List<Bot> getAllBots()
+    {
         return botRepository.findAll();
     }
 

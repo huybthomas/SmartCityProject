@@ -73,12 +73,13 @@ public class MqttLocationSubscriber
             connOpts.setPassword(mqttPassword.toCharArray());
             mqttSubscribeClient.connect(connOpts);
 
-            //Subscribe to all subtopics of Sensor
+            //Subscribe to all subtopics of bots
             mqttSubscribeClient.subscribe("BOT/#");
 
         }
         catch(MqttException e)
         {
+            System.err.println("Could not subscribe to topics of MQTT service!");
             e.printStackTrace();
             //System.exit(1);
         }

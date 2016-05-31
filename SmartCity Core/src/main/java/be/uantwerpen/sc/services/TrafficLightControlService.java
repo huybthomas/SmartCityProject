@@ -17,7 +17,7 @@ public class TrafficLightControlService
     @Autowired
     private TrafficLightRepository trafficLightRepository;
 
-    public List<TrafficLight> getAlTrafficLights(){
+    public List<TrafficLight> getAllTrafficLights(){
         return trafficLightRepository.findAll();
     }
 

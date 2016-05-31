@@ -21,6 +21,7 @@ public class PathPlanningService implements IPathplanning
 {
     @Autowired
     private LinkControlService linkControlService;
+
     @Autowired
     private MapControlService mapControlService;
 

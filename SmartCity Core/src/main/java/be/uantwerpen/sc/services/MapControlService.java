@@ -18,59 +18,63 @@ public class MapControlService
 {
     @Autowired
     private PointControlService pointControlService;
+
     @Autowired
     private LinkControlService linkControlService;
+
     @Autowired
     private BotControlService botControlService;
+
     @Autowired
     private TrafficLightControlService trafficLightControlService;
 
-    private List<Link> linkEntityList;
-    private List<Link> targetlinks;
-    private List<Neighbour> neighbourList;
+    public Map buildMap()
+    {
+        Map map = new Map();
 
-    private Node node;
-    private NodeJson nodeJson;
+        List<Link> linkEntityList = linkControlService.getAllLinks();
 
-    public Map buildMap(){
+        for(Point point : pointControlService.getAllPoints())
+        {
+            Node node = new Node(point);
+            List<Link> targetLinks = linkEntityList.stream().filter(item -> Objects.equals(item.getStartId().getPid(), node.getNodeId())).collect(Collectors.toList());
 
-        Map myMap = new Map();
-
-        linkEntityList =linkControlService.getAllLinks();
-
-        for(Point point : pointControlService.getAllPoints()){
-            node = new Node(point);
-            targetlinks = linkEntityList.stream().filter(item -> Objects.equals(item.getStartId().getPid(), node.getNodeId())).collect(Collectors.toList());
-            node.setNeighbours(targetlinks);
-            myMap.addNode(node);
+            node.setNeighbours(targetLinks);
+            map.addNode(node);
         }
 
-        myMap.setBotEntities(botControlService.getAllBots());
-        myMap.setTrafficlightEntity(trafficLightControlService.getAlTrafficLights());
+        map.setBotEntities(botControlService.getAllBots());
+        map.setTrafficlightEntity(trafficLightControlService.getAllTrafficLights());
 
-        myMap.getNodeList();
-
-        return myMap;
+        return map;
     }
 
-    public MapJson buildMapJson(){
-
+    public MapJson buildMapJson()
+    {
         MapJson mapJson = new MapJson();
-        linkEntityList =linkControlService.getAllLinks();
 
-        for(Point point : pointControlService.getAllPoints()){
-            nodeJson = new NodeJson(point);
-            neighbourList = new ArrayList<>();
-            for(Link link: linkEntityList){
-                if((link.getStartId().getPid()) == (nodeJson.getPointEntity().getPid())){
+        List<Link> linkEntityList = linkControlService.getAllLinks();
+
+        for(Point point : pointControlService.getAllPoints())
+        {
+            NodeJson nodeJson = new NodeJson(point);
+
+            List<Neighbour> neighbourList = new ArrayList<Neighbour>();
+
+            for(Link link: linkEntityList)
+            {
+                if((link.getStartId().getPid()) == (nodeJson.getPointEntity().getPid()))
+                {
                     neighbourList.add(new Neighbour(link));
                 }
             }
+
             nodeJson.setNeighbours(neighbourList);
             mapJson.addNodeJson(nodeJson);
         }
 
         mapJson.setSize(mapJson.getNodeJsons().size());
+
         return mapJson;
     }
 }
