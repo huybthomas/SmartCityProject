@@ -25,9 +25,9 @@ public class SmartCar
         this.eventSocket = null;
         this.name = "SimBot";
 
-        this.driveHandler = new DriveHandler();
         this.eventHandler = new EventHandler();
         this.locationHandler = new LocationHandler();
+        this.driveHandler = new DriveHandler(70, locationHandler);
         this.tagReaderHandler = new TagReaderHandler(locationHandler);
         this.taskHandler = new TaskHandler(driveHandler, eventHandler, locationHandler, tagReaderHandler);
     }
@@ -45,6 +45,7 @@ public class SmartCar
         this(name, speed);
 
         this.locationHandler = new LocationHandler(serverIP, serverPort);
+        this.driveHandler = new DriveHandler(speed, locationHandler);
         this.tagReaderHandler = new TagReaderHandler(locationHandler);
         this.taskHandler = new TaskHandler(driveHandler, eventHandler, locationHandler, tagReaderHandler);
     }

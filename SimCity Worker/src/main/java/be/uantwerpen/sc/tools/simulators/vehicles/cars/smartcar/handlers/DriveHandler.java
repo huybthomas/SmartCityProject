@@ -11,11 +11,12 @@ public class DriveHandler
     private boolean paused;
     private boolean driving;
     private QueueHandler queue;
+    private LocationHandler locationHandler;
 
     private static final float MMPD = 0.46f;    //mm per degree
     private static final float MMRD = 2f;       //mm per degree to rotate
 
-    public DriveHandler()
+    protected DriveHandler()
     {
         this.speed = 70;
 
@@ -26,29 +27,26 @@ public class DriveHandler
         this.driving = false;
 
         this.queue = new QueueHandler();
+
+        this.locationHandler = null;
     }
 
-    public DriveHandler(float speed)
+    public DriveHandler(float speed, LocationHandler locationHandler)
     {
         this();
 
         this.speed = speed;
+        this.locationHandler = locationHandler;
     }
 
     public void newDriveDistanceCommand(float distance)
     {
-        //Total turning angle for the wheels
-        float targetPosition = distance/MMPD;
-
-        this.queue.addElement(targetPosition);
+        this.queue.addElement(new Event(Event.EventType.DRIVE_EVENT, "DRIVING", distance));
     }
 
     public void newTurnAngleCommand(float angle)
     {
-        //Total turning distance for wheel
-        float targetPosition = angle*MMRD/MMPD;
-
-        this.queue.addElement(targetPosition);
+        this.queue.addElement(new Event(Event.EventType.DRIVE_EVENT, "TURNING", angle));
     }
 
     public void setSpeed(float speed)
@@ -140,11 +138,36 @@ public class DriveHandler
         {
             this.currentPosition = 0.0f;
 
-            this.targetPosition = (float)this.queue.getNextElement();
+            Event driveCommand = (Event)this.queue.getNextElement();
 
-            this.driving = true;
+            if(driveCommand.getType() == Event.EventType.DRIVE_EVENT)
+            {
+                if(driveCommand.getProperty().equals("TURNING"))
+                {
+                    this.locationHandler.turn((float)driveCommand.getValue());
 
-            return true;
+                    //Total turning distance for wheel
+                    this.targetPosition = Math.abs((float)driveCommand.getValue())*MMRD/MMPD;
+                }
+                else if(driveCommand.getProperty().equals("DRIVING"))
+                {
+                    //Total turning angle for the wheels
+                    this.targetPosition = (float)driveCommand.getValue()/MMPD;
+                }
+                else
+                {
+                    //Unknown command
+                    return false;
+                }
+
+                this.driving = true;
+
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
         else
         {

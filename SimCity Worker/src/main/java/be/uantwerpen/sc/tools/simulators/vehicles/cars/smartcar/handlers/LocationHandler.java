@@ -22,7 +22,7 @@ public class LocationHandler
     private boolean onMap;
     private Direction currentDirection;
     private Direction destinationDirection;
-    private boolean followline;
+    private boolean followLine;
 
     private String serverIP;
     private int serverPort;
@@ -45,7 +45,7 @@ public class LocationHandler
         this.onMap = false;
         this.currentDirection = Direction.NORTH;
         this.destinationDirection = Direction.NORTH;
-        this.followline = false;
+        this.followLine = false;
 
         this.serverIP = "localhost";
         this.serverPort = 1994;
@@ -267,7 +267,7 @@ public class LocationHandler
 
                 this.travelledDistance = 0;
 
-                this.followline = true;
+                this.followLine = true;
             }
             else
             {
@@ -292,11 +292,11 @@ public class LocationHandler
             return;
         }
 
-        if(followline)
+        if(followLine)
         {
             this.currentLocation = this.destinationLocation;
             this.currentDirection = this.destinationDirection;
-            this.followline = false;
+            this.followLine = false;
         }
     }
 

@@ -176,9 +176,15 @@ public class TaskHandler
         {
             if(command.split(" ").length == 3)
             {
-                if(command.split(" ")[2].equals("L") || command.split(" ")[2].equals("R"))
+                if(command.split(" ")[2].equals("L"))
                 {
                     driveHandler.newTurnAngleCommand(90);
+
+                    response = "ACK";
+                }
+                else if(command.split(" ")[2].equals("R"))
+                {
+                    driveHandler.newTurnAngleCommand(-90);
 
                     response = "ACK";
                 }
@@ -189,13 +195,29 @@ public class TaskHandler
             }
             else if(command.split(" ").length == 4)
             {
-                if(command.split(" ")[2].equals("L") || command.split(" ")[2].equals("R"))
+                if(command.split(" ")[2].equals("L"))
                 {
                     try
                     {
                         int angle = parseInteger(command.split(" ")[3]);
 
                         driveHandler.newTurnAngleCommand(angle);
+
+                        response = "ACK";
+                    }
+                    catch(Exception e)
+                    {
+                        //Could not parse distance from command
+                        response = "MALFORMED COMMAND";
+                    }
+                }
+                else if(command.split(" ")[2].equals("R"))
+                {
+                    try
+                    {
+                        int angle = parseInteger(command.split(" ")[3]);
+
+                        driveHandler.newTurnAngleCommand(-angle);
 
                         response = "ACK";
                     }
@@ -219,13 +241,29 @@ public class TaskHandler
         {
             if(command.split(" ").length == 4)
             {
-                if(command.split(" ")[2].equals("L") || command.split(" ")[2].equals("R"))
+                if(command.split(" ")[2].equals("L"))
                 {
                     try
                     {
                         int angle = parseInteger(command.split(" ")[3]);
 
                         driveHandler.newTurnAngleCommand(angle);
+
+                        response = "ACK";
+                    }
+                    catch(Exception e)
+                    {
+                        //Could not parse distance from command
+                        response = "MALFORMED COMMAND";
+                    }
+                }
+                else if(command.split(" ")[2].equals("R"))
+                {
+                    try
+                    {
+                        int angle = parseInteger(command.split(" ")[3]);
+
+                        driveHandler.newTurnAngleCommand(-angle);
 
                         response = "ACK";
                     }
