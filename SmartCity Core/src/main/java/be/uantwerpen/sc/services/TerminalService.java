@@ -137,7 +137,7 @@ public class TerminalService
     {
         if(botControlService.resetBots())
         {
-            terminal.printTerminalInfo("All bots entries cleared from database.");
+            terminal.printTerminalInfo("All bot entries cleared from database.");
         }
         else
         {
