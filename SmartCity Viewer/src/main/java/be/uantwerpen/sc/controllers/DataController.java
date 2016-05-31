@@ -9,44 +9,42 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Arthur on 23/03/2016.
  */
 @RestController
-public class DataController {
-
-    /*@RequestMapping("/update")
-    public SimBot returnSimBot(@RequestParam(value="name", defaultValue="World") String name) {
-        return new Greeting(counter.incrementAndGet(),
-                String.format(template, name));
-    }*/
+public class DataController
+{
     @Autowired
     CarService carService;
+
     @Autowired
     MapService mapService;
 
-    SimBot simBot;
-
     @RequestMapping("/map")
-    public SimMap returnSimMap() {
+    public SimMap returnSimMap()
+    {
         return mapService.mapBuilder.getSimMap();
     }
 
     @RequestMapping("/paths")
-    public ArrayList<SimPath> returnPaths() {
+    public List<SimPath> returnPaths()
+    {
         return mapService.mapBuilder.getSimPaths();
     }
 
     @RequestMapping("/update")
-    public ArrayList<SimBot> returnSimBot() {
+    public List<SimBot> returnSimBot()
+    {
         carService.getBots();
         return carService.simBots;
     }
 
     @RequestMapping("/testcar")
-    public SimBot updateSimBot(){
+    public SimBot updateSimBot()
+    {
         SimPath path = mapService.mapBuilder.getSimPaths().get(3);
         SimBot bot = carService.simBots.get(0);
         bot.setLinkID(path.getLinkID());
@@ -54,4 +52,10 @@ public class DataController {
         bot.update(path);
         return bot;
     }
+
+    /*@RequestMapping("/update")
+    public SimBot returnSimBot(@RequestParam(value="name", defaultValue="World") String name) {
+        return new Greeting(counter.incrementAndGet(),
+                String.format(template, name));
+    }*/
 }
