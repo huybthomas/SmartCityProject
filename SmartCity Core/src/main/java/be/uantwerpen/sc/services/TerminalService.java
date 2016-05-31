@@ -1,8 +1,6 @@
 package be.uantwerpen.sc.services;
 
-import be.uantwerpen.sc.controllers.BotController;
 import be.uantwerpen.sc.controllers.JobController;
-import be.uantwerpen.sc.controllers.SimulationController;
 import be.uantwerpen.sc.tools.Terminal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,10 +15,7 @@ public class TerminalService
     private JobController jobController;
     
     @Autowired
-    private SimulationController simulationController;
-    
-    @Autowired
-    private BotController botController;
+    private BotControlService botControlService;
     
     private Terminal terminal;
 
@@ -38,7 +33,7 @@ public class TerminalService
 
     public void systemReady()
     {
-        terminal.printTerminal(" :: SmartCity Core - 2016 ::  -  Developed by: Huybrechts T., Janssens A., Joosens D., Vervliet N.");
+        terminal.printTerminal(" :: SmartCity Core - 2016 ::  -  Developed by: Huybrechts T., Janssens A., Vervliet N.");
         terminal.printTerminal("Type 'help' to display the possible commands.");
 
         terminal.activateTerminal();
@@ -66,31 +61,30 @@ public class TerminalService
                 }catch (Exception e){
                     terminal.printTerminal(e.getMessage());
                 }
-                break;
-            case "simulate":
-                try {
-                    String command2 = commandString.split(" ", 2)[1].toLowerCase();
-                    if(command2.equals("true"))
-                        simulationController.setSimulation("http://localhost:8080/simulate/",true);
-                    else
-                        simulationController.setSimulation("http://localhost:8080/simulate/",false);
-                }catch(ArrayIndexOutOfBoundsException e){
-                    terminal.printTerminal("error");
-                }
+                terminal.printTerminalInfo("METHOD NOT IMPLEMENTED YET!");
                 break;
             case "resetbots":
-                try {
-                    botController.resetBots();
-                }catch(ArrayIndexOutOfBoundsException e){
-                    terminal.printTerminal("error");
-                }
+                this.resetBots();
                 break;
             case "delete":
-                try {
-                    String command2 = commandString.split(" ", 2)[1].toLowerCase();
-                    botController.deleteBot((long)Integer.parseInt(command2));
-                }catch(ArrayIndexOutOfBoundsException e){
-                    terminal.printTerminal("error");
+                if(commandString.split(" ", 2).length <= 1)
+                {
+                    terminal.printTerminalInfo("Missing arguments! 'delete {botId}'");
+                }
+                else
+                {
+                    int parsedInt;
+
+                    try
+                    {
+                        parsedInt = this.parseInteger(commandString.split(" ", 2)[1]);
+
+                        this.deleteBot(parsedInt);
+                    }
+                    catch(Exception e)
+                    {
+                        terminal.printTerminalError(e.getMessage());
+                    }
                 }
                 break;
             case "exit":
@@ -119,17 +113,40 @@ public class TerminalService
                 terminal.printTerminal("Available commands:");
                 terminal.printTerminal("-------------------");
                 terminal.printTerminal("'job {robotId} {command}' : send a command to the robot.");
-                terminal.printTerminal("'resetBots' : empty robots in DB.");
-                terminal.printTerminal("'delete {robotId}' : delete robot with id from DB.");
-                terminal.printTerminal("'simulate {true/false}' : activate/deactivate robot simulator mode.");
+                terminal.printTerminal("'resetbots' : remove all robots from the database.");
+                terminal.printTerminal("'delete {robotId}' : remove the robot with the given id from the database.");
                 terminal.printTerminal("'exit' : shutdown the server.");
                 terminal.printTerminal("'help' / '?' : show all available commands.\n");
                 break;
         }
     }
 
-    private void sendJobs(int robotID, String job){
+    private void deleteBot(int botID)
+    {
+        if(botControlService.deleteBot(botID))
+        {
+            terminal.printTerminalInfo("Bot deleted with id: " + botID + ".");
+        }
+        else
+        {
+            terminal.printTerminalError("Could not delete bot with id: " + botID + "!");
+        }
+    }
 
+    private void resetBots()
+    {
+        if(botControlService.resetBots())
+        {
+            terminal.printTerminalInfo("All bots entries cleared from database.");
+        }
+        else
+        {
+            terminal.printTerminalError("Could not clear all robots from the database.");
+        }
+    }
+
+    private void sendJobs(int robotID, String job)
+    {
         switch (robotID)
         {
             case 1:

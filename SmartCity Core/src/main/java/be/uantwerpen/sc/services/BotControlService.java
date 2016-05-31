@@ -5,6 +5,7 @@ import be.uantwerpen.sc.repositories.BotRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
@@ -36,11 +37,24 @@ public class BotControlService
         botRepository.save(dbBot);
     }
 
-    public void deleteBot(Long rid){
-        botRepository.delete(rid);
+    public boolean deleteBot(long rid)
+    {
+        if(this.getBot(rid) == null)
+        {
+            //Could not find bot with rid
+            return false;
+        }
+        else
+        {
+            botRepository.delete(rid);
+            return true;
+        }
     }
 
-    public void resetBots(){
+    public boolean resetBots()
+    {
         botRepository.deleteAll();
+
+        return true;
     }
 }

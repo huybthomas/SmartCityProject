@@ -120,8 +120,8 @@ public class BotController
     }
 
     @RequestMapping(value = "/resetbots}",method = RequestMethod.GET)
-    public void resetBots(){
+    public void resetBots()
+    {
         botControlService.resetBots();
-        System.out.println("Robot table emptied");
     }
 }
