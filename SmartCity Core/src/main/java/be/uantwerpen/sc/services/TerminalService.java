@@ -62,7 +62,7 @@ public class TerminalService
                     {
                         parsedInt = this.parseInteger(commandString.split(" ", 3)[1]);
 
-                        this.sendJob(parsedInt, commandString.split(" ", 3)[1]);
+                        this.sendJob(parsedInt, commandString.split(" ", 3)[2]);
                     }
                     catch(Exception e)
                     {
