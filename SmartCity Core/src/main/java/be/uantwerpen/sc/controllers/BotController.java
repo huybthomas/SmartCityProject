@@ -103,7 +103,7 @@ public class BotController
         bot = botControlService.saveBot(bot);
 
         Date date = new Date();
-        System.out.println("New robot created!!" + date.toString());
+        System.out.println("New robot created!! - " + date.toString());
 
         return bot.getRid();
     }

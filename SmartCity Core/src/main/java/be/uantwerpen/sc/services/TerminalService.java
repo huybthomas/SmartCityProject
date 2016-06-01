@@ -1,6 +1,5 @@
 package be.uantwerpen.sc.services;
 
-import be.uantwerpen.sc.controllers.JobController;
 import be.uantwerpen.sc.models.Bot;
 import be.uantwerpen.sc.models.Link;
 import be.uantwerpen.sc.tools.Terminal;
@@ -87,7 +86,7 @@ public class TerminalService
                     }
                 }
                 break;
-            case "resetbots":
+            case "reset":
                 this.resetBots();
                 break;
             case "delete":
@@ -138,7 +137,7 @@ public class TerminalService
                 terminal.printTerminal("-------------------");
                 terminal.printTerminal("'job {botId} {command}' : send a job to the bot with the given id.");
                 terminal.printTerminal("'show {bots}' : show all bots in the database.");
-                terminal.printTerminal("'resetbots' : remove all bots from the database.");
+                terminal.printTerminal("'reset' : remove all bots from the database.");
                 terminal.printTerminal("'delete {botId}' : remove the bot with the given id from the database.");
                 terminal.printTerminal("'exit' : shutdown the server.");
                 terminal.printTerminal("'help' / '?' : show all available commands.\n");
