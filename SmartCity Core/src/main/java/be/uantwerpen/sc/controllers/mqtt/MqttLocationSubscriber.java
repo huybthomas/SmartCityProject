@@ -50,7 +50,7 @@ public class MqttLocationSubscriber
 
         try
         {
-            mqttSubscribeClient = new MqttClient(brokerURL, "SmartCity_Core");
+            mqttSubscribeClient = new MqttClient(brokerURL, "SmartCity_Core_Subscriber");
             start();
         }
         catch(MqttException e)

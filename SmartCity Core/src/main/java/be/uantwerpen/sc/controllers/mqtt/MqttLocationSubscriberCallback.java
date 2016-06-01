@@ -33,6 +33,12 @@ public class MqttLocationSubscriberCallback implements MqttCallback
 
         String payloadString = new String(mqttMessage.getPayload());
 
+        if(!payloadString.endsWith("Location"))
+        {
+            //No topic of interest, drop message
+            return;
+        }
+
         try
         {
             int parsedInt = Integer.parseInt(payloadString);

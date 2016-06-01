@@ -1,9 +1,13 @@
 package be.uantwerpen.sc.services;
 
 import be.uantwerpen.sc.controllers.JobController;
+import be.uantwerpen.sc.models.Bot;
+import be.uantwerpen.sc.models.Link;
 import be.uantwerpen.sc.tools.Terminal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * Created by Thomas on 25/02/2016.
@@ -66,6 +70,23 @@ public class TerminalService
                     }
                 }
                 break;
+            case "show":
+                if(commandString.split(" ", 2).length <= 1)
+                {
+                    terminal.printTerminalInfo("Missing arguments! 'show {bots}'");
+                }
+                else
+                {
+                    if(commandString.split(" ", 2)[1].equals("bots"))
+                    {
+                        this.printAllBots();
+                    }
+                    else
+                    {
+                        terminal.printTerminalInfo("Unknown arguments! 'show {bots}'");
+                    }
+                }
+                break;
             case "resetbots":
                 this.resetBots();
                 break;
@@ -116,11 +137,40 @@ public class TerminalService
                 terminal.printTerminal("Available commands:");
                 terminal.printTerminal("-------------------");
                 terminal.printTerminal("'job {botId} {command}' : send a job to the bot with the given id.");
-                terminal.printTerminal("'resetbots' : remove all robots from the database.");
+                terminal.printTerminal("'show {bots}' : show all bots in the database.");
+                terminal.printTerminal("'resetbots' : remove all bots from the database.");
                 terminal.printTerminal("'delete {botId}' : remove the bot with the given id from the database.");
                 terminal.printTerminal("'exit' : shutdown the server.");
                 terminal.printTerminal("'help' / '?' : show all available commands.\n");
                 break;
+        }
+    }
+
+    private void printAllBots()
+    {
+        List<Bot> bots = botControlService.getAllBots();
+
+        if(bots.isEmpty())
+        {
+            terminal.printTerminalInfo("There are no bots available to list.");
+        }
+        else
+        {
+            terminal.printTerminal("Bot-id\t\tLink-id\t\tStatus");
+            terminal.printTerminal("------------------------------");
+
+            for(Bot bot : bots)
+            {
+                int linkId = -1;
+                Link link = bot.getLinkId();
+
+                if(link != null)
+                {
+                    linkId = link.getLid();
+                }
+
+                terminal.printTerminal("\t" + bot.getRid() + "\t\t" + linkId + "\t\t\t" + bot.getState());
+            }
         }
     }
 
@@ -158,7 +208,7 @@ public class TerminalService
 
         if(jobService.sendJob(botId, command))
         {
-            terminal.printTerminalInfo("Job sended to bot with id: " + botId + ".");
+            terminal.printTerminalInfo("Job send to bot with id: " + botId + ".");
         }
         else
         {

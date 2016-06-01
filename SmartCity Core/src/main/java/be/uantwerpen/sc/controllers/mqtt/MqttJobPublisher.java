@@ -38,7 +38,7 @@ public class MqttJobPublisher
 
         try
         {
-            MqttClient client = new MqttClient(broker, "SmartCity_Core", persistence);
+            MqttClient client = new MqttClient(broker, "SmartCity_Core_Publisher", persistence);
             MqttConnectOptions connectOptions = new MqttConnectOptions();
             connectOptions.setCleanSession(true);
             connectOptions.setUserName(mqttUsername);
