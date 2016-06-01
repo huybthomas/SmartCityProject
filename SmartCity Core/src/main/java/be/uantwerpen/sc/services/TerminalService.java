@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 public class TerminalService
 {
     @Autowired
-    private JobController jobController;
+    private JobService jobService;
     
     @Autowired
     private BotControlService botControlService;
@@ -46,22 +46,25 @@ public class TerminalService
         switch(command)
         {
             case "job":
-                try {
-                    String command2 = commandString.split(" ", 2)[1].toLowerCase();
-                    String robot = command2.split(" ", 2)[0].toLowerCase();
-                    String job = command2.split(" ", 2)[1].toLowerCase();
-                    System.out.println(robot + " do " + job);
-                    try {
-                        int robotId = Integer.parseInt(robot);
-                        sendJobs(robotId, job);
-                    } catch (NumberFormatException e) {
-                        terminal.printTerminalError(e.getMessage());
-                        terminal.printTerminal("Usage: navigate start end");
-                    }
-                }catch (Exception e){
-                    terminal.printTerminal(e.getMessage());
+                if(commandString.split(" ", 3).length <= 2)
+                {
+                    terminal.printTerminalInfo("Missing arguments! 'job {botId} {command}");
                 }
-                terminal.printTerminalInfo("METHOD NOT IMPLEMENTED YET!");
+                else
+                {
+                    int parsedInt;
+
+                    try
+                    {
+                        parsedInt = this.parseInteger(commandString.split(" ", 3)[1]);
+
+                        this.sendJob(parsedInt, commandString.split(" ", 3)[1]);
+                    }
+                    catch(Exception e)
+                    {
+                        terminal.printTerminalError(e.getMessage());
+                    }
+                }
                 break;
             case "resetbots":
                 this.resetBots();
@@ -112,9 +115,9 @@ public class TerminalService
             default:
                 terminal.printTerminal("Available commands:");
                 terminal.printTerminal("-------------------");
-                terminal.printTerminal("'job {robotId} {command}' : send a command to the robot.");
+                terminal.printTerminal("'job {botId} {command}' : send a job to the bot with the given id.");
                 terminal.printTerminal("'resetbots' : remove all robots from the database.");
-                terminal.printTerminal("'delete {robotId}' : remove the robot with the given id from the database.");
+                terminal.printTerminal("'delete {botId}' : remove the bot with the given id from the database.");
                 terminal.printTerminal("'exit' : shutdown the server.");
                 terminal.printTerminal("'help' / '?' : show all available commands.\n");
                 break;
@@ -145,16 +148,21 @@ public class TerminalService
         }
     }
 
-    private void sendJobs(int robotID, String job)
+    private void sendJob(int botId, String command)
     {
-        switch (robotID)
+        if(botControlService.getBot((long)botId) == null)
         {
-            case 1:
-                jobController.sendJob("http://146.175.140.119:8080/job/", job.toUpperCase());
-                break;
-            default:
-                System.out.println("Robot not found");
-                break;
+            //Could not find bot in database
+            terminal.printTerminalError("Could not find bot with id: " + botId + "!");
+        }
+
+        if(jobService.sendJob(botId, command))
+        {
+            terminal.printTerminalInfo("Job sended to bot with id: " + botId + ".");
+        }
+        else
+        {
+            terminal.printTerminalError("Could not send job to bot with id: " + botId + "!");
         }
     }
 

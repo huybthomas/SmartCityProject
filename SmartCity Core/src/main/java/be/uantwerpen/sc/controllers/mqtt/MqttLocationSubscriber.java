@@ -50,7 +50,7 @@ public class MqttLocationSubscriber
 
         try
         {
-            mqttSubscribeClient = new MqttClient(brokerURL, "SmartCity_Core_Receiver");
+            mqttSubscribeClient = new MqttClient(brokerURL, "SmartCity_Core");
             start();
         }
         catch(MqttException e)
@@ -62,7 +62,7 @@ public class MqttLocationSubscriber
         }
     }
 
-    public void start()
+    private void start()
     {
         try
         {
@@ -75,7 +75,6 @@ public class MqttLocationSubscriber
 
             //Subscribe to all subtopics of bots
             mqttSubscribeClient.subscribe("BOT/#");
-
         }
         catch(MqttException e)
         {

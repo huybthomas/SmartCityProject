@@ -6,39 +6,46 @@ package be.uantwerpen.sc.models;
 public class Job
 {
     private int jobId;
-    private String jobDesciption;
+    private String jobDescription;
 
-    public Job(String jobDesciption) {
+    public Job(String jobDescription)
+    {
         this.jobId = 0;
-        this.jobDesciption = jobDesciption;
+        this.jobDescription = jobDescription;
     }
 
-    public Job(int jobId, String jobDesciption) {
+    public Job(int jobId, String jobDescription)
+    {
         this.jobId = jobId;
-        this.jobDesciption = jobDesciption;
+        this.jobDescription = jobDescription;
     }
 
-    public int getJobId() {
+    public int getJobId()
+    {
         return jobId;
     }
 
-    public void setJobId(int jobId) {
+    public void setJobId(int jobId)
+    {
         this.jobId = jobId;
     }
 
-    public String getJobDesciption() {
-        return jobDesciption;
+    public String getJobDescription()
+    {
+        return jobDescription;
     }
 
-    public void setJobDesciption(String jobDesciption) {
-        this.jobDesciption = jobDesciption;
+    public void setJobDescription(String jobDesciption)
+    {
+        this.jobDescription = jobDesciption;
     }
 
     @Override
-    public String toString() {
+    public String toString()
+    {
         return "Job{" +
                 "jobId=" + jobId +
-                ", jobDesciption='" + jobDesciption + '\'' +
+                ", jobDescription='" + jobDescription + '\'' +
                 '}';
     }
 }
