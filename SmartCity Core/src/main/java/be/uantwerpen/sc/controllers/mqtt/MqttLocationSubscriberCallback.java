@@ -25,7 +25,7 @@ public class MqttLocationSubscriberCallback implements MqttCallback
     @Override
     public void messageArrived(String topic, MqttMessage mqttMessage) throws Exception
     {
-        //System.out.println("Message arrived. String: " + topic + "  Message: " + mqttMessage.toString());
+        System.out.println("Message arrived. String: " + topic + "  Message: " + mqttMessage.toString());
 
         //TODO Process message
         String botIDString = topic.split("/")[1];

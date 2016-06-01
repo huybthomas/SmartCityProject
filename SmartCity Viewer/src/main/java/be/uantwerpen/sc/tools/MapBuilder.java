@@ -96,10 +96,6 @@ public class MapBuilder{
 
         Iterator<LinkEntity> linkIterator = linkEntities.iterator();
 
-        for(LinkEntity link : linkEntities){
-            link.setLength((int)(link.getLength()/290.0));
-        }
-
         boolean firstFound = false;
         while(linkIterator.hasNext() && firstFound == false){
             LinkEntity link = linkIterator.next();
@@ -188,6 +184,7 @@ public class MapBuilder{
     private boolean processLink(LinkEntity link, ProcessingType type){
         //Create new path
         path = new SimPath(link.getLid());
+        path.setLength(link.getLength());
 
         SimPoint point = new SimPoint(link.getStartId().getPid(), locX, locY);
         SimPoint point2 = new SimPoint(link.getStopId().getPid(), locX, locY);
@@ -214,32 +211,35 @@ public class MapBuilder{
             path.addLoc(locX, locY);
         }
 
+       
+        int length = (int)(link.getLength()/190.0);
+
         switch(type){
             case STRAIGHT:  //Only one point needs to exist already
                 switch (link.getStartDirection()){
                     case 'N':
                         if(swap)
-                            addTileBelow(link.getLength());
+                            addTileBelow(length);
                         else
-                            addTileAbove(link.getLength());
+                            addTileAbove(length);
                         break;
                     case 'E':
                         if(swap)
-                            addTileLeft(link.getLength());
+                            addTileLeft(length);
                         else
-                            addTileRight(link.getLength());
+                            addTileRight(length);
                         break;
                     case 'S':
                         if(swap)
-                            addTileAbove(link.getLength());
+                            addTileAbove(length);
                         else
-                            addTileBelow(link.getLength());
+                            addTileBelow(length);
                         break;
                     case 'W':
                         if(swap)
-                            addTileRight(link.getLength());
+                            addTileRight(length);
                         else
-                            addTileLeft(link.getLength());
+                            addTileLeft(length);
                         break;
                 }
                 break;

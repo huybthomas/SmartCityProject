@@ -10,6 +10,16 @@ import java.util.ArrayList;
 public class SimPath {
 
     private int linkID;
+
+    public int getLength() {
+        return length;
+    }
+
+    public void setLength(int lenght) {
+        this.length = lenght;
+    }
+
+    private int length;
     private ArrayList<int[]> locs;
 
     public SimPath(int linkID){

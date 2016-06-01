@@ -33,10 +33,9 @@ public class SimBot {
 
     public void update(SimPath currentPath){
         int size = currentPath.getLocs().size();
-        double perc = percentageComplete/size;
-        if(percentageComplete >= 1)
-            percentageComplete = 0.999;
-        size = (int)(size/290.0);
+        double perc = percentageComplete/currentPath.getLength();
+        if(perc >= 1)
+            perc = 0.999;
         int selected = (int)(size*perc);
         loc = currentPath.getLocs().get(selected);
     }
