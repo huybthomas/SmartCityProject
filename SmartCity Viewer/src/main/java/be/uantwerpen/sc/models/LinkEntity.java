@@ -11,6 +11,16 @@ public class LinkEntity {
     private PointEntity startId;
     private PointEntity stopId;
 
+    public int getWeight() {
+        return weight;
+    }
+
+    public void setWeight(int weight) {
+        this.weight = weight;
+    }
+
+    private int weight;
+
     public int getLid() {
         return lid;
     }

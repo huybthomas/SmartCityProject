@@ -216,6 +216,7 @@ public class MapBuilder{
 
         switch(type){
             case STRAIGHT:  //Only one point needs to exist already
+                int length = (int)(link.getLength()/290.0);
                 switch (link.getStartDirection()){
                     case 'N':
                         if(swap)

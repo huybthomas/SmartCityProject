@@ -7,45 +7,57 @@ import java.util.ArrayList;
 /**
  * Created by Arthur on 16/04/2016.
  */
-public class SimPath {
-
+public class SimPath
+{
     private int linkID;
-
-    public int getLength() {
-        return length;
-    }
-
-    public void setLength(int lenght) {
-        this.length = lenght;
-    }
-
     private int length;
     private ArrayList<int[]> locs;
 
-    public SimPath(int linkID){
+    public SimPath(int linkID)
+    {
         this.linkID = linkID;
         locs = new ArrayList<>();
     }
 
-    public void addLoc(int x, int y){
+    public void addLoc(int x, int y)
+    {
         int loc[] = {x,y};
         locs.add(loc);
     }
 
-    public int getLinkID(){return linkID;}
-    public ArrayList<int[]> getLocs(){
+    public int getLinkID()
+    {
+        return linkID;
+    }
+    
+    public ArrayList<int[]> getLocs()
+    {
         return locs;
     }
 
-    public void up(){
-        for(int[] loc : locs){
+    public int getLength()
+    {
+        return length;
+    }
+
+    public void setLength(int length)
+    {
+        this.length = length;
+    }
+
+    public void up()
+    {
+        for(int[] loc : locs)
+        {
             loc[1]++;
         }
 
     }
 
-    public void right(){
-        for(int[] loc : locs){
+    public void right()
+    {
+        for(int[] loc : locs)
+        {
             loc[0]++;
         }
     }

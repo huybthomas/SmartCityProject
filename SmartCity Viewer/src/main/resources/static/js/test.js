@@ -48,6 +48,9 @@ function drawMap(){
     }
 }
 
+//needed later
+//type.id = map.mapTiles[j][i]
+
 function drawCars(){
     var tilesX = map.sizeX;
     var tilesY = map.sizeY;
