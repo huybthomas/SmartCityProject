@@ -13,6 +13,6 @@ public class ViewController
     @RequestMapping(value = {"/view"})
     public String showSimView(ModelMap model)
     {
-        return "simView";
+        return "simview";
     }
 }
