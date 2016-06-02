@@ -1,26 +1,21 @@
 package be.uantwerpen.sc.services;
 
-import be.uantwerpen.sc.models.BotEntity;
 import be.uantwerpen.sc.models.LinkEntity;
 import be.uantwerpen.sc.models.PointEntity;
 import be.uantwerpen.sc.tools.MapBuilder;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.client.RestTemplate;
 
 import javax.annotation.PostConstruct;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Arthur on 3/04/2016.
  */
 @Service
-public class MapService {
-
+public class MapService
+{
     @Value("${sc.core.ip:localhost}")
     private String serverCoreIP;
 

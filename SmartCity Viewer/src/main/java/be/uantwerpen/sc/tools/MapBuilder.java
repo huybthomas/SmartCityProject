@@ -2,11 +2,9 @@ package be.uantwerpen.sc.tools;
 
 import be.uantwerpen.sc.models.LinkEntity;
 import be.uantwerpen.sc.models.PointEntity;
-import be.uantwerpen.sc.models.sim.SimLink;
 import be.uantwerpen.sc.models.sim.SimMap;
 import be.uantwerpen.sc.models.sim.SimPath;
 import be.uantwerpen.sc.models.sim.SimPoint;
-import org.springframework.security.access.method.P;
 
 import java.util.*;
 
@@ -216,7 +214,6 @@ public class MapBuilder{
 
         switch(type){
             case STRAIGHT:  //Only one point needs to exist already
-                int length = (int)(link.getLength()/290.0);
                 switch (link.getStartDirection()){
                     case 'N':
                         if(swap)
