@@ -16,7 +16,8 @@ public class Vertex implements Comparable<Vertex>
     private double minDistance = Double.POSITIVE_INFINITY;
     private Vertex previous;
 
-    public Vertex(NodeJson nodeJson) {
+    public Vertex(NodeJson nodeJson)
+    {
         this.id = nodeJson.getPointEntity().getPid();
     }
     public Vertex(Node node){this.id = node.getNodeId();}

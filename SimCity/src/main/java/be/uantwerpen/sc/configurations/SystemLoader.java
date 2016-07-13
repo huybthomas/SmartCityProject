@@ -2,22 +2,40 @@ package be.uantwerpen.sc.configurations;
 
 import be.uantwerpen.sc.services.TerminalService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationListener;
+import org.springframework.boot.ApplicationArguments;
+import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.event.ContextRefreshedEvent;
 
 /**
  * Created by Thomas on 25/02/2016.
  */
 @Configuration
-public class SystemLoader implements ApplicationListener<ContextRefreshedEvent>
+public class SystemLoader implements ApplicationRunner
 {
     @Autowired
     TerminalService terminalService;
 
     //Run after Spring context initialization
-    public void onApplicationEvent(ContextRefreshedEvent event)
+    public void run(ApplicationArguments args)
     {
-        terminalService.systemReady();
+        new Thread(new StartupProcess()).start();
+    }
+
+    private class StartupProcess implements Runnable
+    {
+        @Override
+        public void run()
+        {
+            try
+            {
+                Thread.sleep(200);
+            }
+            catch(InterruptedException ex)
+            {
+                //Thread interrupted
+            }
+
+            terminalService.systemReady();
+        }
     }
 }

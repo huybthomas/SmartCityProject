@@ -11,33 +11,45 @@ public class Edge
     private int weight;
     private Link linkEntity;
     public Edge(int argTarget, int argWeight, Link linkEntity)
-    { target = argTarget; weight = argWeight; this.linkEntity = linkEntity;}
+    {
+        target = argTarget;
+        weight = argWeight;
+        this.linkEntity = linkEntity;
+    }
 
     public Edge(int argTarget, int argWeight)
-    { target = argTarget; weight = argWeight;}
+    {
+        target = argTarget;
+        weight = argWeight;
+    }
 
-
-    public int getTarget() {
+    public int getTarget()
+    {
         return target;
     }
 
-    public void setTarget(int target) {
+    public void setTarget(int target)
+    {
         this.target = target;
     }
 
-    public int getWeight() {
+    public int getWeight()
+    {
         return weight;
     }
 
-    public void setWeight(int weight) {
+    public void setWeight(int weight)
+    {
         this.weight = weight;
     }
 
-    public Link getLinkEntity() {
+    public Link getLinkEntity()
+    {
         return linkEntity;
     }
 
-    public void setLinkEntity(Link linkEntity) {
+    public void setLinkEntity(Link linkEntity)
+    {
         this.linkEntity = linkEntity;
     }
 }

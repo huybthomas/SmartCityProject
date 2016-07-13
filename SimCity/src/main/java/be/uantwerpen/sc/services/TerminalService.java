@@ -1,8 +1,6 @@
 package be.uantwerpen.sc.services;
 
-
 import be.uantwerpen.sc.tools.Terminal;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -27,7 +25,7 @@ public class TerminalService
 
     public void systemReady()
     {
-        terminal.printTerminal(" :: SmartCity Core - 2016 ::  -  Developed by: Huybrechts T., Janssens A., Vervliet N.");
+        terminal.printTerminal("\nSimCity [Version " + getClass().getPackage().getImplementationVersion() + "]\n(c) 2015-2017 University of Antwerp. All rights reserved.");
         terminal.printTerminal("Type 'help' to display the possible commands.");
 
         terminal.activateTerminal();

@@ -15,7 +15,8 @@ import java.io.IOException;
 @Component
 public class GsonParser
 {
-    public MapJson fromJson()  throws IOException {
+    public MapJson fromJson() throws IOException
+    {
         JsonReader jsonReader = new JsonReader(new FileReader("omapjson.json"));
         Gson gson = new GsonBuilder().create();
         MapJson mapJson = gson.fromJson(jsonReader, MapJson.class);
@@ -24,7 +25,8 @@ public class GsonParser
         return mapJson;
     }
 
-    public void toJson(MapJson mapJson){
+    public void toJson(MapJson mapJson)
+    {
         Gson gson = new GsonBuilder().create();
         //code voor eventueel nar file te schrijven
     }
