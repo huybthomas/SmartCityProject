@@ -9,6 +9,8 @@ import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.util.Random;
+
 /**
  * Created by Thomas on 01/06/2016.
  */
@@ -27,7 +29,7 @@ public class MqttJobPublisher
     @Value("${mqtt.password:default}")
     private String mqttPassword;
 
-    public boolean publishJob(Job job, int robotID)
+    public boolean publishJob(Job job, long robotID)
     {
         String content  = job.toString();
         int qos         = 2;
@@ -38,7 +40,8 @@ public class MqttJobPublisher
 
         try
         {
-            MqttClient client = new MqttClient(broker, "SmartCity_Core_Publisher", persistence);
+            //Generate unique client ID
+            MqttClient client = new MqttClient(broker, "SmartCity_Core_Publisher_" + new Random().nextLong(), persistence);
             MqttConnectOptions connectOptions = new MqttConnectOptions();
             connectOptions.setCleanSession(true);
             connectOptions.setUserName(mqttUsername);
@@ -54,30 +57,15 @@ public class MqttJobPublisher
         catch(MqttException e)
         {
             System.err.println("Could not publish topic: " + topic + " to mqtt service!");
-            System.err.println("reason " + e.getReasonCode());
-            System.err.println("msg " + e.getMessage());
-            System.err.println("loc " + e.getLocalizedMessage());
-            System.err.println("cause " + e.getCause());
-            System.err.println("excep " + e);
-            e.printStackTrace();
+            System.err.println("Reason: " + e.getReasonCode());
+            System.err.println("Message: " + e.getMessage());
+            System.err.println(e.getLocalizedMessage());
+            System.err.println("Cause: " + e.getCause());
+            System.err.println("Exception: " + e);
 
             return false;
         }
 
         return true;
-    }
-
-    public void close()
-    {
-        try
-        {
-
-        }
-        catch(Exception e)
-        {
-            e.printStackTrace();
-        }
-
-        System.out.println("Disconnected");
     }
 }

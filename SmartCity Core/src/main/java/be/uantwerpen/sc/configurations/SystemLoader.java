@@ -13,7 +13,7 @@ import org.springframework.context.annotation.Configuration;
 public class SystemLoader implements ApplicationRunner
 {
     @Autowired
-    TerminalService terminalService;
+    private TerminalService terminalService;
 
     //Run after Spring context initialization
     public void run(ApplicationArguments args)

@@ -12,6 +12,7 @@ import java.io.IOException;
 /**
  * Created by Niels on 20/04/2016.
  */
+@Deprecated
 @Component
 public class GsonParser
 {

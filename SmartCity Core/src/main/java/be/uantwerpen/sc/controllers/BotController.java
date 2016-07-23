@@ -53,7 +53,7 @@ public class BotController
     public void updateBotTest(@PathVariable("id") Long id)
     {
         Bot botEntity = new Bot();
-        botEntity.setRid(id);
+        botEntity.setId(id);
         botEntity.setState("Updated");
         botControlService.updateBot(botEntity);
     }
@@ -105,11 +105,11 @@ public class BotController
         Date date = new Date();
         System.out.println("New robot created!! - " + date.toString());
 
-        return bot.getRid();
+        return bot.getId();
     }
 
     @RequestMapping(value = "{id}/lid/{lid}", method = RequestMethod.GET)
-    public void locationLink(@PathVariable("id") Long id, @PathVariable("lid") int lid)
+    public void locationLink(@PathVariable("id") Long id, @PathVariable("lid") Long lid)
     {
         Bot bot = this.getBot(id);
         Link link;

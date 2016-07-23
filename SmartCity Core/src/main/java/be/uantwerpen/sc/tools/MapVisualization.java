@@ -34,7 +34,7 @@ public class MapVisualization
 
     public void addEdge(Link link)
     {
-        e = g.addEdge(String.valueOf(link.getStartId().getPid()),String.valueOf(link.getStopId().getPid()));
+        e = g.addEdge(String.valueOf(link.getStartPoint().getId()),String.valueOf(link.getStopPoint().getId()));
         g.setEdgeWeight(e,link.getLength());
     }
 

@@ -14,6 +14,7 @@ import java.util.List;
 /**
  * Created by Niels on 26/03/2016.
  */
+@Deprecated
 @RestController
 @RequestMapping("/graph/")
 public class GraphController

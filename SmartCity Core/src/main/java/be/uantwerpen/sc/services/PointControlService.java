@@ -21,7 +21,7 @@ public class PointControlService
         return pointRepository.findAll();
     }
 
-    public Point getPoint(int id)
+    public Point getPoint(Long id)
     {
         return pointRepository.findOne(id);
     }

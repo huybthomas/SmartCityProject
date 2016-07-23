@@ -61,7 +61,7 @@ public class TerminalService
                     {
                         parsedInt = this.parseInteger(commandString.split(" ", 3)[1]);
 
-                        this.sendJob(parsedInt, commandString.split(" ", 3)[2]);
+                        this.sendJob((long)parsedInt, commandString.split(" ", 3)[2]);
                     }
                     catch(Exception e)
                     {
@@ -160,15 +160,15 @@ public class TerminalService
 
             for(Bot bot : bots)
             {
-                int linkId = -1;
+                Long linkId = -1L;
                 Link link = bot.getLinkId();
 
                 if(link != null)
                 {
-                    linkId = link.getLid();
+                    linkId = link.getId();
                 }
 
-                terminal.printTerminal("\t" + bot.getRid() + "\t\t" + linkId + "\t\t\t" + bot.getState());
+                terminal.printTerminal("\t" + bot.getId() + "\t\t" + linkId + "\t\t\t" + bot.getState());
             }
         }
     }
@@ -197,12 +197,14 @@ public class TerminalService
         }
     }
 
-    private void sendJob(int botId, String command)
+    private void sendJob(Long botId, String command)
     {
         if(botControlService.getBot((long)botId) == null)
         {
             //Could not find bot in database
             terminal.printTerminalError("Could not find bot with id: " + botId + "!");
+
+            return;
         }
 
         if(jobService.sendJob(botId, command))
@@ -229,5 +231,21 @@ public class TerminalService
         }
 
         return parsedInt;
+    }
+
+    private long parseLong(String value) throws Exception
+    {
+        Long parsedLong;
+
+        try
+        {
+            parsedLong = Long.parseLong(value);
+        }
+        catch(NumberFormatException e)
+        {
+            throw new Exception("'" + value + "' is not a numeric value!");
+        }
+
+        return parsedLong;
     }
 }

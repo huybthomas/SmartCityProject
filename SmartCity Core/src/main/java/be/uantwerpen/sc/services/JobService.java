@@ -14,9 +14,9 @@ public class JobService
     @Autowired
     MqttJobPublisher mqttJobPublisher;
 
-    public boolean sendJob(int botId, String command)
+    public boolean sendJob(Long botId, String command)
     {
-        Job job = new Job(0, command);
+        Job job = new Job(0L, command);
 
         return mqttJobPublisher.publishJob(job, botId);
     }

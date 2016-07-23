@@ -31,7 +31,7 @@ public class GraphService
 
     public void addPointToGraph(String pointIdString) {directedGraph.addVertex(pointIdString);}
 
-    public void addEdgeToGraph(Link link){directedGraph.addEdge(String.valueOf(link.getStartId().getPid()),String.valueOf(link.getStopId().getPid()));}
+    public void addEdgeToGraph(Link link){directedGraph.addEdge(String.valueOf(link.getStartPoint().getId()),String.valueOf(link.getStopPoint().getId()));}
 
     public StrongConnectivityInspector strongConnectivity(){
         sci = new StrongConnectivityInspector(directedGraph);

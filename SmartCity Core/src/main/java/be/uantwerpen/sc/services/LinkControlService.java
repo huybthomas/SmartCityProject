@@ -16,9 +16,12 @@ public class LinkControlService
     @Autowired
     private LinkRepository linkRepository;
 
-    public List<Link> getAllLinks(){return linkRepository.findAll();}
+    public List<Link> getAllLinks()
+    {
+        return linkRepository.findAll();
+    }
 
-    public Link getLink(int id)
+    public Link getLink(Long id)
     {
         return linkRepository.findOne(id);
     }

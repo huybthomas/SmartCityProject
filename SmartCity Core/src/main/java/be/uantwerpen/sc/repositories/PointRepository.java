@@ -10,7 +10,7 @@ import java.util.List;
  * Created by Thomas on 25/02/2016.
  */
 @Repository
-public interface PointRepository extends CrudRepository<Point, Integer>
+public interface PointRepository extends CrudRepository<Point, Long>
 {
     List<Point> findAll();
 }

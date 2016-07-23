@@ -21,7 +21,7 @@ public class Dijkstra
         List<Vertex> vertexList = new ArrayList<>();
         while (!vertexQueue.isEmpty()) {
             Vertex u = vertexQueue.poll();
-            Vertex v = new Vertex(1);
+            Vertex v = new Vertex(1L);
             // Visit each edge exiting u
             for (Edge e : u.getAdjacencies())
             {
@@ -58,14 +58,14 @@ public class Dijkstra
         vertex= vertexes.get(i);*/
 
 
-        int i = target.getId();
+        int i = (int)(target.getId() % Integer.MAX_VALUE);
         do {
             for (Vertex v : vertexes){
                 if(v.getId() == i)
                     path.add(vertexes.get(i-1));
             }
             try {
-                i = vertexes.get(i-1).getPrevious().getId();
+                i = (int)(vertexes.get(i-1).getPrevious().getId() % Integer.MAX_VALUE);
             }catch (Exception e){
                i = 0;
             }

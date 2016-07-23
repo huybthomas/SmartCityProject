@@ -33,7 +33,7 @@ public class BotControlService
 
     public void updateBot(Bot bot)
     {
-        Bot dbBot = botRepository.findOne(bot.getRid());
+        Bot dbBot = botRepository.findOne(bot.getId());
         dbBot = bot;
         //dbBot.setLinkId(bot.getLinkId());
         botRepository.save(dbBot);

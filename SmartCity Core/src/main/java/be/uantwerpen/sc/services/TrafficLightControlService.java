@@ -17,21 +17,24 @@ public class TrafficLightControlService
     @Autowired
     private TrafficLightRepository trafficLightRepository;
 
-    public List<TrafficLight> getAllTrafficLights(){
+    public List<TrafficLight> getAllTrafficLights()
+    {
         return trafficLightRepository.findAll();
     }
 
-    public TrafficLight getTrafficLight(int id){
+    public TrafficLight getTrafficLight(long id)
+    {
         return trafficLightRepository.findOne(id);
     }
 
     public void updateTL(TrafficLight trafficlightEntity){
-        TrafficLight dbTL = trafficLightRepository.findOne(trafficlightEntity.getTlid());
+        TrafficLight dbTL = trafficLightRepository.findOne(trafficlightEntity.getId());
         dbTL = trafficlightEntity;
         trafficLightRepository.save(dbTL);
     }
 
-    public void saveTl(TrafficLight tl){
+    public void saveTl(TrafficLight tl)
+    {
         trafficLightRepository.save(tl);
     }
 

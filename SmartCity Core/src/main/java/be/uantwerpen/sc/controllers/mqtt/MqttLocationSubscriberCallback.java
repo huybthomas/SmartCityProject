@@ -1,5 +1,6 @@
 package be.uantwerpen.sc.controllers.mqtt;
 
+import be.uantwerpen.sc.controllers.BotController;
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
 import org.eclipse.paho.client.mqttv3.MqttCallback;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
@@ -9,11 +10,11 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
  */
 public class MqttLocationSubscriberCallback implements MqttCallback
 {
-    MqttLocationSubscriber subscriber;
+    BotController botController;
 
-    public MqttLocationSubscriberCallback(MqttLocationSubscriber subscriber)
+    public MqttLocationSubscriberCallback(BotController botController)
     {
-        this.subscriber = subscriber;
+        this.botController = botController;
     }
 
     @Override
@@ -25,7 +26,6 @@ public class MqttLocationSubscriberCallback implements MqttCallback
     @Override
     public void messageArrived(String topic, MqttMessage mqttMessage) throws Exception
     {
-        //TODO Process message
         String botIDString = topic.split("/")[1];
         Long botID = Long.parseLong(botIDString);
 
@@ -40,14 +40,12 @@ public class MqttLocationSubscriberCallback implements MqttCallback
         try
         {
             int parsedInt = Integer.parseInt(payloadString);
-            subscriber.botController.updateLocation(botID, parsedInt);
+            botController.updateLocation(botID, parsedInt);
         }
         catch(Exception e)
         {
             System.err.println("Could not parse integer from payloadString: " + payloadString);
         }
-
-        //System.out.println("Message processing finished");
     }
 
     @Override

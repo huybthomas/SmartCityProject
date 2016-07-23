@@ -51,9 +51,9 @@ public class PathPlanningService implements IPathplanning
             edges = new ArrayList<>();
             for (Link neighbour : nj.getNeighbours()){
                 for (Vertex v : vertexes){
-                    if(v.getId() == neighbour.getStopId().getPid()){
+                    if(v.getId() == neighbour.getStopPoint().getId()){
                         for(Link linkEntity: linkEntityList){
-                            if(linkEntity.getStopId().getPid() == v.getId() && linkEntity.getStartId().getPid() == nj.getPointEntity().getPid()){
+                            if(linkEntity.getStopPoint().getId() == v.getId() && linkEntity.getStartPoint().getId() == nj.getPointEntity().getId()){
                                 System.out.println(linkEntity.toString() +" " + linkEntity);
                                 realLink = linkEntity;
                             }
@@ -110,7 +110,7 @@ public class PathPlanningService implements IPathplanning
         }
         int i = currentVertex.getAdjacencies().size();
         int index = random.nextInt(i);
-        Vertex nextVertex = new Vertex(new Node(currentVertex.getAdjacencies().get(index).getLinkEntity().getStopId()));
+        Vertex nextVertex = new Vertex(new Node(currentVertex.getAdjacencies().get(index).getLinkEntity().getStopPoint()));
 
         List<Vertex> vertexList = new ArrayList<>();
         vertexList.add(currentVertex);
@@ -133,9 +133,9 @@ public class PathPlanningService implements IPathplanning
             edges = new ArrayList<>();
             for (Neighbour neighbour : nj.getNeighbours()){
                 for (Vertex v : vertexes){
-                    if(v.getId() == neighbour.getPointEntity().getPid()){
+                    if(v.getId() == neighbour.getPointEntity().getId()){
                         for(Link linkEntity: linkControlService.getAllLinks()){
-                            if(linkEntity.getStopId().getPid() == v.getId() && linkEntity.getStartId().getPid() == nj.getPointEntity().getPid()){
+                            if(linkEntity.getStopPoint().getId() == v.getId() && linkEntity.getStartPoint().getId() == nj.getPointEntity().getId()){
                                 System.out.println(linkEntity.toString() +" " + linkEntity);
                                 realLink = linkEntity;
                             }

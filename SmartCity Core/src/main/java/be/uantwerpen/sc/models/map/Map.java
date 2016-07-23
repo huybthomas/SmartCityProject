@@ -2,6 +2,7 @@ package be.uantwerpen.sc.models.map;
 
 import be.uantwerpen.sc.models.Bot;
 import be.uantwerpen.sc.models.TrafficLight;
+import be.uantwerpen.sc.tools.pathplanning.AbstractMap;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,7 +10,7 @@ import java.util.List;
 /**
  * Created by Niels on 3/04/2016.
  */
-public class Map
+public class Map implements AbstractMap
 {
     private List<Node> nodeList;
     private List<Bot> botEntities;
@@ -20,7 +21,7 @@ public class Map
         botEntities = new ArrayList<>();
     }
 
-    public  void addNode(Node node){
+    public void addNode(Node node){
         nodeList.add(node);
     }
 
@@ -51,7 +52,7 @@ public class Map
 
     @Override
     public String toString() {
-        return "Map{" +
+        return "AbstractMap{" +
                 "nodeList=" + nodeList +
                 ", botEntities=" + botEntities +
                 ", trafficlightEntity=" + trafficlightEntity +

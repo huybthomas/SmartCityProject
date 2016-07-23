@@ -37,7 +37,7 @@ public class MapControlService
         for(Point point : pointControlService.getAllPoints())
         {
             Node node = new Node(point);
-            List<Link> targetLinks = linkEntityList.stream().filter(item -> Objects.equals(item.getStartId().getPid(), node.getNodeId())).collect(Collectors.toList());
+            List<Link> targetLinks = linkEntityList.stream().filter(item -> Objects.equals(item.getStartPoint().getId(), node.getNodeId())).collect(Collectors.toList());
 
             node.setNeighbours(targetLinks);
             map.addNode(node);
@@ -63,7 +63,7 @@ public class MapControlService
 
             for(Link link: linkEntityList)
             {
-                if((link.getStartId().getPid()) == (nodeJson.getPointEntity().getPid()))
+                if((link.getStartPoint().getId()) == (nodeJson.getPointEntity().getId()))
                 {
                     neighbourList.add(new Neighbour(link));
                 }

@@ -27,7 +27,7 @@ public class TrafficLightController
     }
 
     @RequestMapping(value = "{id}",method = RequestMethod.GET)
-    public TrafficLight getBot(@PathVariable("id") int id)
+    public TrafficLight getBot(@PathVariable("id") Long id)
     {
         return trafficLightControlService.getTrafficLight(id);
     }

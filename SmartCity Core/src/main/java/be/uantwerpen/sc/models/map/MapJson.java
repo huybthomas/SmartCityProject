@@ -1,13 +1,15 @@
 package be.uantwerpen.sc.models.map;
 
+import be.uantwerpen.sc.tools.pathplanning.AbstractMap;
+
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by Niels on 14/04/2016.
  */
-public class MapJson {
-
+public class MapJson implements AbstractMap
+{
     private List<NodeJson> nodeJsons;
     private int size;
 

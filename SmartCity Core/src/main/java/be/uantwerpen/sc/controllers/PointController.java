@@ -29,7 +29,7 @@ public class PointController
     }
 
     @RequestMapping(value = "requestlock/{id}", method = RequestMethod.GET)
-    public boolean requestPointLock(@PathVariable("id") int id)
+    public boolean requestPointLock(@PathVariable("id") Long id)
     {
         synchronized(this)
         {
@@ -41,12 +41,12 @@ public class PointController
                 return false;
             }
 
-            switch(point.getPointlock())
+            switch(point.getPointLock())
             {
                 case 1: //Point already locked
                     return false;
                 case 0: //Point not locked -> attempt lock
-                    point.setPointlock(1);
+                    point.setPointLock(1);
                     pointService.save(point);
                     return true;
                 default:
@@ -58,7 +58,7 @@ public class PointController
     }
 
     @RequestMapping(value = "getlock/{id}", method = RequestMethod.GET)
-    public boolean getPointStatus(@PathVariable("id") int id)
+    public boolean getPointStatus(@PathVariable("id") Long id)
     {
         Point point = pointService.getPoint(id);
 
@@ -68,7 +68,7 @@ public class PointController
             return false;
         }
 
-        switch(point.getPointlock())
+        switch(point.getPointLock())
         {
             case 1:
                 return true;
@@ -80,7 +80,7 @@ public class PointController
     }
 
     @RequestMapping(value = "setlock/{id}/{value}", method = RequestMethod.GET)
-    public boolean setPointStatus(@PathVariable("id") int id, @PathVariable("value") int value)
+    public boolean setPointStatus(@PathVariable("id") Long id, @PathVariable("value") int value)
     {
         synchronized (this)
         {
@@ -92,7 +92,7 @@ public class PointController
                 return false;
             }
 
-            point.setPointlock(value);
+            point.setPointLock(value);
             pointService.save(point);
 
             return true;

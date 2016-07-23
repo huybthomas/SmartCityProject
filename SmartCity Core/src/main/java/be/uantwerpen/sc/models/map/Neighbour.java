@@ -9,11 +9,11 @@ import be.uantwerpen.sc.models.Point;
 public class Neighbour {
 
     private Point pointEntity;
-    private int length;
+    private Long length;
     private int weight;
 
     public Neighbour(Link linkEntity) {
-        this.pointEntity = linkEntity.getStopId();
+        this.pointEntity = linkEntity.getStopPoint();
         this.length = linkEntity.getLength();
         this.weight = linkEntity.getWeight();
     }
@@ -26,11 +26,11 @@ public class Neighbour {
         this.pointEntity = pointEntity;
     }
 
-    public int getLength() {
+    public Long getLength() {
         return length;
     }
 
-    public void setLength(int length) {
+    public void setLength(Long length) {
         this.length = length;
     }
 

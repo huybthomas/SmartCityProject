@@ -10,20 +10,20 @@ import java.util.List;
  */
 public class Node {
 
-    private int nodeId;
+    private Long nodeId;
     private Point pointEntity;
     private List<Link> neighbours;
 
     public Node(Point pointEntity) {
         this.pointEntity = pointEntity;
-        this.nodeId = pointEntity.getPid();
+        this.nodeId = pointEntity.getId();
     }
 
-    public int getNodeId() {
+    public Long getNodeId() {
         return nodeId;
     }
 
-    public void setNodeId(int nodeId) {
+    public void setNodeId(Long nodeId) {
         this.nodeId = nodeId;
     }
 

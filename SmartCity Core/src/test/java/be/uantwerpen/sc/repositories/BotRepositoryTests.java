@@ -34,18 +34,18 @@ public class BotRepositoryTests
         bot.setState("Test");
 
         //Save bot, verify has ID value after save
-        assertNull(bot.getRid());       //Null before save
+        assertNull(bot.getId());       //Null before save
         botRepository.save(bot);
-        assertNotNull(bot.getRid());    //Not null after save
+        assertNotNull(bot.getId());    //Not null after save
 
         //Fetch from database
-        Bot fetchedBot = botRepository.findOne(bot.getRid());
+        Bot fetchedBot = botRepository.findOne(bot.getId());
 
         //Should not be null
         assertNotNull(fetchedBot);
 
         //Should equal
-        assertEquals(bot.getRid(), fetchedBot.getRid());
+        assertEquals(bot.getId(), fetchedBot.getId());
         assertEquals(bot.getState(), fetchedBot.getState());
 
         //Update description and save
@@ -53,7 +53,7 @@ public class BotRepositoryTests
         botRepository.save(fetchedBot);
 
         //Get from database, should be updated
-        Bot fetchedUpdatedBot = botRepository.findOne(fetchedBot.getRid());
+        Bot fetchedUpdatedBot = botRepository.findOne(fetchedBot.getId());
         assertEquals(fetchedBot.getState(), fetchedUpdatedBot.getState());
 
         //Verify count of bots in database
@@ -84,25 +84,25 @@ public class BotRepositoryTests
         Bot bot = new Bot();
 
         //Save bot, verify if it has ID value after save
-        assertNull(bot.getRid());           //Null before save
+        assertNull(bot.getId());           //Null before save
         botRepository.save(bot);
-        assertNotNull(bot.getRid());        //Not null after save
+        assertNotNull(bot.getId());        //Not null after save
 
         //Verify count of bots in database
         long botCount = botRepository.count();
         assertEquals(botCount, origBotRepositorySize + 1);      //One bot has been added to the database
 
         //Fetch from database
-        Bot fetchedBot = botRepository.findOne(bot.getRid());
+        Bot fetchedBot = botRepository.findOne(bot.getId());
 
         //Should not be null
         assertNotNull(fetchedBot);
 
         //Delete bot from database
-        botRepository.delete(fetchedBot.getRid());
+        botRepository.delete(fetchedBot.getId());
 
         //Fetch from database (should not exist anymore
-        fetchedBot = botRepository.findOne(fetchedBot.getRid());
+        fetchedBot = botRepository.findOne(fetchedBot.getId());
 
         //Should be null
         assertNull(fetchedBot);
