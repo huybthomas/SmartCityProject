@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
+import org.springframework.core.env.Environment;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.authentication.configurers.GlobalAuthenticationConfigurerAdapter;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -19,13 +20,12 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter
 {
+    @Autowired
+    private Environment environment;
+
     @Override
     protected void configure(HttpSecurity http) throws Exception
     {
-        //Permit access to H2 console --Development only
-        http.authorizeRequests().antMatchers("/h2console/**")
-                                    .permitAll();
-
         http.authorizeRequests().antMatchers("/webjars/**")
                                     .permitAll();
 
@@ -44,8 +44,25 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter
                                 .exceptionHandling()
                                     .accessDeniedPage("/access?accessdenied");
 
-        http.csrf().disable();
-        http.headers().frameOptions().disable();
+        devConfiguration(http);
+    }
+
+    protected void devConfiguration(HttpSecurity http) throws Exception
+    {
+        for(String profile : environment.getActiveProfiles())
+        {
+            if(profile.equals("dev"))
+            {
+                //Permit access to H2 console --Development only
+                http.authorizeRequests().antMatchers("/h2console/**")
+                        .permitAll();
+
+                http.csrf().disable();
+                http.headers().frameOptions().disable();
+
+                return;
+            }
+        }
     }
 
     @Order(Ordered.HIGHEST_PRECEDENCE)
