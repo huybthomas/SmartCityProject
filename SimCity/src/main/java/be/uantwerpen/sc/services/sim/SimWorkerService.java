@@ -1,13 +1,9 @@
 package be.uantwerpen.sc.services.sim;
 
-import be.uantwerpen.sc.models.security.User;
 import be.uantwerpen.sc.models.sim.SimWorker;
 import be.uantwerpen.sc.repositories.sim.SimWorkerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Thomas on 03/04/2016.

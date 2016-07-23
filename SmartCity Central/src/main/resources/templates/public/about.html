@@ -12,7 +12,7 @@
                 <img alt="Logo" th:src="@{/images/SmartCityLogo.png}" style="vertical-align: middle; height: 100px"/>
                 <span style="padding-left: 8px">
                     <span class="h1" th:text="#{application.title}"></span>
-                    <!--<span class="h5" th:text="'v.' +  #{application.version.main} + '.' + #{application.version.minor}"></span>-->
+                    <span class="h5" th:text="'v.' +  #{application.version.main} + '.' + #{application.version.minor}"></span>
                 </span>
             </div>
         </div>
@@ -22,8 +22,22 @@
 
     <h2>About</h2>
 
-    <p>Developed by: Thomas Huybrechts, Arthur Janssens, Dennis Joosens, Niels Vervliet</p>
-    <p></p>
+    <p th:text="'Copyright &copy; 2015-2017 UAntwerpen and its licensors. All Rights Reserved.'">Copyright</p>
+    <h3>Developed by:</h3>
+    <h4 style="padding-top: 20px">Supervisors:</h4>
+    <div th:each="supervisor : ${supervisors}">
+        <p th:text="${supervisor}"></p>
+    </div>
+    <h4 style="padding-top: 20px">Students:</h4>
+    <div th:each="year : ${students}">
+        <h4 th:text="${year.key}"></h4>
+        <div class="row">
+            <div class="col-sm-4" th:each="student : ${year.value}">
+                <p th:text="${student}"></p>
+            </div>
+        </div>
+    </div>
+    <div style="padding-bottom: 75px"></div>
 </div>
 
 <!-- Import footer -->
