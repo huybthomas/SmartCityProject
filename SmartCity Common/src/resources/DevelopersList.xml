@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<developers>
+    <supervisors>
+        <person>
+            <name>Peter Hellinckx</name>
+        </person>
+        <person>
+            <name>Yorick De Bock</name>
+        </person>
+        <person>
+            <name>Eric Paillet</name>
+        </person>
+        <person>
+            <name>Charles Vercauteren</name>
+        </person>
+        <person>
+            <name>Thomas Huybrechts</name>
+        </person>
+    </supervisors>
+
+    <students>
+        <group year="2015-2016">
+            <person>
+                <name>Thomas Huybrechts</name>
+            </person>
+            <person>
+                <name>Arthur Janssens</name>
+            </person>
+            <person>
+                <name>Dennis Joosens</name>
+            </person>
+            <person>
+                <name>Niels Vervliet</name>
+            </person>
+        </group>
+        <group year="2016-2017">
+
+        </group>
+    </students>
+</developers>
